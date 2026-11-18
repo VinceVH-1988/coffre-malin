@@ -149,6 +149,7 @@ button:focus-visible,input:focus-visible,select:focus-visible{outline:4px solid 
   background:var(--navy);color:#fff;box-shadow:0 6px 0 var(--key-shadow);display:flex;flex-direction:column;gap:2px}
 .mode:active{transform:translateY(4px);box-shadow:0 2px 0 var(--key-shadow)}
 .mode.infini{background:var(--teal)}
+.mode.montre{background:var(--red)}
 .mode-name{font-size:clamp(1.2rem,3.4dvh,1.6rem);font-weight:700}
 .mode-desc{font-size:clamp(.85rem,2.1dvh,1rem);opacity:.92}
 .home-info{font-size:clamp(.75rem,1.8dvh,.9rem);color:var(--muted);text-align:center;max-width:40ch;flex:none}
@@ -217,13 +218,29 @@ button:focus-visible,input:focus-visible,select:focus-visible{outline:4px solid 
 
 /* ---------- réglages : profils & général ---------- */
 .plist{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px}
-.plist li{display:flex;align-items:center;gap:10px;background:var(--chip);border-radius:12px;padding:6px 10px}
+.plist li{display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px;background:var(--chip);border-radius:12px;padding:6px 10px;min-width:0}
+.plist .pinfo{display:flex;align-items:center;gap:8px;flex:1 1 120px;min-width:0}
 .plist .pav{width:34px;flex:none}
 .plist .pav svg{width:100%;display:block}
-.plist .pnm{flex:1;font-weight:700}
+.plist .pnm{flex:1;min-width:0;font-weight:700;overflow-wrap:anywhere}
+.plist .pbtns{display:flex;gap:8px;flex:none}
 .plist .pbtn{font:inherit;font-size:.85rem;border:2px solid var(--ink);border-radius:999px;padding:5px 10px;background:var(--sheet);cursor:pointer}
 .plist .pbtn.danger{color:var(--red)}
 .cursive-sample{font-family:var(--cursive);font-size:1.4rem}
+.settings,.profiles,.filous,.avatarcreate{max-width:100vw;overflow-x:hidden}
+.settings .inner,.avatarcreate .inner{overflow-wrap:anywhere}
+.field{flex-wrap:wrap}
+.field label{min-width:0;overflow-wrap:anywhere}
+.group-head h3{min-width:0;overflow-wrap:anywhere}
+
+/* ---------- dictée (Le Faussaire) ---------- */
+.dictee-pad{display:none;flex-direction:column;gap:8px;width:100%;flex:none}
+.dictee-pad.show{display:flex}
+.btn.teal{background:var(--teal);color:#fff}
+.listen-btn{margin:6px auto 0;display:inline-block}
+.word-note{min-height:1.1em;font-size:.82rem;color:var(--muted);margin-top:2px}
+.tab-cat{font-size:.78rem;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);margin:10px 0 4px}
+.tab-cat:first-child{margin-top:0}
 </style>
 </head>
 <body>
@@ -243,7 +260,9 @@ button:focus-visible,input:focus-visible,select:focus-visible{outline:4px solid 
       <div class="bolts right" id="bolts-r"></div>
       <div class="plate">
         <div class="calc" id="calc"></div>
+        <button type="button" class="btn listen-btn" id="word-listen" style="display:none">Écouter</button>
         <div class="answer empty" id="answer" aria-live="polite"></div>
+        <div class="word-note" id="word-note" aria-live="polite"></div>
         <div class="progress" id="progress"></div>
       </div>
     </div>
@@ -256,6 +275,11 @@ button:focus-visible,input:focus-visible,select:focus-visible{outline:4px solid 
     <button class="erase" data-k="del">Effacer</button><button data-k="0">0</button><button class="ok" data-k="ok">Valider</button>
   </div>
 
+  <div class="dictee-pad" id="dictee-pad">
+    <div class="kb" id="word-kb"></div>
+    <button type="button" class="btn teal" id="word-validate">Valider</button>
+  </div>
+
   <div class="foot"><button class="btn ghost" id="again" style="display:none">Rejouer</button><button class="parent-link" id="profiles-link">Profils</button><button class="parent-link" id="filous-link">Filous</button><button class="parent-link" data-pin>Réglages</button></div>
 </main>
 
@@ -266,6 +290,7 @@ button:focus-visible,input:focus-visible,select:focus-visible{outline:4px solid 
   <div class="modes">
     <button class="mode" id="go-coffre"><span class="mode-name">Mode coffre</span><span class="mode-desc" id="desc-coffre"></span></button>
     <button class="mode infini" id="go-infini"><span class="mode-name">Mode infini</span><span class="mode-desc" id="desc-infini"></span></button>
+    <button class="mode montre" id="go-montre"><span class="mode-name">Contre la montre</span><span class="mode-desc" id="desc-montre"></span></button>
   </div>
   <div class="home-info" id="home-info"></div>
   <div class="foot"><button class="parent-link" id="home-back">Filous</button><button class="parent-link" data-pin>Réglages</button></div>
@@ -354,16 +379,23 @@ button:focus-visible,input:focus-visible,select:focus-visible{outline:4px solid 
     </div>
 
     <div class="group">
-      <div class="group-head"><h3>Mode coffre</h3></div>
-      <div class="field"><label for="s-target">Calculs d'affilée</label><input id="s-target" type="number" inputmode="numeric" min="2" max="20"></div>
-      <div class="sub">Quand le coffre s'ouvre</div><div class="chips" data-radio="reward"></div>
-      <div class="field" id="f-code"><label for="s-code">Code du cadenas</label><input id="s-code" inputmode="numeric" maxlength="6"></div>
-    </div>
-    <div class="group">
       <div class="field"><label for="s-pin">Code du parent</label><input id="s-pin" inputmode="numeric" maxlength="4"></div>
     </div>
 
-    <div class="group" id="g-add">
+    <div class="group">
+      <div class="group-head"><h3>Réglages des épreuves</h3></div>
+      <div class="sub">Chaque filou a ses propres épreuves et son propre coffre.</div>
+      <div id="calc-tabs"></div>
+    </div>
+
+    <div class="group">
+      <div class="group-head"><h3 id="coffre-tab-title">Mode coffre</h3></div>
+      <div class="field"><label for="s-target">Bonnes réponses d'affilée</label><input id="s-target" type="number" inputmode="numeric" min="2" max="20"></div>
+      <div class="sub">Quand le coffre s'ouvre</div><div class="chips" data-radio="reward"></div>
+      <div class="field" id="f-code"><label for="s-code">Code du cadenas</label><input id="s-code" inputmode="numeric" maxlength="6"></div>
+    </div>
+
+    <div class="group" id="g-add" data-tab="retenues">
       <div class="group-head"><h3>Additions</h3><label class="switch"><input type="checkbox" data-op="add" aria-label="Additions"><span></span></label></div>
       <div class="group-body">
         <div class="sub">Nombres</div><div class="chips" data-list="add-forms"></div>
@@ -372,29 +404,37 @@ button:focus-visible,input:focus-visible,select:focus-visible{outline:4px solid 
         <div class="field"><input id="s-add-max" type="number" inputmode="numeric" min="10" max="999" placeholder="ex. 100"></div>
       </div>
     </div>
-    <div class="group" id="g-sub">
+    <div class="group" id="g-sub" data-tab="retenues">
       <div class="group-head"><h3>Soustractions</h3><label class="switch"><input type="checkbox" data-op="sub" aria-label="Soustractions"><span></span></label></div>
       <div class="group-body">
         <div class="sub">Nombres</div><div class="chips" data-list="sub-forms"></div>
         <div class="sub">Passage de la dizaine ou de la centaine</div><div class="chips" data-radio="sub-pass"></div>
       </div>
     </div>
-    <div class="group" id="g-mul">
+    <div class="group" id="g-mul" data-tab="tables">
       <div class="group-head"><h3>Multiplications</h3><label class="switch"><input type="checkbox" data-op="mul" aria-label="Multiplications"><span></span></label></div>
       <div class="group-body">
         <div class="sub">Tables</div><div class="chips" data-list="mul-tables"></div>
         <div class="sub">En plus</div><div class="chips" data-list="mul-extra"></div>
       </div>
     </div>
-    <div class="group" id="g-div">
+    <div class="group" id="g-div" data-tab="tables">
       <div class="group-head"><h3>Divisions</h3><label class="switch"><input type="checkbox" data-op="div" aria-label="Divisions"><span></span></label></div>
       <div class="group-body">
         <div class="sub">Tables</div><div class="chips" data-list="div-tables"></div>
       </div>
     </div>
+    <div class="group" id="g-mix-note" data-tab="mix">
+      <div class="sub">Calcul mélangé pioche parmi les opérations actives réglées ci-dessus pour le Faussaire des Retenues et le Tricheur des Tables (onglets « Faussaire des Retenues » et « Tricheur des Tables »). Seul son propre mode coffre se règle ici.</div>
+    </div>
+    <div class="group" id="g-faussaire" data-tab="faussaire">
+      <div class="group-head"><h3>Séries de dictée</h3></div>
+      <div class="sub">Séries actives pour ce profil</div>
+      <div class="chips" data-list="faussaire-series"></div>
+    </div>
 
     <div class="group">
-      <div class="group-head"><h3>Records du mode infini</h3></div>
+      <div class="group-head"><h3>Records</h3></div>
       <ul class="recs" id="recs"></ul>
       <div class="row" style="margin-top:8px"><button class="btn ghost" id="r-reset">Effacer les records</button></div>
     </div>
@@ -546,11 +586,29 @@ menteur: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 240">
 <path d="M82 116 Q100 132 120 112" fill="none" stroke="#222" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>
 <path d="M140 40 h46 a8 8 0 0 1 8 8 v24 a8 8 0 0 1 -8 8 h-30 l-12 12 l2 -12 h-6 a8 8 0 0 1 -8 -8 v-24 a8 8 0 0 1 8 -8z" fill="#fff" stroke="#222" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>
 <text x="148" y="68" font-family="Fredoka" font-weight="700" font-size="16" fill="#d64545">Vrai!</text>
+</svg>`,
+mix: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 240">
+<rect x="4" y="4" width="192" height="232" rx="22" fill="#f5ecd7"/>
+<ellipse cx="100" cy="222" rx="62" ry="8" fill="#000" opacity=".12"/>
+<text x="26" y="50" font-family="Fredoka" font-weight="700" font-size="26" fill="#1f3a5f">+</text>
+<text x="150" y="50" font-family="Fredoka" font-weight="700" font-size="26" fill="#d64545">−</text>
+<text x="24" y="214" font-family="Fredoka" font-weight="700" font-size="26" fill="#2a9d8f">x</text>
+<text x="150" y="222" font-family="Fredoka" font-weight="700" font-size="34" fill="#b08a5a">:</text>
+<g transform="translate(0,38)">
+<rect x="20" y="40" width="160" height="110" rx="12" fill="#1f3a5f" stroke="#222" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>
+<rect x="34" y="54" width="132" height="82" rx="8" fill="#2f5583" stroke="#222" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>
+<circle cx="100" cy="95" r="26" fill="#f2b134" stroke="#222" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/><circle cx="100" cy="95" r="8" fill="#222"/>
+<path d="M100 69 v8 M100 113 v8 M74 95 h8 M118 95 h8" stroke="#222" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>
+<rect x="36" y="146" width="20" height="12" fill="#222"/><rect x="144" y="146" width="20" height="12" fill="#222"/>
+<path d="M74 40 v-14 a26 26 0 0 1 52 0 v14" fill="none" stroke="#222" stroke-width="10"/>
+<path d="M74 40 v-14 a26 26 0 0 1 52 0 v14" fill="none" stroke="#c7c7c7" stroke-width="5"/>
+</g>
 </svg>` };
 const REWARD = {feu:"Feu d'artifice", code:"Code du cadenas"};
 const VILLAIN = {
   add:{name:"Le Faussaire des Retenues", art:"retenues"}, sub:{name:"Le Faussaire des Retenues", art:"retenues"},
-  mul:{name:"Le Tricheur des Tables", art:"tables"}, div:{name:"Le Tricheur des Tables", art:"tables"}
+  mul:{name:"Le Tricheur des Tables", art:"tables"}, div:{name:"Le Tricheur des Tables", art:"tables"},
+  faussaire:{name:"Le Faussaire", art:"faussaire_mot"}
 };
 const SYM = {add:"+", sub:"−", mul:"x", div:":"};
 const FORMS = {
@@ -558,22 +616,39 @@ const FORMS = {
   sub:{ "du-u":["DU − U",[11,99],[2,9]], "du-du":["DU − DU",[20,99],[11,89]], "cdu-du":["CDU − DU",[100,999],[11,99]], "cdu-cdu":["CDU − CDU",[200,999],[100,899]] }
 };
 const PASS = {avec:"Avec", sans:"Sans", mix:"Mélangé"};
-const DEFAULT = {
+const DEFAULT_RETENUES = {
   code:"5472", target:6, reward:"feu",
   add:{on:true, forms:["du+u"], pass:"avec", max:null},
-  sub:{on:true, forms:["du-u"], pass:"avec"},
-  mul:{on:false, tables:[2,5,10], extra:[]},
+  sub:{on:true, forms:["du-u"], pass:"avec"}
+};
+const DEFAULT_TABLES = {
+  code:"5472", target:6, reward:"feu",
+  mul:{on:true, tables:[2,5,10], extra:[]},
   div:{on:false, tables:[2,5,10]}
 };
+const DEFAULT_MIX = { code:"5472", target:6, reward:"feu" };
+const DEFAULT_FAUSSAIRE = { code:"5472", target:6, reward:"feu", series:[1,2,3,4,5,6,7,8] };
+const DEFAULTS_BY_FILOU = {retenues:DEFAULT_RETENUES, tables:DEFAULT_TABLES, mix:DEFAULT_MIX, faussaire:DEFAULT_FAUSSAIRE};
+const CFG_STORE_KEY = {retenues:"coffre-cfg-retenues", tables:"coffre-cfg-tables", mix:"coffre-cfg-mix", faussaire:"coffre-cfg-faussaire"};
 
 /* ---------- filous (registre) ---------- */
 const FILOUS = [
-  {id:"retenues", nom:"Le Faussaire des Retenues", domaine:"Calcul : additions et soustractions", art:"retenues", ready:true, scope:"retenues"},
-  {id:"tables", nom:"Le Tricheur des Tables", domaine:"Calcul : multiplications et divisions", art:"tables", ready:true, scope:"tables"},
-  {id:"deguiseur", nom:"Le Déguiseur", domaine:"Les verbes", art:"deguiseur", ready:false},
-  {id:"faussaire", nom:"Le Faussaire", domaine:"L'orthographe des mots de dictée", art:"faussaire_mot", ready:false},
-  {id:"menteur", nom:"Le Menteur", domaine:"Quiz d'éveil", art:"menteur", ready:false}
+  {id:"retenues", nom:"Le Faussaire des Retenues", domaine:"Calcul : additions et soustractions", art:"retenues", ready:true, scope:"retenues", kind:"calc", categorie:"calcul"},
+  {id:"tables", nom:"Le Tricheur des Tables", domaine:"Calcul : multiplications et divisions", art:"tables", ready:true, scope:"tables", kind:"calc", categorie:"calcul"},
+  {id:"mix", nom:"Calcul mélangé", domaine:"Toutes tes opérations réglées, au hasard", art:"mix", ready:true, scope:"mix", combo:true, kind:"calc", categorie:"calcul"},
+  {id:"deguiseur", nom:"Le Déguiseur", domaine:"Les verbes", art:"deguiseur", ready:false, kind:"deguiseur", categorie:"francais"},
+  {id:"faussaire", nom:"Le Faussaire", domaine:"La dictée des mots appris", art:"faussaire_mot", ready:true, kind:"dictee", categorie:"francais"},
+  {id:"menteur", nom:"Le Menteur", domaine:"Quiz d'éveil", art:"menteur", ready:false, kind:"menteur", categorie:"eveil"}
 ];
+const FILOU_KIND = Object.fromEntries(FILOUS.map(f=>[f.id, f.kind]));
+const CATEGORIES = [["calcul","Calcul"],["francais","Français"],["eveil","Éveil"]];
+function buildEpreuveTabs(){
+  return CATEGORIES.map(([cat,label])=>({
+    cat, label,
+    tabs: FILOUS.filter(f=>f.ready && f.categorie===cat).map(f=>[f.id, f.nom])
+  })).filter(g=>g.tabs.length);
+}
+const EPREUVE_TABS = buildEpreuveTabs();
 
 /* ---------- avatars ---------- */
 const SKIN = ["#ffe0bd","#f1c27d","#c68642","#8d5524"];
@@ -633,7 +708,8 @@ function buildKeyboard(el, onKey, onBackspace){
 }
 
 const clone = o => JSON.parse(JSON.stringify(o));
-const S = { cfg:clone(DEFAULT), stats:{tries:0,errors:0,best:0,opens:0}, records:{}, mode:"coffre", recKey:"", newRec:false, streak:0, q:null, input:"", last:"", locked:true, filou:"retenues" };
+const S = { cfgs:{retenues:clone(DEFAULT_RETENUES), tables:clone(DEFAULT_TABLES), mix:clone(DEFAULT_MIX), faussaire:clone(DEFAULT_FAUSSAIRE)}, stats:{tries:0,errors:0,best:0,opens:0}, records:{}, mode:"coffre", recKey:"", newRec:false, streak:0, q:null, word:null, lastWord:"", spoken:false, input:"", last:"", locked:true, filou:"retenues" };
+function curCfg(){ return S.cfgs[S.filou] || S.cfgs.retenues; }
 const $ = id => document.getElementById(id);
 const rnd = (a,b) => Math.floor(Math.random()*(b-a+1))+a;
 const pick = arr => arr[Math.floor(Math.random()*arr.length)];
@@ -654,10 +730,15 @@ const store = {
     try{ if(window.storage) await window.storage.set(k, null, false); }catch(e){}
   }
 };
-function mergeCfg(saved){
-  const c = clone(DEFAULT);
+function mergeCfgFor(filou, saved){
+  const c = clone(DEFAULTS_BY_FILOU[filou]);
   if(!saved) return c;
-  for(const k of Object.keys(c)){ if(saved[k]!==undefined){ c[k] = (typeof c[k]==="object" && c[k]!==null) ? Object.assign(c[k], saved[k]) : saved[k]; } }
+  for(const k of Object.keys(c)){
+    if(saved[k]===undefined) continue;
+    if(Array.isArray(c[k])) c[k] = Array.isArray(saved[k]) ? saved[k].slice() : c[k];
+    else if(typeof c[k]==="object" && c[k]!==null) c[k] = Object.assign(c[k], saved[k]);
+    else c[k] = saved[k];
+  }
   return c;
 }
 
@@ -683,12 +764,19 @@ async function migrateIfNeeded(){
   const legacyRecords = await store.get("coffre-records");
   if(!legacyCfg && !legacyStats && !legacyRecords) return null;
   const id = "p" + Date.now().toString(36);
-  const cfg = mergeCfg(legacyCfg);
+  const base = legacyCfg || {};
+  const retenues = mergeCfgFor("retenues", {code:base.code, target:base.target, reward:base.reward, add:base.add, sub:base.sub});
+  const tables = mergeCfgFor("tables", {code:base.code, target:base.target, reward:base.reward, mul:base.mul, div:base.div});
+  const mix = mergeCfgFor("mix", {code:base.code, target:base.target, reward:base.reward});
+  const faussaire = clone(DEFAULT_FAUSSAIRE);
   if(legacyCfg && legacyCfg.pin) PIN = legacyCfg.pin;
-  await store.set(pk("coffre-cfg",id), cfg);
+  await store.set(pk(CFG_STORE_KEY.retenues,id), retenues);
+  await store.set(pk(CFG_STORE_KEY.tables,id), tables);
+  await store.set(pk(CFG_STORE_KEY.mix,id), mix);
+  await store.set(pk(CFG_STORE_KEY.faussaire,id), faussaire);
   await store.set(pk("coffre-stats",id), legacyStats || {tries:0,errors:0,best:0,opens:0});
   await store.set(pk("coffre-records",id), legacyRecords || {});
-  await store.set(pk("brigade-filous",id), {retenues:true, tables:true});
+  await store.set(pk("brigade-filous",id), {retenues:true, tables:true, faussaire:true});
   const profile = {id, prenom:"", avatar:clone(DEFAULT_AVATAR), createdAt:Date.now()};
   PROFILES = [profile];
   await saveProfiles();
@@ -699,10 +787,15 @@ async function migrateIfNeeded(){
 
 async function loadActiveProfileData(){
   const id = ACTIVE_ID;
-  S.cfg = mergeCfg(await store.get(pk("coffre-cfg",id)));
+  S.cfgs = {
+    retenues: mergeCfgFor("retenues", await store.get(pk(CFG_STORE_KEY.retenues,id))),
+    tables: mergeCfgFor("tables", await store.get(pk(CFG_STORE_KEY.tables,id))),
+    mix: mergeCfgFor("mix", await store.get(pk(CFG_STORE_KEY.mix,id))),
+    faussaire: mergeCfgFor("faussaire", await store.get(pk(CFG_STORE_KEY.faussaire,id)))
+  };
   const st = await store.get(pk("coffre-stats",id)); S.stats = st || {tries:0,errors:0,best:0,opens:0};
   S.records = (await store.get(pk("coffre-records",id))) || {};
-  S.filousActifs = (await store.get(pk("brigade-filous",id))) || {retenues:true, tables:true};
+  S.filousActifs = (await store.get(pk("brigade-filous",id))) || {retenues:true, tables:true, faussaire:true};
 }
 
 function currentProfile(){ return PROFILES.find(p=>p.id===ACTIVE_ID) || null; }
@@ -741,8 +834,11 @@ function renderFilouList(){
   $("filous-title").textContent = profile ? `Les Filous de ${profile.prenom || "l'inspecteur"}` : "Les Filous";
   const list = $("filou-list");
   list.innerHTML = "";
+  const retActive = S.filousActifs ? S.filousActifs.retenues !== false : true;
+  const tabActive = S.filousActifs ? S.filousActifs.tables !== false : true;
   FILOUS.forEach(f=>{
-    const actif = f.ready && S.filousActifs && S.filousActifs[f.id] !== false;
+    if(f.combo && !(retActive && tabActive)) return;
+    const actif = f.combo ? true : (f.ready && S.filousActifs && S.filousActifs[f.id] !== false);
     const card = document.createElement("div");
     card.className = "filou-card" + (f.ready && actif ? "" : " soon");
     card.innerHTML = `<div class="ic">${ART[f.art]}</div><div class="tx"><div class="nm">${f.nom}</div><div class="dm">${f.domaine}</div>${(!f.ready) ? '<div class="soon-badge">Bientôt disponible</div>' : (!actif ? '<div class="soon-badge">Désactivé pour ce profil</div>' : "")}</div>`;
@@ -756,11 +852,13 @@ function openFilou(id){
   goHome();
 }
 function showFilous(){
+  clearMontreInterval();
   hideAllScreens();
   renderFilouList();
   $("filous").classList.add("show");
 }
 function hideAllScreens(){
+  clearMontreInterval();
   $("profiles").classList.remove("show");
   $("filous").classList.remove("show");
   $("home").classList.remove("show");
@@ -822,10 +920,13 @@ $("av-save").addEventListener("click", async ()=>{
   }else{
     const id = "p" + Date.now().toString(36) + Math.random().toString(36).slice(2,6);
     PROFILES.push({id, prenom:niceName, avatar, createdAt:Date.now()});
-    await store.set(pk("coffre-cfg",id), clone(DEFAULT));
+    await store.set(pk(CFG_STORE_KEY.retenues,id), clone(DEFAULT_RETENUES));
+    await store.set(pk(CFG_STORE_KEY.tables,id), clone(DEFAULT_TABLES));
+    await store.set(pk(CFG_STORE_KEY.mix,id), clone(DEFAULT_MIX));
+    await store.set(pk(CFG_STORE_KEY.faussaire,id), clone(DEFAULT_FAUSSAIRE));
     await store.set(pk("coffre-stats",id), {tries:0,errors:0,best:0,opens:0});
     await store.set(pk("coffre-records",id), {});
-    await store.set(pk("brigade-filous",id), {retenues:true, tables:true});
+    await store.set(pk("brigade-filous",id), {retenues:true, tables:true, faussaire:true});
     await setActiveProfile(id);
   }
   await saveProfiles();
@@ -839,7 +940,8 @@ async function deleteProfile(id){
   if(!confirm("Supprimer ce profil et toutes ses données ?")) return;
   PROFILES = PROFILES.filter(p=>p.id!==id);
   await saveProfiles();
-  await store.del(pk("coffre-cfg",id)); await store.del(pk("coffre-stats",id)); await store.del(pk("coffre-records",id)); await store.del(pk("brigade-filous",id));
+  await store.del(pk(CFG_STORE_KEY.retenues,id)); await store.del(pk(CFG_STORE_KEY.tables,id)); await store.del(pk(CFG_STORE_KEY.mix,id)); await store.del(pk(CFG_STORE_KEY.faussaire,id));
+  await store.del(pk("coffre-stats",id)); await store.del(pk("coffre-records",id)); await store.del(pk("brigade-filous",id));
   if(ACTIVE_ID===id){
     ACTIVE_ID = PROFILES.length ? PROFILES[0].id : null;
     await store.set("brigade-profil-actif", ACTIVE_ID);
@@ -855,7 +957,7 @@ function borrowsSub(a,b){ let br=0,n=0; while(a>0||b>0){ const d=a%10-b%10-br; b
 function passOk(n,mode){ return mode==="mix" ? true : mode==="avec" ? n>0 : n===0; }
 
 function genAddSub(op){
-  const conf = S.cfg[op], form = pick(conf.forms), [,ra,rb] = FORMS[op][form];
+  const conf = S.cfgs.retenues[op], form = pick(conf.forms), [,ra,rb] = FORMS[op][form];
   const mode = conf.pass==="mix" ? (Math.random()<.6?"avec":"sans") : conf.pass;
   for(let i=0;i<800;i++){
     const a=rnd(...ra), b=rnd(...rb);
@@ -866,35 +968,126 @@ function genAddSub(op){
   return {op,a:43,b:6,r:37,form};
 }
 function genMul(){
-  const c=S.cfg.mul, tables = c.tables.length ? c.tables : [2,5,10];
+  const c=S.cfgs.tables.mul, tables = c.tables.length ? c.tables : [2,5,10];
   const useDu = c.extra.includes("du*u") && (tables.length===0 || Math.random()<.35);
   if(useDu){ const a=rnd(11,49), b=rnd(2,9); return {op:"mul",a,b,r:a*b,form:"du*u"}; }
   const t=pick(tables), q=rnd(1,10);
   return Math.random()<.5 ? {op:"mul",a:q,b:t,r:q*t,t,form:"table"} : {op:"mul",a:t,b:q,r:q*t,t,form:"table"};
 }
-function genDiv(){ const tables = S.cfg.div.tables.length ? S.cfg.div.tables : [2,5,10]; const t=pick(tables), q=rnd(1,10); return {op:"div",a:t*q,b:t,r:q,form:"table"}; }
+function genDiv(){ const tables = S.cfgs.tables.div.tables.length ? S.cfgs.tables.div.tables : [2,5,10]; const t=pick(tables), q=rnd(1,10); return {op:"div",a:t*q,b:t,r:q,form:"table"}; }
 
-function activeOps(){
+/* Chaque filou de calcul a ses propres réglages (S.cfgs.retenues / S.cfgs.tables), jamais partagés :
+   désactiver une opération dans l'un n'affecte que lui. Calcul mélangé lit les deux en lecture seule. */
+function activeOpsForFilou(filou){
   const ops=[];
-  if(S.cfg.add.on && S.cfg.add.forms.length) ops.push("add");
-  if(S.cfg.sub.on && S.cfg.sub.forms.length) ops.push("sub");
-  if(S.cfg.mul.on && (S.cfg.mul.tables.length || S.cfg.mul.extra.length)) ops.push("mul");
-  if(S.cfg.div.on && S.cfg.div.tables.length) ops.push("div");
-  return ops;
-}
-function activeOpsScoped(){
-  const allowed = S.filou==="tables" ? ["mul","div"] : ["add","sub"];
-  const filtered = activeOps().filter(o=>allowed.includes(o));
-  return filtered.length ? filtered : (S.filou==="tables" ? ["mul"] : ["add"]);
+  if(filou!=="tables"){
+    const cr=S.cfgs.retenues;
+    if(cr.add.on && cr.add.forms.length) ops.push("add");
+    if(cr.sub.on && cr.sub.forms.length) ops.push("sub");
+  }
+  if(filou!=="retenues"){
+    const ct=S.cfgs.tables;
+    if(ct.mul.on && (ct.mul.tables.length || ct.mul.extra.length)) ops.push("mul");
+    if(ct.div.on && ct.div.tables.length) ops.push("div");
+  }
+  return ops.length ? ops : (filou==="tables" ? ["mul"] : ["add"]);
 }
 function generate(){
+  if(FILOU_KIND[S.filou]==="dictee") return generateWord();
   let q, key, guard=0;
   do{
-    const op = pick(activeOpsScoped());
+    const op = pick(activeOpsForFilou(S.filou));
     q = op==="mul" ? genMul() : op==="div" ? genDiv() : genAddSub(op);
     key = q.a+q.op+q.b;
   }while(key===S.last && guard++<20);
   S.q=q; S.last=key; S.input=""; render();
+}
+
+/* ---------- dictée (Le Faussaire) ---------- */
+function poolFaussaire(){
+  const active = new Set(S.cfgs.faussaire.series);
+  return CONTENU.dictee.filter(w=>active.has(w.serie));
+}
+function pickWord(){
+  const pool = poolFaussaire();
+  if(!pool.length) return null;
+  let w, guard=0;
+  do{ w = pick(pool); } while(w.mot===S.lastWord && guard++<20);
+  S.lastWord = w.mot;
+  return w;
+}
+function generateWord(){
+  S.word = pickWord(); S.input=""; S.spoken=false; render();
+}
+function normWord(s){ return String(s||"").trim().toLowerCase().replace(/\s+/g," "); }
+function checkWord(w, typed){
+  const t = normWord(typed);
+  if(t===normWord(w.mot)) return {ok:true, usedAlt:false};
+  if(w.alt && w.alt.some(a=>normWord(a)===t)) return {ok:true, usedAlt:true};
+  return {ok:false};
+}
+function speakText(text){
+  try{
+    if(!("speechSynthesis" in window) || typeof SpeechSynthesisUtterance==="undefined") return false;
+    window.speechSynthesis.cancel();
+    const u = new SpeechSynthesisUtterance(text);
+    u.lang = "fr-FR"; u.rate = 0.85;
+    window.speechSynthesis.speak(u);
+    return true;
+  }catch(e){ return false; }
+}
+function renderDictee(){
+  if(!S.word) return;
+  const ans=$("answer"); ans.textContent=S.input; ans.classList.toggle("empty",!S.input);
+  $("word-listen").textContent = S.spoken ? "Réécouter" : "Écouter";
+  const p=$("progress");
+  if(S.mode==="infini"){ p.textContent = S.newRec ? `Série : ${S.streak} · Nouveau record !` : `Série : ${S.streak} · Record : ${S.records[S.recKey]||0}`; p.classList.toggle("rec",S.newRec); }
+  else { p.textContent = `Verrous ouverts : ${S.streak} sur ${curCfg().target}`; p.classList.remove("rec"); }
+  document.querySelectorAll(".bolt").forEach((el,i)=>el.classList.toggle("done", i<S.streak));
+}
+function helpWord(w){
+  let html = `La bonne réponse était : <b>${w.mot}</b>`;
+  if(w.piege) html += `<span class="note">Piège : ${w.piege}</span>`;
+  return html;
+}
+function submitWord(){
+  if(S.locked || !S.input || !S.word) return;
+  S.stats.tries++;
+  const res = checkWord(S.word, S.input);
+  if(res.ok){
+    if(res.usedAlt){
+      $("word-note").textContent = `L'école écrit plutôt : « ${S.word.mot} ».`;
+      clearTimeout(S._noteTimer); S._noteTimer = setTimeout(()=>{ $("word-note").textContent=""; },1600);
+    }
+    S.streak++; S.stats.best=Math.max(S.stats.best,S.streak); store.set(pk("coffre-stats",ACTIVE_ID),S.stats);
+    if(S.mode==="infini"){
+      const prev=S.records[S.recKey]||0;
+      if(S.streak>prev){ S.records[S.recKey]=S.streak; store.set(pk("coffre-records",ACTIVE_ID),S.records); }
+      if(!S.newRec && S.base>0 && S.streak>S.base){ S.newRec=true; fireworks(1800); }
+      return generateWord();
+    }
+    if(S.streak>=curCfg().target){ render(); return openVault(); }
+    generateWord();
+  }else{
+    S.stats.errors++; store.set(pk("coffre-stats",ACTIVE_ID),S.stats);
+    const v=VILLAIN.faussaire;
+    $("catch-who").innerHTML = ART[v.art];
+    let msg = `Tu as écrit <b>${S.input}</b>. La bonne réponse était <b>${S.word.mot}</b>.`;
+    if(S.mode==="infini"){
+      $("catch-title").textContent = `${v.name} t'a eu !`;
+      const rec=S.records[S.recKey]||0;
+      msg += S.newRec ? `<br><b>Nouveau record : ${S.streak} !</b>` : (S.base===0 && S.streak>0 ? `<br>Série : <b>${S.streak}</b>. C'est ton premier record !` : `<br>Série : <b>${S.streak}</b> · Record : <b>${rec}</b>`);
+      $("catch-ok").textContent = "Je continue";
+    }else{
+      $("catch-title").textContent = `${v.name} a refermé le coffre !`;
+      $("catch-ok").textContent = "Je recommence";
+    }
+    $("catch-msg").innerHTML = msg;
+    $("steps").innerHTML = helpWord(S.word);
+    S.streak=0; S.newRec=false; S.locked=true;
+    $("vault").classList.remove("shake"); void $("vault").offsetWidth; $("vault").classList.add("shake");
+    render(); $("catch").classList.add("show"); $("catch-ok").focus();
+  }
 }
 
 /* ---------- aide après une erreur ---------- */
@@ -926,13 +1119,16 @@ function help(q){
 
 /* ---------- records par combinaison d'opérations, par filou ---------- */
 const sorted = arr => [...arr].sort((x,y)=>String(x).localeCompare(String(y),undefined,{numeric:true}));
-function recordKeyScoped(filou, c){
+function recordKeyScoped(filou){
+  if(filou==="faussaire") return "dictee:"+sorted(S.cfgs.faussaire.series).join(",");
   const k=[];
   if(filou!=="tables"){
+    const c=S.cfgs.retenues;
     if(c.add.on&&c.add.forms.length) k.push(`add:${sorted(c.add.forms).join(",")}:${c.add.pass}`);
     if(c.sub.on&&c.sub.forms.length) k.push(`sub:${sorted(c.sub.forms).join(",")}:${c.sub.pass}`);
   }
   if(filou!=="retenues"){
+    const c=S.cfgs.tables;
     if(c.mul.on&&(c.mul.tables.length||c.mul.extra.length)) k.push(`mul:${sorted(c.mul.tables).join(",")}:${sorted(c.mul.extra).join(",")}`);
     if(c.div.on&&c.div.tables.length) k.push(`div:${sorted(c.div.tables).join(",")}`);
   }
@@ -940,7 +1136,11 @@ function recordKeyScoped(filou, c){
 }
 const PASS_TXT = {avec:"avec passage", sans:"sans passage", mix:"avec ou sans passage"};
 function describeKey(key){
-  if(!key) return "Aucune opération réglée";
+  if(!key) return "Aucune épreuve réglée";
+  if(key.startsWith("dictee:")){
+    const series = key.slice(7);
+    return series ? `Dictée · séries ${series.split(",").join(", ")}` : "Dictée · aucune série";
+  }
   return key.split("|").map(part=>{
     const [op,x,y]=part.split(":");
     if(op==="add"||op==="sub"){ const forms=x.split(",").map(f=>FORMS[op][f]?FORMS[op][f][0]:f).join(", "); return `${op==="add"?"Additions":"Soustractions"} ${forms}, ${PASS_TXT[y]||y}`; }
@@ -949,55 +1149,107 @@ function describeKey(key){
     return part;
   }).join(" · ");
 }
-const currentRecord = () => S.records[recordKeyScoped(S.filou, S.cfg)]||0;
+const currentRecord = () => S.records[recordKeyScoped(S.filou)]||0;
 
 /* ---------- affichage ---------- */
 function buildBolts(){
-  if(S.mode==="infini"){ $("bolts-l").innerHTML=""; $("bolts-r").innerHTML=""; return; }
-  const n=S.cfg.target, left=Math.ceil(n/2);
+  if(S.mode==="infini"||S.mode==="montre"){ $("bolts-l").innerHTML=""; $("bolts-r").innerHTML=""; return; }
+  const n=curCfg().target, left=Math.ceil(n/2);
   $("bolts-l").innerHTML = '<span class="bolt"></span>'.repeat(left);
   $("bolts-r").innerHTML = '<span class="bolt"></span>'.repeat(n-left);
 }
 function leadText(){
-  $("title").textContent = S.mode==="infini" ? "Mode infini" : "Le coffre des Filous";
+  const isDictee = FILOU_KIND[S.filou]==="dictee";
+  $("title").textContent = S.mode==="infini" ? "Mode infini" : S.mode==="montre" ? "Contre la montre" : "Le coffre des Filous";
   $("lead").innerHTML = S.mode==="infini"
-    ? `Enchaîne les calculs sans faute le plus longtemps possible.`
-    : `Réussis <b>${S.cfg.target}</b> calculs d'affilée pour ouvrir le coffre. Une seule erreur, et il se referme !`;
+    ? (isDictee ? `Enchaîne les mots bien écrits le plus longtemps possible.` : `Enchaîne les calculs sans faute le plus longtemps possible.`)
+    : S.mode==="montre"
+    ? `Résous le plus de calculs possible en <b>2 minutes</b>.`
+    : (isDictee ? `Écris <b>${curCfg().target}</b> mots d'affilée sans faute pour ouvrir le coffre. Une seule erreur, et il se referme !` : `Réussis <b>${curCfg().target}</b> calculs d'affilée pour ouvrir le coffre. Une seule erreur, et il se referme !`);
 }
 function render(){
+  if(FILOU_KIND[S.filou]==="dictee") return renderDictee();
   if(!S.q) return;
   const q=S.q, txt=`${q.a} ${SYM[q.op]} ${q.b} =`;
   $("calc").textContent = txt; $("calc").classList.toggle("long", txt.length>10);
   const ans=$("answer"); ans.textContent=S.input; ans.classList.toggle("empty",!S.input);
   const p=$("progress");
   if(S.mode==="infini"){ p.textContent = S.newRec ? `Série : ${S.streak} · Nouveau record !` : `Série : ${S.streak} · Record : ${S.records[S.recKey]||0}`; p.classList.toggle("rec",S.newRec); }
-  else { p.textContent = `Verrous ouverts : ${S.streak} sur ${S.cfg.target}`; p.classList.remove("rec"); }
+  else if(S.mode==="montre"){
+    const rem = Math.max(0,montreRemaining), mm=Math.floor(rem/60), ss=String(rem%60).padStart(2,"0");
+    p.textContent = `Temps : ${mm}:${ss} · Calculs justes : ${montreScore}`;
+    p.classList.remove("rec");
+  }
+  else { p.textContent = `Verrous ouverts : ${S.streak} sur ${curCfg().target}`; p.classList.remove("rec"); }
   document.querySelectorAll(".bolt").forEach((el,i)=>el.classList.toggle("done", i<S.streak));
 }
 
 /* ---------- accueil (écran du filou choisi) ---------- */
+function applyKindUI(){
+  const isDictee = FILOU_KIND[S.filou]==="dictee";
+  $("pad").style.display = isDictee ? "none" : "grid";
+  $("dictee-pad").classList.toggle("show", isDictee);
+  $("calc").style.display = isDictee ? "none" : "block";
+  $("word-listen").style.display = isDictee ? "inline-block" : "none";
+  $("go-montre").style.display = isDictee ? "none" : "flex";
+}
 function goHome(){
-  stopFx(); S.locked=true; $("catch").classList.remove("show");
+  stopFx(); clearMontreInterval(); S.locked=true; $("catch").classList.remove("show");
   $("vault").classList.remove("open"); $("pad").style.visibility="visible"; $("again").style.display="none";
   const f = FILOUS.find(x=>x.id===S.filou);
+  const isDictee = FILOU_KIND[S.filou]==="dictee";
+  applyKindUI();
   $("home-title").textContent = f ? f.nom : "Le coffre des Filous";
   $("home-art").innerHTML = ART[f.art];
-  $("desc-coffre").textContent = `Réussis ${S.cfg.target} calculs d'affilée pour ouvrir le coffre.`;
+  $("desc-coffre").textContent = isDictee ? `Écris ${curCfg().target} mots d'affilée sans faute pour ouvrir le coffre.` : `Réussis ${curCfg().target} calculs d'affilée pour ouvrir le coffre.`;
   const r=currentRecord();
-  $("desc-infini").textContent = r ? `Des calculs sans fin. Ton record : ${r}` : `Des calculs sans fin. Établis ton premier record !`;
-  $("home-info").textContent = "Calculs : " + describeKey(recordKeyScoped(S.filou, S.cfg));
+  $("desc-infini").textContent = r
+    ? (isDictee ? `Des mots sans fin. Ton record : ${r}` : `Des calculs sans fin. Ton record : ${r}`)
+    : (isDictee ? `Des mots sans fin. Établis ton premier record !` : `Des calculs sans fin. Établis ton premier record !`);
+  if(!isDictee){
+    const recMontre = S.records["montre:"+recordKeyScoped(S.filou)]||0;
+    $("desc-montre").textContent = recMontre ? `Le plus de calculs en 2 minutes. Ton record : ${recMontre}` : `Le plus de calculs en 2 minutes. Établis ton premier record !`;
+  }
+  $("home-info").textContent = (isDictee ? "Dictée : " : "Calculs : ") + describeKey(recordKeyScoped(S.filou));
   $("home").classList.add("show");
 }
 function startMode(m){
-  S.mode=m; S.recKey=recordKeyScoped(S.filou, S.cfg); S.newRec=false;
+  S.mode=m; S.recKey = m==="montre" ? "montre:"+recordKeyScoped(S.filou) : recordKeyScoped(S.filou); S.newRec=false;
   $("home").classList.remove("show"); restart();
+}
+
+/* ---------- contre la montre ---------- */
+let montreInterval=null, montreRemaining=120, montreScore=0;
+function clearMontreInterval(){ if(montreInterval){ clearInterval(montreInterval); montreInterval=null; } }
+function montreTick(){
+  if(S.locked) return;
+  montreRemaining--; render();
+  if(montreRemaining<=0) finishMontre();
+}
+function finishMontre(){
+  clearMontreInterval(); S.locked=true;
+  const prev=S.records[S.recKey]||0, isRecord = montreScore>prev;
+  if(isRecord){ S.records[S.recKey]=montreScore; store.set(pk("coffre-records",ACTIVE_ID),S.records); }
+  $("in-label").textContent = "Temps écoulé !";
+  $("code-out").textContent = String(montreScore);
+  $("code-out").classList.remove("words");
+  $("in-hint").textContent = isRecord ? "Nouveau record de calculs !" : `Ton record : ${Math.max(prev,montreScore)} calculs.`;
+  setTimeout(()=>$("vault").classList.add("open"),350);
+  if(isRecord) setTimeout(()=>fireworks(3000),900);
+  $("pad").style.visibility="hidden"; $("again").style.display="inline-block";
+  $("lead").textContent = `Tu as résolu ${montreScore} calcul${montreScore>1?"s":""} en 2 minutes !`;
 }
 
 /* ---------- jeu ---------- */
 function submit(){
+  if(FILOU_KIND[S.filou]==="dictee") return submitWord();
   if(S.locked || !S.input) return;
   S.stats.tries++;
   if(parseInt(S.input,10)===S.q.r){
+    if(S.mode==="montre"){
+      montreScore++; S.stats.best=Math.max(S.stats.best,montreScore); store.set(pk("coffre-stats",ACTIVE_ID),S.stats);
+      render(); return generate();
+    }
     S.streak++; S.stats.best=Math.max(S.stats.best,S.streak); store.set(pk("coffre-stats",ACTIVE_ID),S.stats);
     if(S.mode==="infini"){
       const prev=S.records[S.recKey]||0;
@@ -1005,14 +1257,18 @@ function submit(){
       if(!S.newRec && S.base>0 && S.streak>S.base){ S.newRec=true; fireworks(1800); }
       return generate();
     }
-    if(S.streak>=S.cfg.target){ render(); return openVault(); }
+    if(S.streak>=curCfg().target){ render(); return openVault(); }
     generate();
   }else{
     S.stats.errors++; store.set(pk("coffre-stats",ACTIVE_ID),S.stats);
     const v=VILLAIN[S.q.op];
     $("catch-who").innerHTML = ART[v.art];
     let msg = `Tu as écrit <b>${S.input}</b>. La bonne réponse était <b>${S.q.r}</b>.`;
-    if(S.mode==="infini"){
+    if(S.mode==="montre"){
+      $("catch-title").textContent = `${v.name} t'a eu !`;
+      msg += `<br>Calculs justes jusqu'ici : <b>${montreScore}</b>`;
+      $("catch-ok").textContent = "Je continue";
+    }else if(S.mode==="infini"){
       $("catch-title").textContent = `${v.name} t'a eu !`;
       const rec=S.records[S.recKey]||0;
       msg += S.newRec ? `<br><b>Nouveau record : ${S.streak} !</b>` : (S.base===0 && S.streak>0 ? `<br>Série : <b>${S.streak}</b>. C'est ton premier record !` : `<br>Série : <b>${S.streak}</b> · Record : <b>${rec}</b>`);
@@ -1030,9 +1286,9 @@ function submit(){
 }
 function openVault(){
   S.locked=true; S.stats.opens++; store.set(pk("coffre-stats",ACTIVE_ID),S.stats);
-  const code = S.cfg.reward==="code";
+  const code = curCfg().reward==="code";
   $("in-label").textContent = code ? "Le coffre est ouvert ! Le code du cadenas est :" : "Félicitations, inspecteur !";
-  $("code-out").textContent = code ? S.cfg.code : "Tu as ouvert le coffre !";
+  $("code-out").textContent = code ? curCfg().code : "Tu as ouvert le coffre !";
   $("code-out").classList.toggle("words", !code);
   $("in-hint").textContent = code ? "Écris-le sur ta fiche et ouvre le vrai coffre." : "Les Filous sont battus.";
   setTimeout(()=>$("vault").classList.add("open"),350);
@@ -1041,8 +1297,11 @@ function openVault(){
   $("lead").textContent="Bravo inspecteur, les Filous sont battus !";
 }
 function restart(){
-  stopFx(); $("vault").classList.remove("open"); $("pad").style.visibility="visible"; $("again").style.display="none";
-  S.streak=0; S.newRec=false; S.base=S.records[S.recKey]||0; S.locked=false; leadText(); buildBolts(); generate();
+  stopFx(); clearMontreInterval(); $("vault").classList.remove("open"); $("pad").style.visibility="visible"; $("again").style.display="none";
+  applyKindUI(); $("word-note").textContent="";
+  S.streak=0; S.newRec=false; S.base=S.records[S.recKey]||0; S.locked=false; leadText(); buildBolts();
+  if(S.mode==="montre"){ montreScore=0; montreRemaining=120; montreInterval=setInterval(montreTick,1000); }
+  generate();
 }
 function press(k){
   if(S.locked) return;
@@ -1052,6 +1311,16 @@ function press(k){
   render();
 }
 $("pad").addEventListener("click",e=>{const b=e.target.closest("button"); if(b) press(b.dataset.k);});
+buildKeyboard($("word-kb"),
+  ch=>{ if(S.locked) return; if(S.input.length<30) S.input+=ch; render(); },
+  ()=>{ if(S.locked) return; S.input=S.input.slice(0,-1); render(); }
+);
+$("word-validate").addEventListener("click", submit);
+$("word-listen").addEventListener("click", ()=>{
+  if(!S.word) return;
+  speakText(S.word.mot);
+  S.spoken=true; render();
+});
 document.addEventListener("keydown",e=>{
   if($("settings").classList.contains("show") || $("profiles").classList.contains("show") || $("filous").classList.contains("show") || $("avatarcreate").classList.contains("show")) return;
   if($("home").classList.contains("show") && !$("pin").classList.contains("show")) return;
@@ -1073,6 +1342,7 @@ $("filous-link").addEventListener("click",()=>{ if(ACTIVE_ID) showFilous(); else
 $("filous-back").addEventListener("click",showProfiles);
 $("go-coffre").addEventListener("click",()=>startMode("coffre"));
 $("go-infini").addEventListener("click",()=>startMode("infini"));
+$("go-montre").addEventListener("click",()=>startMode("montre"));
 
 /* ---------- feu d'artifice ---------- */
 let fxRun=null;
@@ -1105,22 +1375,42 @@ function fireworks(duration){
 
 /* ---------- réglages ---------- */
 let draft=null;
+let settingsTab="retenues";
+const CALC_TABS=[["retenues","Faussaire des Retenues"],["tables","Tricheur des Tables"],["mix","Calcul mélangé"]];
 function chip(label,pressed,onClick){ const b=document.createElement("button"); b.type="button"; b.className="chip"; b.textContent=label; b.setAttribute("aria-pressed",pressed); b.onclick=()=>{onClick(); fillSettings();}; return b; }
 function toggleIn(arr,v){ const i=arr.indexOf(v); i<0?arr.push(v):arr.splice(i,1); }
+function hasActiveOps(filouId, c){
+  if(filouId==="retenues") return (c.add.on&&c.add.forms.length)||(c.sub.on&&c.sub.forms.length);
+  if(filouId==="tables") return (c.mul.on&&(c.mul.tables.length||c.mul.extra.length))||(c.div.on&&c.div.tables.length);
+  if(filouId==="faussaire") return c.series && c.series.length>0;
+  return true;
+}
+function ensureMinOp(filouId, c){
+  if(filouId==="retenues" && !hasActiveOps("retenues",c)){
+    c.add.on=true; if(!c.add.forms.length) c.add.forms=["du+u"];
+  }else if(filouId==="tables" && !hasActiveOps("tables",c)){
+    c.mul.on=true; if(!c.mul.tables.length && !c.mul.extra.length) c.mul.tables=[2,5,10];
+  }else if(filouId==="faussaire" && !hasActiveOps("faussaire",c)){
+    c.series=[1];
+  }
+}
 function fillSettingsProfiles(){
   const ul = $("p-list"); ul.innerHTML = "";
   PROFILES.forEach(p=>{
     const li = document.createElement("li");
-    li.innerHTML = `<div class="pav">${generateAvatarSVG(p.avatar)}</div><div class="pnm">${p.prenom}${p.id===ACTIVE_ID?" (actif)":""}</div>`;
+    const info = document.createElement("div"); info.className="pinfo";
+    info.innerHTML = `<div class="pav">${generateAvatarSVG(p.avatar)}</div><div class="pnm">${p.prenom}${p.id===ACTIVE_ID?" (actif)":""}</div>`;
+    const btns = document.createElement("div"); btns.className="pbtns";
     const editBtn = document.createElement("button"); editBtn.type="button"; editBtn.className="pbtn"; editBtn.textContent="Modifier";
     editBtn.addEventListener("click", ()=>{ settingsOpenAfterSave=true; openAvatarCreate(p.id); });
     const delBtn = document.createElement("button"); delBtn.type="button"; delBtn.className="pbtn danger"; delBtn.textContent="Supprimer";
     delBtn.addEventListener("click", ()=>deleteProfile(p.id));
-    li.appendChild(editBtn); li.appendChild(delBtn);
+    btns.appendChild(editBtn); btns.appendChild(delBtn);
+    li.appendChild(info); li.appendChild(btns);
     ul.appendChild(li);
   });
   const fToggles = $("f-toggles"); fToggles.innerHTML = "";
-  FILOUS.filter(f=>f.ready).forEach(f=>{
+  FILOUS.filter(f=>f.ready && !f.combo).forEach(f=>{
     const row = document.createElement("div"); row.className="field";
     row.innerHTML = `<label>${f.nom}</label>`;
     const sw = document.createElement("label"); sw.className="switch";
@@ -1129,6 +1419,13 @@ function fillSettingsProfiles(){
     input.addEventListener("change", async ()=>{
       S.filousActifs = S.filousActifs || {}; S.filousActifs[f.id] = input.checked;
       await store.set(pk("brigade-filous",ACTIVE_ID), S.filousActifs);
+      if(input.checked && CFG_STORE_KEY[f.id]){
+        const c = S.cfgs[f.id];
+        ensureMinOp(f.id, c);
+        if(draft && draft[f.id]) ensureMinOp(f.id, draft[f.id]);
+        await store.set(pk(CFG_STORE_KEY[f.id],ACTIVE_ID), c);
+      }
+      fillSettings();
     });
     const span = document.createElement("span");
     sw.appendChild(input); sw.appendChild(span);
@@ -1145,61 +1442,115 @@ function fillSettingsProfiles(){
 }
 $("p-add").addEventListener("click", ()=>{ settingsOpenAfterSave=true; openAvatarCreate(null); });
 function fillSettings(){
-  const d=draft;
+  const tabsEl=$("calc-tabs"); tabsEl.innerHTML="";
+  for(const group of EPREUVE_TABS){
+    const catLabel=document.createElement("div"); catLabel.className="tab-cat"; catLabel.textContent=group.label;
+    tabsEl.appendChild(catLabel);
+    const row=document.createElement("div"); row.className="chips";
+    for(const [k,label] of group.tabs) row.appendChild(chip(label, settingsTab===k, ()=>{settingsTab=k;}));
+    tabsEl.appendChild(row);
+  }
+  document.querySelectorAll("[data-tab]").forEach(el=>{ el.style.display = el.dataset.tab===settingsTab ? "" : "none"; });
+  const tabLabel = EPREUVE_TABS.flatMap(g=>g.tabs).find(t=>t[0]===settingsTab)[1];
+  $("coffre-tab-title").textContent = "Mode coffre — " + tabLabel;
+
+  const d=draft[settingsTab];
   $("s-code").value=d.code; $("s-pin").value=PIN; $("s-target").value=d.target;
   const rw=document.querySelector('[data-radio="reward"]'); rw.innerHTML="";
   for(const [k,label] of Object.entries(REWARD)) rw.appendChild(chip(label, d.reward===k, ()=>{d.reward=k;}));
   $("f-code").style.display = d.reward==="code" ? "" : "none";
+
   const keys=Object.keys(S.records).filter(k=>S.records[k]>0).sort((a,b)=>S.records[b]-S.records[a]);
-  $("recs").innerHTML = keys.length ? keys.map(k=>`<li><span>${describeKey(k)}</span><b>${S.records[k]}</b></li>`).join("") : "<li><span>Aucun record pour l'instant.</span></li>";
-  for(const op of ["add","sub","mul","div"]){
-    const sw=document.querySelector(`input[data-op="${op}"]`); sw.checked=d[op].on;
-    $("g-"+op).classList.toggle("off",!d[op].on);
+  $("recs").innerHTML = keys.length ? keys.map(k=>{
+    const isMontre = k.startsWith("montre:");
+    const base = isMontre ? k.slice(7) : k;
+    const label = (isMontre ? "Contre la montre · " : "") + describeKey(base);
+    const unit = isMontre ? " calculs" : "";
+    return `<li><span>${label}</span><b>${S.records[k]}${unit}</b></li>`;
+  }).join("") : "<li><span>Aucun record pour l'instant.</span></li>";
+
+  if(settingsTab==="retenues"){
+    const dr=draft.retenues;
+    for(const op of ["add","sub"]){
+      const sw=document.querySelector(`input[data-op="${op}"]`); sw.checked=dr[op].on;
+      $("g-"+op).classList.toggle("off",!dr[op].on);
+      const fl=document.querySelector(`[data-list="${op}-forms"]`); fl.innerHTML="";
+      for(const [k,[label]] of Object.entries(FORMS[op])) fl.appendChild(chip(label, dr[op].forms.includes(k), ()=>toggleIn(dr[op].forms,k)));
+      const pl=document.querySelector(`[data-radio="${op}-pass"]`); pl.innerHTML="";
+      for(const [k,label] of Object.entries(PASS)) pl.appendChild(chip(label, dr[op].pass===k, ()=>{dr[op].pass=k;}));
+    }
+    $("s-add-max").value = dr.add.max || "";
+  }else if(settingsTab==="tables"){
+    const dt=draft.tables;
+    for(const op of ["mul","div"]){
+      const sw=document.querySelector(`input[data-op="${op}"]`); sw.checked=dt[op].on;
+      $("g-"+op).classList.toggle("off",!dt[op].on);
+    }
+    for(const op of ["mul","div"]){
+      const tl=document.querySelector(`[data-list="${op}-tables"]`); tl.innerHTML="";
+      for(let t=2;t<=10;t++) tl.appendChild(chip(String(t), dt[op].tables.includes(t), ()=>toggleIn(dt[op].tables,t)));
+    }
+    const ex=document.querySelector('[data-list="mul-extra"]'); ex.innerHTML="";
+    ex.appendChild(chip("DU x U", dt.mul.extra.includes("du*u"), ()=>toggleIn(dt.mul.extra,"du*u")));
+  }else if(settingsTab==="faussaire"){
+    const df=draft.faussaire;
+    const seriesAvailable=[...new Set(CONTENU.dictee.map(w=>w.serie))].sort((a,b)=>a-b);
+    const sl=document.querySelector('[data-list="faussaire-series"]'); sl.innerHTML="";
+    for(const sNum of seriesAvailable) sl.appendChild(chip("Série "+sNum, df.series.includes(sNum), ()=>toggleIn(df.series,sNum)));
   }
-  for(const op of ["add","sub"]){
-    const fl=document.querySelector(`[data-list="${op}-forms"]`); fl.innerHTML="";
-    for(const [k,[label]] of Object.entries(FORMS[op])) fl.appendChild(chip(label, d[op].forms.includes(k), ()=>toggleIn(d[op].forms,k)));
-    const pl=document.querySelector(`[data-radio="${op}-pass"]`); pl.innerHTML="";
-    for(const [k,label] of Object.entries(PASS)) pl.appendChild(chip(label, d[op].pass===k, ()=>{d[op].pass=k;}));
-  }
-  $("s-add-max").value = d.add.max || "";
-  for(const op of ["mul","div"]){
-    const tl=document.querySelector(`[data-list="${op}-tables"]`); tl.innerHTML="";
-    for(let t=2;t<=10;t++) tl.appendChild(chip(String(t), d[op].tables.includes(t), ()=>toggleIn(d[op].tables,t)));
-  }
-  const ex=document.querySelector('[data-list="mul-extra"]'); ex.innerHTML="";
-  ex.appendChild(chip("DU x U", d.mul.extra.includes("du*u"), ()=>toggleIn(d.mul.extra,"du*u")));
+
   const s=S.stats, rate=s.tries?Math.round(100*(s.tries-s.errors)/s.tries):0;
-  $("stats").innerHTML=`Calculs tentés : ${s.tries}<br>Réussite : ${rate} %<br>Meilleure série : ${s.best}<br>Coffres ouverts : ${s.opens}`;
+  $("stats").innerHTML=`Essais : ${s.tries}<br>Réussite : ${rate} %<br>Meilleure série : ${s.best}<br>Coffres ouverts : ${s.opens}`;
   fillSettingsProfiles();
 }
-document.querySelectorAll('input[data-op]').forEach(sw=>sw.addEventListener("change",()=>{ draft[sw.dataset.op].on=sw.checked; fillSettings(); }));
-$("s-code").addEventListener("input",e=>{ draft.code=e.target.value.replace(/\D/g,""); });
+document.querySelectorAll('input[data-op]').forEach(sw=>sw.addEventListener("change",()=>{ draft[settingsTab][sw.dataset.op].on=sw.checked; fillSettings(); }));
+$("s-code").addEventListener("input",e=>{ draft[settingsTab].code=e.target.value.replace(/\D/g,""); });
 $("s-pin").addEventListener("input",e=>{ draftPin=e.target.value.replace(/\D/g,"").slice(0,4); });
-$("s-target").addEventListener("input",e=>{ draft.target=e.target.value; });
-$("s-add-max").addEventListener("input",e=>{ const v=parseInt(e.target.value,10); draft.add.max = (e.target.value===""||isNaN(v)) ? null : v; });
+$("s-target").addEventListener("input",e=>{ draft[settingsTab].target=e.target.value; });
+$("s-add-max").addEventListener("input",e=>{ const v=parseInt(e.target.value,10); draft.retenues.add.max = (e.target.value===""||isNaN(v)) ? null : v; });
 let draftPin = "0000";
-function openSettings(){ draft=clone(S.cfg); draftPin=PIN; $("warn").textContent=""; fillSettings(); $("settings").classList.add("show"); $("settings").scrollTop=0; }
+function openSettings(){
+  draft = {retenues:clone(S.cfgs.retenues), tables:clone(S.cfgs.tables), mix:clone(S.cfgs.mix), faussaire:clone(S.cfgs.faussaire)};
+  draftPin=PIN; settingsTab="retenues"; $("warn").textContent=""; fillSettings(); $("settings").classList.add("show"); $("settings").scrollTop=0;
+}
 $("s-cancel").addEventListener("click",()=>$("settings").classList.remove("show"));
 $("r-reset").addEventListener("click",()=>{ if(!confirm("Effacer tous les records ?")) return; S.records={}; store.set(pk("coffre-records",ACTIVE_ID),S.records); fillSettings(); });
 $("s-reset").addEventListener("click",()=>{ S.stats={tries:0,errors:0,best:0,opens:0}; store.set(pk("coffre-stats",ACTIVE_ID),S.stats); fillSettings(); });
 $("s-save").addEventListener("click",async ()=>{
-  const d=draft;
-  d.code = String(d.code||"").replace(/\D/g,"") || "5472";
-  d.target = Math.min(20,Math.max(2,parseInt(d.target,10)||6));
   if(!/^\d{4}$/.test(String(draftPin||""))){ $("warn").textContent="Le code du parent doit faire exactement 4 chiffres."; return; }
-  const ok = (d.add.on&&d.add.forms.length)||(d.sub.on&&d.sub.forms.length)||(d.mul.on&&(d.mul.tables.length||d.mul.extra.length))||(d.div.on&&d.div.tables.length);
-  if(!ok){ $("warn").textContent="Active au moins une opération et choisis au moins un type de nombres ou une table."; return; }
-  if(d.add.max!=null){
-    d.add.max = Math.max(1, parseInt(d.add.max,10)||0);
-    if(d.add.on && d.add.forms.length){
-      const minSum = Math.min(...d.add.forms.map(f=>{ const [,ra,rb]=FORMS.add[f]; return ra[0]+rb[0]; }));
-      if(d.add.max < minSum){ $("warn").textContent = `Le résultat maximum des additions (${d.add.max}) est trop petit pour les nombres choisis (minimum possible : ${minSum}).`; return; }
+
+  for(const key of ["retenues","tables","mix","faussaire"]){
+    const d=draft[key];
+    d.code = String(d.code||"").replace(/\D/g,"") || "5472";
+    d.target = Math.min(20,Math.max(2,parseInt(d.target,10)||6));
+  }
+
+  const dr=draft.retenues, dt=draft.tables;
+
+  if(dr.add.max!=null){
+    dr.add.max = Math.max(1, parseInt(dr.add.max,10)||0);
+    if(dr.add.on && dr.add.forms.length){
+      const minSum = Math.min(...dr.add.forms.map(f=>{ const [,ra,rb]=FORMS.add[f]; return ra[0]+rb[0]; }));
+      if(dr.add.max < minSum){ settingsTab="retenues"; fillSettings(); $("warn").textContent = `Le résultat maximum des additions (${dr.add.max}) est trop petit pour les nombres choisis (minimum possible : ${minSum}).`; return; }
     }
   }
-  S.cfg=d; await store.set(pk("coffre-cfg",ACTIVE_ID),S.cfg);
+
+  S.filousActifs = S.filousActifs || {};
+  const notes=[];
+  for(const [id,label] of [["retenues","Le Faussaire des Retenues"],["tables","Le Tricheur des Tables"],["faussaire","Le Faussaire"]]){
+    if(!hasActiveOps(id,draft[id]) && S.filousActifs[id]!==false){ S.filousActifs[id]=false; notes.push(`${label} a été désactivé : plus aucune épreuve n'était active.`); }
+  }
+  if(notes.length) await store.set(pk("brigade-filous",ACTIVE_ID), S.filousActifs);
+
+  S.cfgs.retenues = dr; S.cfgs.tables = dt; S.cfgs.mix = draft.mix; S.cfgs.faussaire = draft.faussaire;
+  await store.set(pk(CFG_STORE_KEY.retenues,ACTIVE_ID), S.cfgs.retenues);
+  await store.set(pk(CFG_STORE_KEY.tables,ACTIVE_ID), S.cfgs.tables);
+  await store.set(pk(CFG_STORE_KEY.mix,ACTIVE_ID), S.cfgs.mix);
+  await store.set(pk(CFG_STORE_KEY.faussaire,ACTIVE_ID), S.cfgs.faussaire);
   PIN = draftPin; await store.set("brigade-pin", PIN);
-  $("settings").classList.remove("show"); showFilous();
+  $("settings").classList.remove("show");
+  if(notes.length) alert(notes.join("\n"));
+  showFilous();
 });
 
 /* code d'accès du parent */

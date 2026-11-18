@@ -1,7 +1,451 @@
 {
-  "version": "0.1.0",
+  "version": "0.2.0",
   "date": "2026-11-18",
-  "dictee": [],
+  "dictee": [
+    {
+      "mot": "lundi",
+      "serie": 1,
+      "piege": "un"
+    },
+    {
+      "mot": "mardi",
+      "serie": 1,
+      "piege": ""
+    },
+    {
+      "mot": "mercredi",
+      "serie": 1,
+      "piege": "c (et non qu)"
+    },
+    {
+      "mot": "jeudi",
+      "serie": 1,
+      "piege": "eu"
+    },
+    {
+      "mot": "vendredi",
+      "serie": 1,
+      "piege": "en"
+    },
+    {
+      "mot": "samedi",
+      "serie": 1,
+      "piege": ""
+    },
+    {
+      "mot": "dimanche",
+      "serie": 1,
+      "piege": "an"
+    },
+    {
+      "mot": "pendant",
+      "serie": 1,
+      "piege": "en puis an, t muet"
+    },
+    {
+      "mot": "les vacances",
+      "serie": 1,
+      "piege": "c, s du pluriel"
+    },
+    {
+      "mot": "un élève",
+      "serie": 1,
+      "piege": "é puis è, pluriel en s"
+    },
+    {
+      "mot": "une peinture",
+      "serie": 2,
+      "piege": "ein"
+    },
+    {
+      "mot": "une activité artistique",
+      "serie": 2,
+      "piege": "é final, qu"
+    },
+    {
+      "mot": "les couleurs",
+      "serie": 2,
+      "piege": "ou, s muet"
+    },
+    {
+      "mot": "une sculpture",
+      "serie": 2,
+      "piege": "p muet"
+    },
+    {
+      "mot": "un artiste",
+      "serie": 2,
+      "piege": ""
+    },
+    {
+      "mot": "le théâtre",
+      "serie": 2,
+      "piege": "th, â"
+    },
+    {
+      "mot": "l'imagination",
+      "serie": 2,
+      "piege": "tion"
+    },
+    {
+      "mot": "un dessin",
+      "serie": 2,
+      "piege": "ss, in"
+    },
+    {
+      "mot": "la musique",
+      "serie": 2,
+      "piege": "s qui chante z, qu"
+    },
+    {
+      "mot": "une œuvre",
+      "serie": 2,
+      "piege": "œ"
+    },
+    {
+      "mot": "mademoiselle",
+      "serie": 3,
+      "piege": "ll"
+    },
+    {
+      "mot": "monsieur",
+      "serie": 3,
+      "piege": "on prononcé e, eu"
+    },
+    {
+      "mot": "l'adresse",
+      "serie": 3,
+      "piege": "un seul d, ss"
+    },
+    {
+      "mot": "la ville",
+      "serie": 3,
+      "piege": "ll, pluriel en s"
+    },
+    {
+      "mot": "le village",
+      "serie": 3,
+      "piege": "ll, ge"
+    },
+    {
+      "mot": "la rue",
+      "serie": 3,
+      "piege": "e muet, pluriel en s"
+    },
+    {
+      "mot": "le numéro de téléphone",
+      "serie": 3,
+      "piege": "ph, é"
+    },
+    {
+      "mot": "une enveloppe",
+      "serie": 3,
+      "piege": "pp"
+    },
+    {
+      "mot": "un timbre",
+      "serie": 3,
+      "piege": "im devant b, pluriel en s"
+    },
+    {
+      "mot": "une année",
+      "serie": 4,
+      "piege": "nn, ée"
+    },
+    {
+      "mot": "la saison",
+      "serie": 4,
+      "piege": "s qui chante z"
+    },
+    {
+      "mot": "le calendrier",
+      "serie": 4,
+      "piege": "en"
+    },
+    {
+      "mot": "l'automne",
+      "serie": 4,
+      "piege": "au, m muet"
+    },
+    {
+      "mot": "une citrouille",
+      "serie": 4,
+      "piege": "c qui chante s, ouille"
+    },
+    {
+      "mot": "tomber",
+      "serie": 4,
+      "piege": "om devant b"
+    },
+    {
+      "mot": "une feuille",
+      "serie": 4,
+      "piege": "euille"
+    },
+    {
+      "mot": "la pluie",
+      "serie": 4,
+      "piege": ""
+    },
+    {
+      "mot": "un écureuil",
+      "serie": 4,
+      "piege": "euil, pluriel en s"
+    },
+    {
+      "mot": "un instrument de mesure",
+      "serie": 5,
+      "piege": "in, t muet"
+    },
+    {
+      "mot": "la masse",
+      "serie": 5,
+      "piege": "ss"
+    },
+    {
+      "mot": "la longueur",
+      "serie": 5,
+      "piege": "gu"
+    },
+    {
+      "mot": "la température",
+      "serie": 5,
+      "piege": "em devant p"
+    },
+    {
+      "mot": "la capacité",
+      "serie": 5,
+      "piege": "é final"
+    },
+    {
+      "mot": "le temps",
+      "serie": 5,
+      "piege": "mps"
+    },
+    {
+      "mot": "la durée",
+      "serie": 5,
+      "piege": "ée"
+    },
+    {
+      "mot": "la monnaie",
+      "serie": 5,
+      "piege": "nn, aie"
+    },
+    {
+      "mot": "le cout",
+      "serie": 5,
+      "piege": "orthographe rectifiée, sans accent",
+      "alt": [
+        "le coût"
+      ]
+    },
+    {
+      "mot": "mesurer",
+      "serie": 5,
+      "piege": "s qui chante z"
+    },
+    {
+      "mot": "l'heure",
+      "serie": 6,
+      "piege": "h muet, eu"
+    },
+    {
+      "mot": "aujourd'hui",
+      "serie": 6,
+      "piege": "apostrophe"
+    },
+    {
+      "mot": "demain",
+      "serie": 6,
+      "piege": "ain"
+    },
+    {
+      "mot": "hier",
+      "serie": 6,
+      "piege": "h muet"
+    },
+    {
+      "mot": "avant",
+      "serie": 6,
+      "piege": "an, t muet"
+    },
+    {
+      "mot": "après",
+      "serie": 6,
+      "piege": "è, s muet"
+    },
+    {
+      "mot": "maintenant",
+      "serie": 6,
+      "piege": "ain, en, an"
+    },
+    {
+      "mot": "souvent",
+      "serie": 6,
+      "piege": "ou, ent"
+    },
+    {
+      "mot": "déjà",
+      "serie": 6,
+      "piege": "é, à"
+    },
+    {
+      "mot": "plus tard",
+      "serie": 6,
+      "piege": "deux mots, s et d muets"
+    },
+    {
+      "mot": "cher",
+      "serie": 7,
+      "piege": "accord masculin/féminin"
+    },
+    {
+      "mot": "j'espère",
+      "serie": 7,
+      "piege": "pas d'accent sur le premier e"
+    },
+    {
+      "mot": "voici",
+      "serie": 7,
+      "piege": "c et non ss"
+    },
+    {
+      "mot": "recevoir",
+      "serie": 7,
+      "piege": "pas de cédille devant e"
+    },
+    {
+      "mot": "une lettre",
+      "serie": 7,
+      "piege": "deux t, pas d'accent"
+    },
+    {
+      "mot": "un jeu",
+      "serie": 7,
+      "piege": "pluriel en x"
+    },
+    {
+      "mot": "un gros bisou",
+      "serie": 7,
+      "piege": "pluriel en s, gros invariable"
+    },
+    {
+      "mot": "une signature",
+      "serie": 7,
+      "piege": ""
+    },
+    {
+      "mot": "je te souhaite",
+      "serie": 7,
+      "piege": "ou, h muet, ai"
+    },
+    {
+      "mot": "à bientôt",
+      "serie": 7,
+      "piege": "à, ô, t muet"
+    },
+    {
+      "mot": "avec",
+      "serie": 8,
+      "piege": "c final"
+    },
+    {
+      "mot": "alors",
+      "serie": 8,
+      "piege": "s muet"
+    },
+    {
+      "mot": "assez",
+      "serie": 8,
+      "piege": "ss, ez"
+    },
+    {
+      "mot": "aucun",
+      "serie": 8,
+      "piege": "un"
+    },
+    {
+      "mot": "bien",
+      "serie": 8,
+      "piege": "ien"
+    },
+    {
+      "mot": "chez",
+      "serie": 8,
+      "piege": "ez"
+    },
+    {
+      "mot": "combien",
+      "serie": 8,
+      "piege": "om devant b, ien"
+    },
+    {
+      "mot": "dans",
+      "serie": 8,
+      "piege": "an, s muet"
+    },
+    {
+      "mot": "dehors",
+      "serie": 8,
+      "piege": "h, s muet"
+    },
+    {
+      "mot": "depuis",
+      "serie": 8,
+      "piege": "s muet"
+    },
+    {
+      "mot": "encore",
+      "serie": 8,
+      "piege": "en"
+    },
+    {
+      "mot": "enfin",
+      "serie": 8,
+      "piege": "en puis in"
+    },
+    {
+      "mot": "ensuite",
+      "serie": 8,
+      "piege": "en, ui"
+    },
+    {
+      "mot": "entre",
+      "serie": 8,
+      "piege": "en"
+    },
+    {
+      "mot": "ici",
+      "serie": 8,
+      "piege": "c"
+    },
+    {
+      "mot": "jamais",
+      "serie": 8,
+      "piege": "ai, s muet"
+    },
+    {
+      "mot": "lendemain",
+      "serie": 8,
+      "piege": "en, ain"
+    },
+    {
+      "mot": "longtemps",
+      "serie": 8,
+      "piege": "on, mps"
+    },
+    {
+      "mot": "mais",
+      "serie": 8,
+      "piege": "ai, s muet"
+    },
+    {
+      "mot": "même",
+      "serie": 8,
+      "piege": "ê"
+    }
+  ],
   "deguiseur": [],
   "faussaire": [],
   "menteur": []
