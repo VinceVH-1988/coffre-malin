@@ -162,6 +162,43 @@ button:focus-visible,input:focus-visible,select:focus-visible{outline:4px solid 
 .recs b{font-size:1.1rem}
 @media (prefers-reduced-motion:reduce){ .door,.bolt,.switch span,.switch span::after{transition:none} .vault.shake .door{animation:none} }
 
+/* ---------- mode paysage ---------- */
+@media (orientation:landscape) and (max-height:540px){
+  body{padding-top:calc(env(safe-area-inset-top) + 4px);padding-bottom:calc(env(safe-area-inset-bottom) + 4px);align-items:center}
+  main{display:grid;height:auto;max-height:100%;width:100%;max-width:min(94vw,820px);
+    grid-template-columns:minmax(130px,260px) minmax(170px,360px);
+    grid-template-rows:auto auto auto auto;
+    grid-template-areas:"title title" "lead lead" "vault pad" "foot foot";
+    column-gap:16px;row-gap:2px;align-items:center}
+  main > h1{grid-area:title;font-size:clamp(.75rem,2.2dvh,.95rem);margin:0}
+  main > .lead{grid-area:lead;margin:0 0 2px;font-size:clamp(.65rem,1.8dvh,.8rem)}
+  .vault-wrap{grid-area:vault;min-height:0;height:clamp(120px,32dvh,220px);padding:0;align-self:center;justify-self:center;width:100%}
+  .pad{grid-area:pad;align-self:center;justify-self:center;width:100%;max-width:280px;gap:4px}
+  .pad button{padding:4px 0;font-size:clamp(1rem,3dvh,1.4rem)}
+  .dictee-pad,.choice-pad{grid-area:pad;align-self:center;justify-self:center;width:100%;max-width:340px}
+  .dictee-pad .kb{gap:3px;margin:2px 0}
+  .dictee-pad .kbd{padding:4px 0;font-size:.8rem}
+  .dictee-pad #word-validate{padding:6px 16px;font-size:1rem}
+  .choices{gap:6px}
+  .choice-chip{padding:6px 14px;font-size:.95rem}
+  main > .foot{grid-area:foot;min-height:0}
+
+  .home.show{display:grid;
+    grid-template-columns:minmax(110px,200px) minmax(200px,360px);
+    grid-template-rows:auto auto auto auto;
+    grid-template-areas:"kicker kicker" "title title" "art modes" "info info";
+    column-gap:16px;row-gap:2px;height:100%;align-items:center;
+    padding-top:calc(env(safe-area-inset-top) + 4px);padding-bottom:calc(env(safe-area-inset-bottom) + 4px)}
+  .home .kicker{grid-area:kicker;font-size:clamp(.65rem,1.6dvh,.8rem)}
+  .home h1{grid-area:title;font-size:clamp(.95rem,2.8dvh,1.2rem);margin:0}
+  .home-art{grid-area:art;min-height:0;height:clamp(70px,26dvh,160px);align-self:center;justify-self:center}
+  .modes{grid-area:modes;align-self:center;max-width:340px;gap:4px}
+  .mode{padding:6px 14px}
+  .mode-name{font-size:clamp(.95rem,2.6dvh,1.2rem)}
+  .mode-desc{font-size:clamp(.68rem,1.7dvh,.82rem)}
+  .home-info{grid-area:info;font-size:clamp(.65rem,1.6dvh,.78rem)}
+}
+
 /* ---------- profils ---------- */
 .profiles{position:fixed;inset:0;z-index:7;background:var(--bg);display:none;flex-direction:column;align-items:center;
   gap:clamp(10px,2dvh,18px);overflow:auto;
@@ -239,6 +276,19 @@ button:focus-visible,input:focus-visible,select:focus-visible{outline:4px solid 
 .btn.teal{background:var(--teal);color:#fff}
 .listen-btn{margin:6px auto 0;display:inline-block}
 .word-note{min-height:1.1em;font-size:.82rem;color:var(--muted);margin-top:2px}
+.cursive{font-family:var(--cursive)}
+.word-zones{display:flex;flex-wrap:wrap;justify-content:center;align-items:baseline;gap:2px;font-size:min(1.6rem,9cqw);color:var(--ink);line-height:1.2;padding:4px 6px;width:100%;max-width:100%}
+.word-zones span{white-space:pre}
+.word-zones .blankzone{display:inline-flex;align-items:center;justify-content:center;min-width:.9em;padding:0 .1em;border-bottom:3px solid var(--mustard);color:var(--mustard);font-weight:700}
+.word-zones .zonebtn{font:inherit;font-family:var(--cursive);font-size:inherit;line-height:1.2;color:var(--ink);background:none;border:none;border-bottom:3px solid transparent;padding:0 .05em;cursor:pointer;min-width:.5em;min-height:1.2em}
+.word-zones .zonebtn:hover,.word-zones .zonebtn:focus-visible{border-bottom-color:var(--mustard)}
+.word-zones .zonebtn:active{transform:translateY(2px)}
+.choice-pad{display:none;width:100%;flex:none}
+.choice-pad.show{display:block}
+.choices{display:flex;flex-wrap:wrap;justify-content:center;gap:10px}
+.choice-chip{font:inherit;font-size:1.05rem;font-weight:700;padding:10px 20px;border-radius:999px;border:2px solid var(--ink);
+  background:var(--key);color:var(--key-ink);box-shadow:0 3px 0 var(--key-shadow);cursor:pointer}
+.choice-chip:active{transform:translateY(3px);box-shadow:0 0 0 var(--key-shadow)}
 .tab-cat{font-size:.78rem;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);margin:10px 0 4px}
 .tab-cat:first-child{margin-top:0}
 </style>
@@ -263,6 +313,7 @@ button:focus-visible,input:focus-visible,select:focus-visible{outline:4px solid 
         <button type="button" class="btn listen-btn" id="word-listen" style="display:none">Écouter</button>
         <div class="answer empty" id="answer" aria-live="polite"></div>
         <div class="word-note" id="word-note" aria-live="polite"></div>
+        <div class="word-zones cursive" id="word-zones" style="display:none"></div>
         <div class="progress" id="progress"></div>
       </div>
     </div>
@@ -278,6 +329,10 @@ button:focus-visible,input:focus-visible,select:focus-visible{outline:4px solid 
   <div class="dictee-pad" id="dictee-pad">
     <div class="kb" id="word-kb"></div>
     <button type="button" class="btn teal" id="word-validate">Valider</button>
+  </div>
+
+  <div class="choice-pad" id="choice-pad">
+    <div class="choices" id="word-choices"></div>
   </div>
 
   <div class="foot"><button class="btn ghost" id="again" style="display:none">Rejouer</button><button class="parent-link" id="profiles-link">Profils</button><button class="parent-link" id="filous-link">Filous</button><button class="parent-link" data-pin>Réglages</button></div>
@@ -308,6 +363,13 @@ button:focus-visible,input:focus-visible,select:focus-visible{outline:4px solid 
   <h1 id="filous-title">Les Filous</h1>
   <div class="filou-list" id="filou-list"></div>
   <div class="foot"><button class="parent-link" id="filous-back">Profils</button><button class="parent-link" data-pin>Réglages</button></div>
+</section>
+
+<section class="filous" id="activites" aria-label="Choisis une épreuve">
+  <div class="kicker">LE FAUSSAIRE</div>
+  <h1>Quelle épreuve ?</h1>
+  <div class="filou-list" id="activite-list"></div>
+  <div class="foot"><button class="parent-link" id="activites-back">Filous</button><button class="parent-link" data-pin>Réglages</button></div>
 </section>
 
 <section class="avatarcreate" id="avatarcreate" aria-label="Créer ton profil">
@@ -427,10 +489,20 @@ button:focus-visible,input:focus-visible,select:focus-visible{outline:4px solid 
     <div class="group" id="g-mix-note" data-tab="mix">
       <div class="sub">Calcul mélangé pioche parmi les opérations actives réglées ci-dessus pour le Faussaire des Retenues et le Tricheur des Tables (onglets « Faussaire des Retenues » et « Tricheur des Tables »). Seul son propre mode coffre se règle ici.</div>
     </div>
-    <div class="group" id="g-faussaire" data-tab="faussaire">
-      <div class="group-head"><h3>Séries de dictée</h3></div>
+    <div class="group" id="g-faussaire-dictee" data-tab="faussaire:dictee">
+      <div class="group-head"><h3>Dictée</h3></div>
       <div class="sub">Séries actives pour ce profil</div>
-      <div class="chips" data-list="faussaire-series"></div>
+      <div class="chips" data-list="faussaire:dictee-series"></div>
+    </div>
+    <div class="group" id="g-faussaire-trou" data-tab="faussaire:trou">
+      <div class="group-head"><h3>Le trou du Faussaire</h3></div>
+      <div class="sub">Séries actives pour ce profil</div>
+      <div class="chips" data-list="faussaire:trou-series"></div>
+    </div>
+    <div class="group" id="g-faussaire-correction" data-tab="faussaire:correction">
+      <div class="group-head"><h3>Repérer et corriger</h3></div>
+      <div class="sub">Séries actives pour ce profil</div>
+      <div class="chips" data-list="faussaire:correction-series"></div>
     </div>
 
     <div class="group">
@@ -627,9 +699,15 @@ const DEFAULT_TABLES = {
   div:{on:false, tables:[2,5,10]}
 };
 const DEFAULT_MIX = { code:"5472", target:6, reward:"feu" };
-const DEFAULT_FAUSSAIRE = { code:"5472", target:6, reward:"feu", series:[1,2,3,4,5,6,7,8] };
-const DEFAULTS_BY_FILOU = {retenues:DEFAULT_RETENUES, tables:DEFAULT_TABLES, mix:DEFAULT_MIX, faussaire:DEFAULT_FAUSSAIRE};
-const CFG_STORE_KEY = {retenues:"coffre-cfg-retenues", tables:"coffre-cfg-tables", mix:"coffre-cfg-mix", faussaire:"coffre-cfg-faussaire"};
+const DEFAULT_FAUSSAIRE_ACTIVITY = { code:"5472", target:6, reward:"feu", series:[1,2,3,4,5,6,7,8] };
+const DEFAULTS_BY_FILOU = {
+  retenues:DEFAULT_RETENUES, tables:DEFAULT_TABLES, mix:DEFAULT_MIX,
+  faussaire_dictee:DEFAULT_FAUSSAIRE_ACTIVITY, faussaire_trou:DEFAULT_FAUSSAIRE_ACTIVITY, faussaire_correction:DEFAULT_FAUSSAIRE_ACTIVITY
+};
+const CFG_STORE_KEY = {
+  retenues:"coffre-cfg-retenues", tables:"coffre-cfg-tables", mix:"coffre-cfg-mix",
+  faussaire_dictee:"coffre-cfg-faussaire-dictee", faussaire_trou:"coffre-cfg-faussaire-trou", faussaire_correction:"coffre-cfg-faussaire-correction"
+};
 
 /* ---------- filous (registre) ---------- */
 const FILOUS = [
@@ -637,16 +715,29 @@ const FILOUS = [
   {id:"tables", nom:"Le Tricheur des Tables", domaine:"Calcul : multiplications et divisions", art:"tables", ready:true, scope:"tables", kind:"calc", categorie:"calcul"},
   {id:"mix", nom:"Calcul mélangé", domaine:"Toutes tes opérations réglées, au hasard", art:"mix", ready:true, scope:"mix", combo:true, kind:"calc", categorie:"calcul"},
   {id:"deguiseur", nom:"Le Déguiseur", domaine:"Les verbes", art:"deguiseur", ready:false, kind:"deguiseur", categorie:"francais"},
-  {id:"faussaire", nom:"Le Faussaire", domaine:"La dictée des mots appris", art:"faussaire_mot", ready:true, kind:"dictee", categorie:"francais"},
+  {id:"faussaire", nom:"Le Faussaire", domaine:"Dictée, trou et corrections", art:"faussaire_mot", ready:true, kind:"faussaire", categorie:"francais"},
   {id:"menteur", nom:"Le Menteur", domaine:"Quiz d'éveil", art:"menteur", ready:false, kind:"menteur", categorie:"eveil"}
 ];
 const FILOU_KIND = Object.fromEntries(FILOUS.map(f=>[f.id, f.kind]));
+function currentKind(){ return S.filou==="faussaire" ? S.activite : FILOU_KIND[S.filou]; }
+const FAUSSAIRE_ACTIVITIES = [
+  {id:"dictee", nom:"Dictée", desc:"Écoute le mot et écris-le au clavier."},
+  {id:"trou", nom:"Le trou du Faussaire", desc:"Trouve la bonne lettre manquante."},
+  {id:"correction", nom:"Repérer et corriger", desc:"Touche la faute, puis corrige-la."}
+];
 const CATEGORIES = [["calcul","Calcul"],["francais","Français"],["eveil","Éveil"]];
 function buildEpreuveTabs(){
-  return CATEGORIES.map(([cat,label])=>({
-    cat, label,
-    tabs: FILOUS.filter(f=>f.ready && f.categorie===cat).map(f=>[f.id, f.nom])
-  })).filter(g=>g.tabs.length);
+  return CATEGORIES.map(([cat,label])=>{
+    const tabs=[];
+    FILOUS.filter(f=>f.ready && f.categorie===cat).forEach(f=>{
+      if(f.id==="faussaire"){
+        FAUSSAIRE_ACTIVITIES.forEach(a=>tabs.push(["faussaire:"+a.id, a.nom]));
+      }else{
+        tabs.push([f.id, f.nom]);
+      }
+    });
+    return {cat, label, tabs};
+  }).filter(g=>g.tabs.length);
 }
 const EPREUVE_TABS = buildEpreuveTabs();
 
@@ -708,8 +799,19 @@ function buildKeyboard(el, onKey, onBackspace){
 }
 
 const clone = o => JSON.parse(JSON.stringify(o));
-const S = { cfgs:{retenues:clone(DEFAULT_RETENUES), tables:clone(DEFAULT_TABLES), mix:clone(DEFAULT_MIX), faussaire:clone(DEFAULT_FAUSSAIRE)}, stats:{tries:0,errors:0,best:0,opens:0}, records:{}, mode:"coffre", recKey:"", newRec:false, streak:0, q:null, word:null, lastWord:"", spoken:false, input:"", last:"", locked:true, filou:"retenues" };
-function curCfg(){ return S.cfgs[S.filou] || S.cfgs.retenues; }
+const S = {
+  cfgs:{
+    retenues:clone(DEFAULT_RETENUES), tables:clone(DEFAULT_TABLES), mix:clone(DEFAULT_MIX),
+    faussaire:{dictee:clone(DEFAULT_FAUSSAIRE_ACTIVITY), trou:clone(DEFAULT_FAUSSAIRE_ACTIVITY), correction:clone(DEFAULT_FAUSSAIRE_ACTIVITY)}
+  },
+  stats:{tries:0,errors:0,best:0,opens:0}, records:{}, mode:"coffre", recKey:"", newRec:false, streak:0,
+  q:null, word:null, lastWord:"", spoken:false, item:null, lastItem:"", picked:null,
+  input:"", last:"", locked:true, filou:"retenues", activite:"dictee"
+};
+function curCfg(){
+  if(S.filou==="faussaire") return (S.cfgs.faussaire && S.cfgs.faussaire[S.activite]) || S.cfgs.faussaire.dictee;
+  return S.cfgs[S.filou] || S.cfgs.retenues;
+}
 const $ = id => document.getElementById(id);
 const rnd = (a,b) => Math.floor(Math.random()*(b-a+1))+a;
 const pick = arr => arr[Math.floor(Math.random()*arr.length)];
@@ -768,12 +870,13 @@ async function migrateIfNeeded(){
   const retenues = mergeCfgFor("retenues", {code:base.code, target:base.target, reward:base.reward, add:base.add, sub:base.sub});
   const tables = mergeCfgFor("tables", {code:base.code, target:base.target, reward:base.reward, mul:base.mul, div:base.div});
   const mix = mergeCfgFor("mix", {code:base.code, target:base.target, reward:base.reward});
-  const faussaire = clone(DEFAULT_FAUSSAIRE);
   if(legacyCfg && legacyCfg.pin) PIN = legacyCfg.pin;
   await store.set(pk(CFG_STORE_KEY.retenues,id), retenues);
   await store.set(pk(CFG_STORE_KEY.tables,id), tables);
   await store.set(pk(CFG_STORE_KEY.mix,id), mix);
-  await store.set(pk(CFG_STORE_KEY.faussaire,id), faussaire);
+  await store.set(pk(CFG_STORE_KEY.faussaire_dictee,id), clone(DEFAULT_FAUSSAIRE_ACTIVITY));
+  await store.set(pk(CFG_STORE_KEY.faussaire_trou,id), clone(DEFAULT_FAUSSAIRE_ACTIVITY));
+  await store.set(pk(CFG_STORE_KEY.faussaire_correction,id), clone(DEFAULT_FAUSSAIRE_ACTIVITY));
   await store.set(pk("coffre-stats",id), legacyStats || {tries:0,errors:0,best:0,opens:0});
   await store.set(pk("coffre-records",id), legacyRecords || {});
   await store.set(pk("brigade-filous",id), {retenues:true, tables:true, faussaire:true});
@@ -791,7 +894,11 @@ async function loadActiveProfileData(){
     retenues: mergeCfgFor("retenues", await store.get(pk(CFG_STORE_KEY.retenues,id))),
     tables: mergeCfgFor("tables", await store.get(pk(CFG_STORE_KEY.tables,id))),
     mix: mergeCfgFor("mix", await store.get(pk(CFG_STORE_KEY.mix,id))),
-    faussaire: mergeCfgFor("faussaire", await store.get(pk(CFG_STORE_KEY.faussaire,id)))
+    faussaire: {
+      dictee: mergeCfgFor("faussaire_dictee", await store.get(pk(CFG_STORE_KEY.faussaire_dictee,id))),
+      trou: mergeCfgFor("faussaire_trou", await store.get(pk(CFG_STORE_KEY.faussaire_trou,id))),
+      correction: mergeCfgFor("faussaire_correction", await store.get(pk(CFG_STORE_KEY.faussaire_correction,id)))
+    }
   };
   const st = await store.get(pk("coffre-stats",id)); S.stats = st || {tries:0,errors:0,best:0,opens:0};
   S.records = (await store.get(pk("coffre-records",id))) || {};
@@ -849,7 +956,8 @@ function renderFilouList(){
 function openFilou(id){
   S.filou = id;
   hideAllScreens();
-  goHome();
+  if(id==="faussaire") showActivites();
+  else goHome();
 }
 function showFilous(){
   clearMontreInterval();
@@ -862,7 +970,25 @@ function hideAllScreens(){
   $("profiles").classList.remove("show");
   $("filous").classList.remove("show");
   $("home").classList.remove("show");
+  $("activites").classList.remove("show");
 }
+
+/* ---------- Le Faussaire : écran de choix d'épreuve ---------- */
+function showActivites(){
+  hideAllScreens();
+  renderActiviteList();
+  $("activites").classList.add("show");
+}
+function renderActiviteList(){
+  const list=$("activite-list"); list.innerHTML="";
+  FAUSSAIRE_ACTIVITIES.forEach(a=>{
+    const card=document.createElement("div"); card.className="filou-card";
+    card.innerHTML = `<div class="ic">${ART.faussaire_mot}</div><div class="tx"><div class="nm">${a.nom}</div><div class="dm">${a.desc}</div></div>`;
+    card.addEventListener("click", ()=>{ S.activite=a.id; hideAllScreens(); goHome(); });
+    list.appendChild(card);
+  });
+}
+$("activites-back").addEventListener("click", showFilous);
 
 /* ---------- création / édition d'avatar ---------- */
 let avDraft = null;
@@ -923,7 +1049,9 @@ $("av-save").addEventListener("click", async ()=>{
     await store.set(pk(CFG_STORE_KEY.retenues,id), clone(DEFAULT_RETENUES));
     await store.set(pk(CFG_STORE_KEY.tables,id), clone(DEFAULT_TABLES));
     await store.set(pk(CFG_STORE_KEY.mix,id), clone(DEFAULT_MIX));
-    await store.set(pk(CFG_STORE_KEY.faussaire,id), clone(DEFAULT_FAUSSAIRE));
+    await store.set(pk(CFG_STORE_KEY.faussaire_dictee,id), clone(DEFAULT_FAUSSAIRE_ACTIVITY));
+    await store.set(pk(CFG_STORE_KEY.faussaire_trou,id), clone(DEFAULT_FAUSSAIRE_ACTIVITY));
+    await store.set(pk(CFG_STORE_KEY.faussaire_correction,id), clone(DEFAULT_FAUSSAIRE_ACTIVITY));
     await store.set(pk("coffre-stats",id), {tries:0,errors:0,best:0,opens:0});
     await store.set(pk("coffre-records",id), {});
     await store.set(pk("brigade-filous",id), {retenues:true, tables:true, faussaire:true});
@@ -940,7 +1068,8 @@ async function deleteProfile(id){
   if(!confirm("Supprimer ce profil et toutes ses données ?")) return;
   PROFILES = PROFILES.filter(p=>p.id!==id);
   await saveProfiles();
-  await store.del(pk(CFG_STORE_KEY.retenues,id)); await store.del(pk(CFG_STORE_KEY.tables,id)); await store.del(pk(CFG_STORE_KEY.mix,id)); await store.del(pk(CFG_STORE_KEY.faussaire,id));
+  await store.del(pk(CFG_STORE_KEY.retenues,id)); await store.del(pk(CFG_STORE_KEY.tables,id)); await store.del(pk(CFG_STORE_KEY.mix,id));
+  await store.del(pk(CFG_STORE_KEY.faussaire_dictee,id)); await store.del(pk(CFG_STORE_KEY.faussaire_trou,id)); await store.del(pk(CFG_STORE_KEY.faussaire_correction,id));
   await store.del(pk("coffre-stats",id)); await store.del(pk("coffre-records",id)); await store.del(pk("brigade-filous",id));
   if(ACTIVE_ID===id){
     ACTIVE_ID = PROFILES.length ? PROFILES[0].id : null;
@@ -993,7 +1122,9 @@ function activeOpsForFilou(filou){
   return ops.length ? ops : (filou==="tables" ? ["mul"] : ["add"]);
 }
 function generate(){
-  if(FILOU_KIND[S.filou]==="dictee") return generateWord();
+  const kind = currentKind();
+  if(kind==="dictee") return generateWord();
+  if(kind==="trou"||kind==="correction") return generateItem();
   let q, key, guard=0;
   do{
     const op = pick(activeOpsForFilou(S.filou));
@@ -1005,7 +1136,7 @@ function generate(){
 
 /* ---------- dictée (Le Faussaire) ---------- */
 function poolFaussaire(){
-  const active = new Set(S.cfgs.faussaire.series);
+  const active = new Set(curCfg().series);
   return CONTENU.dictee.filter(w=>active.has(w.serie));
 }
 function pickWord(){
@@ -1055,38 +1186,150 @@ function submitWord(){
   S.stats.tries++;
   const res = checkWord(S.word, S.input);
   if(res.ok){
-    if(res.usedAlt){
-      $("word-note").textContent = `L'école écrit plutôt : « ${S.word.mot} ».`;
-      clearTimeout(S._noteTimer); S._noteTimer = setTimeout(()=>{ $("word-note").textContent=""; },1600);
-    }
-    S.streak++; S.stats.best=Math.max(S.stats.best,S.streak); store.set(pk("coffre-stats",ACTIVE_ID),S.stats);
-    if(S.mode==="infini"){
-      const prev=S.records[S.recKey]||0;
-      if(S.streak>prev){ S.records[S.recKey]=S.streak; store.set(pk("coffre-records",ACTIVE_ID),S.records); }
-      if(!S.newRec && S.base>0 && S.streak>S.base){ S.newRec=true; fireworks(1800); }
-      return generateWord();
-    }
-    if(S.streak>=curCfg().target){ render(); return openVault(); }
-    generateWord();
+    const note = res.usedAlt ? `L'école écrit plutôt : « ${S.word.mot} ».` : null;
+    handleFaussaireSuccess(note);
   }else{
-    S.stats.errors++; store.set(pk("coffre-stats",ACTIVE_ID),S.stats);
-    const v=VILLAIN.faussaire;
-    $("catch-who").innerHTML = ART[v.art];
-    let msg = `Tu as écrit <b>${S.input}</b>. La bonne réponse était <b>${S.word.mot}</b>.`;
-    if(S.mode==="infini"){
-      $("catch-title").textContent = `${v.name} t'a eu !`;
-      const rec=S.records[S.recKey]||0;
-      msg += S.newRec ? `<br><b>Nouveau record : ${S.streak} !</b>` : (S.base===0 && S.streak>0 ? `<br>Série : <b>${S.streak}</b>. C'est ton premier record !` : `<br>Série : <b>${S.streak}</b> · Record : <b>${rec}</b>`);
-      $("catch-ok").textContent = "Je continue";
-    }else{
-      $("catch-title").textContent = `${v.name} a refermé le coffre !`;
-      $("catch-ok").textContent = "Je recommence";
-    }
-    $("catch-msg").innerHTML = msg;
-    $("steps").innerHTML = helpWord(S.word);
-    S.streak=0; S.newRec=false; S.locked=true;
-    $("vault").classList.remove("shake"); void $("vault").offsetWidth; $("vault").classList.add("shake");
-    render(); $("catch").classList.add("show"); $("catch-ok").focus();
+    const msg = `Tu as écrit <b>${S.input}</b>. La bonne réponse était <b>${S.word.mot}</b>.`;
+    handleFaussaireError(msg, helpWord(S.word));
+  }
+}
+
+/* ---------- résultat partagé des 3 épreuves du Faussaire ---------- */
+function handleFaussaireSuccess(noteMsg){
+  if(noteMsg){
+    $("word-note").textContent = noteMsg;
+    clearTimeout(S._noteTimer); S._noteTimer = setTimeout(()=>{ $("word-note").textContent=""; },1600);
+  }
+  S.streak++; S.stats.best=Math.max(S.stats.best,S.streak); store.set(pk("coffre-stats",ACTIVE_ID),S.stats);
+  if(S.mode==="infini"){
+    const prev=S.records[S.recKey]||0;
+    if(S.streak>prev){ S.records[S.recKey]=S.streak; store.set(pk("coffre-records",ACTIVE_ID),S.records); }
+    if(!S.newRec && S.base>0 && S.streak>S.base){ S.newRec=true; fireworks(1800); }
+    return generate();
+  }
+  if(S.streak>=curCfg().target){ render(); return openVault(); }
+  generate();
+}
+function handleFaussaireError(msgHtml, stepsHtml){
+  S.stats.errors++; store.set(pk("coffre-stats",ACTIVE_ID),S.stats);
+  const v=VILLAIN.faussaire;
+  $("catch-who").innerHTML = ART[v.art];
+  let msg = msgHtml;
+  if(S.mode==="infini"){
+    $("catch-title").textContent = `${v.name} t'a eu !`;
+    const rec=S.records[S.recKey]||0;
+    msg += S.newRec ? `<br><b>Nouveau record : ${S.streak} !</b>` : (S.base===0 && S.streak>0 ? `<br>Série : <b>${S.streak}</b>. C'est ton premier record !` : `<br>Série : <b>${S.streak}</b> · Record : <b>${rec}</b>`);
+    $("catch-ok").textContent = "Je continue";
+  }else{
+    $("catch-title").textContent = `${v.name} a refermé le coffre !`;
+    $("catch-ok").textContent = "Je recommence";
+  }
+  $("catch-msg").innerHTML = msg;
+  $("steps").innerHTML = stepsHtml;
+  S.streak=0; S.newRec=false; S.locked=true;
+  $("vault").classList.remove("shake"); void $("vault").offsetWidth; $("vault").classList.add("shake");
+  render(); $("catch").classList.add("show"); $("catch-ok").focus();
+}
+
+/* ---------- le trou du Faussaire & repérer-corriger (Le Faussaire) ---------- */
+function poolFaussaireActivity(){
+  const active = new Set(curCfg().series);
+  return CONTENU.faussaire.filter(it=>active.has(it.serie));
+}
+function pickItem(){
+  const pool = poolFaussaireActivity();
+  if(!pool.length) return null;
+  let it, guard=0;
+  do{ it = pick(pool); } while(it.mot===S.lastItem && guard++<20);
+  S.lastItem = it.mot;
+  return it;
+}
+function generateItem(){
+  S.item = pickItem(); S.picked = null; render();
+}
+function shuffle(arr){
+  const a=[...arr];
+  for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; }
+  return a;
+}
+function renderChoices(choices, onPick){
+  const wrap = $("word-choices");
+  wrap.innerHTML = "";
+  shuffle(choices).forEach(c=>{
+    const b=document.createElement("button");
+    b.type="button"; b.className="choice-chip"; b.textContent=c;
+    b.addEventListener("click", ()=>onPick(c));
+    wrap.appendChild(b);
+  });
+}
+function helpItem(it){
+  let html = `La bonne réponse était : <b>${it.mot}</b>`;
+  if(it.piege) html += `<span class="note">Piège : ${it.piege}</span>`;
+  return html;
+}
+function renderTrou(){
+  if(!S.item) return;
+  const it = S.item;
+  $("word-zones").innerHTML = it.zones.map((z,i)=> i===it.blank ? `<span class="blankzone">?</span>` : `<span>${z}</span>`).join("");
+  const p=$("progress");
+  if(S.mode==="infini"){ p.textContent = S.newRec ? `Série : ${S.streak} · Nouveau record !` : `Série : ${S.streak} · Record : ${S.records[S.recKey]||0}`; p.classList.toggle("rec",S.newRec); }
+  else { p.textContent = `Verrous ouverts : ${S.streak} sur ${curCfg().target}`; p.classList.remove("rec"); }
+  document.querySelectorAll(".bolt").forEach((el,i)=>el.classList.toggle("done", i<S.streak));
+  renderChoices(it.choices, submitTrouChoice);
+}
+function submitTrouChoice(choice){
+  if(S.locked || !S.item) return;
+  S.stats.tries++;
+  const it = S.item, correct = it.zones[it.blank];
+  if(choice===correct){
+    handleFaussaireSuccess(null);
+  }else{
+    const msg = `Tu as choisi <b>${choice}</b>. La bonne réponse était <b>${correct}</b>.`;
+    handleFaussaireError(msg, helpItem(it));
+  }
+}
+function wrongZoneText(it){ const f=it.choices.find(c=>c!==it.zones[it.blank]); return f!==undefined ? f : it.zones[it.blank]; }
+function renderCorrection(){
+  if(!S.item) return;
+  const it = S.item;
+  const p=$("progress");
+  if(S.mode==="infini"){ p.textContent = S.newRec ? `Série : ${S.streak} · Nouveau record !` : `Série : ${S.streak} · Record : ${S.records[S.recKey]||0}`; p.classList.toggle("rec",S.newRec); }
+  else { p.textContent = `Verrous ouverts : ${S.streak} sur ${curCfg().target}`; p.classList.remove("rec"); }
+  document.querySelectorAll(".bolt").forEach((el,i)=>el.classList.toggle("done", i<S.streak));
+  if(S.picked===null){
+    const wrongText = wrongZoneText(it);
+    $("word-zones").innerHTML = it.zones.map((z,i)=>{
+      const txt = i===it.blank ? wrongText : z;
+      return `<button type="button" class="zonebtn" data-i="${i}">${txt}</button>`;
+    }).join("");
+    $("word-zones").querySelectorAll(".zonebtn").forEach(btn=>{
+      btn.addEventListener("click", ()=>pickZone(parseInt(btn.dataset.i,10)));
+    });
+    $("word-choices").innerHTML = "";
+  }else{
+    $("word-zones").innerHTML = it.zones.map((z,i)=> i===it.blank ? `<span class="blankzone">?</span>` : `<span>${z}</span>`).join("");
+    renderChoices(it.choices, submitCorrectionChoice);
+  }
+}
+function pickZone(i){
+  if(S.locked || !S.item || S.picked!==null) return;
+  const it = S.item;
+  if(i===it.blank){ S.picked = i; render(); return; }
+  S.stats.tries++;
+  const wrongText = wrongZoneText(it);
+  const fauxForm = it.zones.map((z,k)=>k===it.blank?wrongText:z).join("");
+  const msg = `Ce n'était pas la lettre fautive. Le mot fautif était <b>${fauxForm}</b>.`;
+  handleFaussaireError(msg, helpItem(it));
+}
+function submitCorrectionChoice(choice){
+  if(S.locked || !S.item) return;
+  S.stats.tries++;
+  const it = S.item, correct = it.zones[it.blank];
+  if(choice===correct){
+    handleFaussaireSuccess(null);
+  }else{
+    const msg = `Tu as choisi <b>${choice}</b>. La bonne réponse était <b>${correct}</b>.`;
+    handleFaussaireError(msg, helpItem(it));
   }
 }
 
@@ -1120,7 +1363,11 @@ function help(q){
 /* ---------- records par combinaison d'opérations, par filou ---------- */
 const sorted = arr => [...arr].sort((x,y)=>String(x).localeCompare(String(y),undefined,{numeric:true}));
 function recordKeyScoped(filou){
-  if(filou==="faussaire") return "dictee:"+sorted(S.cfgs.faussaire.series).join(",");
+  if(filou==="faussaire"){
+    const act = S.activite||"dictee";
+    const c = S.cfgs.faussaire[act];
+    return act+":"+sorted(c.series).join(",");
+  }
   const k=[];
   if(filou!=="tables"){
     const c=S.cfgs.retenues;
@@ -1135,11 +1382,14 @@ function recordKeyScoped(filou){
   return k.join("|");
 }
 const PASS_TXT = {avec:"avec passage", sans:"sans passage", mix:"avec ou sans passage"};
+const FAUSSAIRE_ACT_LABEL = {dictee:"Dictée", trou:"Le trou du Faussaire", correction:"Repérer et corriger"};
 function describeKey(key){
   if(!key) return "Aucune épreuve réglée";
-  if(key.startsWith("dictee:")){
-    const series = key.slice(7);
-    return series ? `Dictée · séries ${series.split(",").join(", ")}` : "Dictée · aucune série";
+  for(const act of ["dictee","trou","correction"]){
+    if(key.startsWith(act+":")){
+      const series = key.slice(act.length+1);
+      return series ? `${FAUSSAIRE_ACT_LABEL[act]} · séries ${series.split(",").join(", ")}` : `${FAUSSAIRE_ACT_LABEL[act]} · aucune série`;
+    }
   }
   return key.split("|").map(part=>{
     const [op,x,y]=part.split(":");
@@ -1159,16 +1409,20 @@ function buildBolts(){
   $("bolts-r").innerHTML = '<span class="bolt"></span>'.repeat(n-left);
 }
 function leadText(){
-  const isDictee = FILOU_KIND[S.filou]==="dictee";
+  const kind = currentKind();
+  const unite = kind==="calc" ? "calculs" : "mots";
   $("title").textContent = S.mode==="infini" ? "Mode infini" : S.mode==="montre" ? "Contre la montre" : "Le coffre des Filous";
   $("lead").innerHTML = S.mode==="infini"
-    ? (isDictee ? `Enchaîne les mots bien écrits le plus longtemps possible.` : `Enchaîne les calculs sans faute le plus longtemps possible.`)
+    ? `Enchaîne les ${unite} justes le plus longtemps possible.`
     : S.mode==="montre"
     ? `Résous le plus de calculs possible en <b>2 minutes</b>.`
-    : (isDictee ? `Écris <b>${curCfg().target}</b> mots d'affilée sans faute pour ouvrir le coffre. Une seule erreur, et il se referme !` : `Réussis <b>${curCfg().target}</b> calculs d'affilée pour ouvrir le coffre. Une seule erreur, et il se referme !`);
+    : `Réussis <b>${curCfg().target}</b> ${unite} d'affilée pour ouvrir le coffre. Une seule erreur, et il se referme !`;
 }
 function render(){
-  if(FILOU_KIND[S.filou]==="dictee") return renderDictee();
+  const kind = currentKind();
+  if(kind==="dictee") return renderDictee();
+  if(kind==="trou") return renderTrou();
+  if(kind==="correction") return renderCorrection();
   if(!S.q) return;
   const q=S.q, txt=`${q.a} ${SYM[q.op]} ${q.b} =`;
   $("calc").textContent = txt; $("calc").classList.toggle("long", txt.length>10);
@@ -1186,31 +1440,37 @@ function render(){
 
 /* ---------- accueil (écran du filou choisi) ---------- */
 function applyKindUI(){
-  const isDictee = FILOU_KIND[S.filou]==="dictee";
-  $("pad").style.display = isDictee ? "none" : "grid";
-  $("dictee-pad").classList.toggle("show", isDictee);
-  $("calc").style.display = isDictee ? "none" : "block";
-  $("word-listen").style.display = isDictee ? "inline-block" : "none";
-  $("go-montre").style.display = isDictee ? "none" : "flex";
+  const kind = currentKind();
+  $("pad").style.display = kind==="calc" ? "grid" : "none";
+  $("dictee-pad").classList.toggle("show", kind==="dictee");
+  $("choice-pad").classList.toggle("show", kind==="trou"||kind==="correction");
+  $("calc").style.display = kind==="calc" ? "block" : "none";
+  $("word-listen").style.display = kind==="dictee" ? "inline-block" : "none";
+  $("word-note").style.display = kind==="dictee" ? "block" : "none";
+  $("word-zones").style.display = (kind==="trou"||kind==="correction") ? "block" : "none";
+  $("answer").style.display = (kind==="calc"||kind==="dictee") ? "flex" : "none";
+  $("go-montre").style.display = kind==="calc" ? "flex" : "none";
 }
 function goHome(){
   stopFx(); clearMontreInterval(); S.locked=true; $("catch").classList.remove("show");
   $("vault").classList.remove("open"); $("pad").style.visibility="visible"; $("again").style.display="none";
   const f = FILOUS.find(x=>x.id===S.filou);
-  const isDictee = FILOU_KIND[S.filou]==="dictee";
+  const kind = currentKind();
+  const isWord = kind!=="calc";
   applyKindUI();
-  $("home-title").textContent = f ? f.nom : "Le coffre des Filous";
+  const titre = S.filou==="faussaire" ? (FAUSSAIRE_ACTIVITIES.find(a=>a.id===S.activite)||{}).nom : (f ? f.nom : "Le coffre des Filous");
+  $("home-title").textContent = titre || "Le coffre des Filous";
   $("home-art").innerHTML = ART[f.art];
-  $("desc-coffre").textContent = isDictee ? `Écris ${curCfg().target} mots d'affilée sans faute pour ouvrir le coffre.` : `Réussis ${curCfg().target} calculs d'affilée pour ouvrir le coffre.`;
+  $("home-back").textContent = S.filou==="faussaire" ? "Épreuves" : "Filous";
+  const unite = kind==="calc" ? "calculs" : "mots";
+  $("desc-coffre").textContent = isWord ? `Réussis ${curCfg().target} ${unite} d'affilée pour ouvrir le coffre.` : `Réussis ${curCfg().target} calculs d'affilée pour ouvrir le coffre.`;
   const r=currentRecord();
-  $("desc-infini").textContent = r
-    ? (isDictee ? `Des mots sans fin. Ton record : ${r}` : `Des calculs sans fin. Ton record : ${r}`)
-    : (isDictee ? `Des mots sans fin. Établis ton premier record !` : `Des calculs sans fin. Établis ton premier record !`);
-  if(!isDictee){
+  $("desc-infini").textContent = r ? `Des ${unite} sans fin. Ton record : ${r}` : `Des ${unite} sans fin. Établis ton premier record !`;
+  if(kind==="calc"){
     const recMontre = S.records["montre:"+recordKeyScoped(S.filou)]||0;
     $("desc-montre").textContent = recMontre ? `Le plus de calculs en 2 minutes. Ton record : ${recMontre}` : `Le plus de calculs en 2 minutes. Établis ton premier record !`;
   }
-  $("home-info").textContent = (isDictee ? "Dictée : " : "Calculs : ") + describeKey(recordKeyScoped(S.filou));
+  $("home-info").textContent = (kind==="calc" ? "Calculs : " : "Épreuve : ") + describeKey(recordKeyScoped(S.filou));
   $("home").classList.add("show");
 }
 function startMode(m){
@@ -1242,7 +1502,9 @@ function finishMontre(){
 
 /* ---------- jeu ---------- */
 function submit(){
-  if(FILOU_KIND[S.filou]==="dictee") return submitWord();
+  const kind = currentKind();
+  if(kind==="dictee") return submitWord();
+  if(kind==="trou"||kind==="correction") return;
   if(S.locked || !S.input) return;
   S.stats.tries++;
   if(parseInt(S.input,10)===S.q.r){
@@ -1336,7 +1598,7 @@ document.addEventListener("keydown",e=>{
 function closeCatch(){ $("catch").classList.remove("show"); S.base=S.records[S.recKey]||0; S.locked=false; generate(); }
 $("catch-ok").addEventListener("click",closeCatch);
 $("again").addEventListener("click",restart);
-$("home-back").addEventListener("click",showFilous);
+$("home-back").addEventListener("click",()=>{ if(S.filou==="faussaire") showActivites(); else showFilous(); });
 $("profiles-link").addEventListener("click",showProfiles);
 $("filous-link").addEventListener("click",()=>{ if(ACTIVE_ID) showFilous(); else showProfiles(); });
 $("filous-back").addEventListener("click",showProfiles);
@@ -1379,10 +1641,11 @@ let settingsTab="retenues";
 const CALC_TABS=[["retenues","Faussaire des Retenues"],["tables","Tricheur des Tables"],["mix","Calcul mélangé"]];
 function chip(label,pressed,onClick){ const b=document.createElement("button"); b.type="button"; b.className="chip"; b.textContent=label; b.setAttribute("aria-pressed",pressed); b.onclick=()=>{onClick(); fillSettings();}; return b; }
 function toggleIn(arr,v){ const i=arr.indexOf(v); i<0?arr.push(v):arr.splice(i,1); }
+function cfgAt(obj, tab){ const i=tab.indexOf(":"); return i<0 ? obj[tab] : obj[tab.slice(0,i)][tab.slice(i+1)]; }
 function hasActiveOps(filouId, c){
   if(filouId==="retenues") return (c.add.on&&c.add.forms.length)||(c.sub.on&&c.sub.forms.length);
   if(filouId==="tables") return (c.mul.on&&(c.mul.tables.length||c.mul.extra.length))||(c.div.on&&c.div.tables.length);
-  if(filouId==="faussaire") return c.series && c.series.length>0;
+  if(filouId==="faussaire"||filouId.startsWith("faussaire:")) return c.series && c.series.length>0;
   return true;
 }
 function ensureMinOp(filouId, c){
@@ -1390,7 +1653,7 @@ function ensureMinOp(filouId, c){
     c.add.on=true; if(!c.add.forms.length) c.add.forms=["du+u"];
   }else if(filouId==="tables" && !hasActiveOps("tables",c)){
     c.mul.on=true; if(!c.mul.tables.length && !c.mul.extra.length) c.mul.tables=[2,5,10];
-  }else if(filouId==="faussaire" && !hasActiveOps("faussaire",c)){
+  }else if((filouId==="faussaire"||filouId.startsWith("faussaire:")) && !hasActiveOps(filouId,c)){
     c.series=[1];
   }
 }
@@ -1454,7 +1717,7 @@ function fillSettings(){
   const tabLabel = EPREUVE_TABS.flatMap(g=>g.tabs).find(t=>t[0]===settingsTab)[1];
   $("coffre-tab-title").textContent = "Mode coffre — " + tabLabel;
 
-  const d=draft[settingsTab];
+  const d=cfgAt(draft,settingsTab);
   $("s-code").value=d.code; $("s-pin").value=PIN; $("s-target").value=d.target;
   const rw=document.querySelector('[data-radio="reward"]'); rw.innerHTML="";
   for(const [k,label] of Object.entries(REWARD)) rw.appendChild(chip(label, d.reward===k, ()=>{d.reward=k;}));
@@ -1492,10 +1755,12 @@ function fillSettings(){
     }
     const ex=document.querySelector('[data-list="mul-extra"]'); ex.innerHTML="";
     ex.appendChild(chip("DU x U", dt.mul.extra.includes("du*u"), ()=>toggleIn(dt.mul.extra,"du*u")));
-  }else if(settingsTab==="faussaire"){
-    const df=draft.faussaire;
-    const seriesAvailable=[...new Set(CONTENU.dictee.map(w=>w.serie))].sort((a,b)=>a-b);
-    const sl=document.querySelector('[data-list="faussaire-series"]'); sl.innerHTML="";
+  }else if(settingsTab.startsWith("faussaire:")){
+    const df=d;
+    const act = settingsTab.slice("faussaire:".length);
+    const source = act==="dictee" ? CONTENU.dictee : CONTENU.faussaire;
+    const seriesAvailable=[...new Set(source.map(w=>w.serie))].sort((a,b)=>a-b);
+    const sl=document.querySelector(`[data-list="${settingsTab}-series"]`); sl.innerHTML="";
     for(const sNum of seriesAvailable) sl.appendChild(chip("Série "+sNum, df.series.includes(sNum), ()=>toggleIn(df.series,sNum)));
   }
 
@@ -1504,13 +1769,16 @@ function fillSettings(){
   fillSettingsProfiles();
 }
 document.querySelectorAll('input[data-op]').forEach(sw=>sw.addEventListener("change",()=>{ draft[settingsTab][sw.dataset.op].on=sw.checked; fillSettings(); }));
-$("s-code").addEventListener("input",e=>{ draft[settingsTab].code=e.target.value.replace(/\D/g,""); });
+$("s-code").addEventListener("input",e=>{ cfgAt(draft,settingsTab).code=e.target.value.replace(/\D/g,""); });
 $("s-pin").addEventListener("input",e=>{ draftPin=e.target.value.replace(/\D/g,"").slice(0,4); });
-$("s-target").addEventListener("input",e=>{ draft[settingsTab].target=e.target.value; });
+$("s-target").addEventListener("input",e=>{ cfgAt(draft,settingsTab).target=e.target.value; });
 $("s-add-max").addEventListener("input",e=>{ const v=parseInt(e.target.value,10); draft.retenues.add.max = (e.target.value===""||isNaN(v)) ? null : v; });
 let draftPin = "0000";
 function openSettings(){
-  draft = {retenues:clone(S.cfgs.retenues), tables:clone(S.cfgs.tables), mix:clone(S.cfgs.mix), faussaire:clone(S.cfgs.faussaire)};
+  draft = {
+    retenues:clone(S.cfgs.retenues), tables:clone(S.cfgs.tables), mix:clone(S.cfgs.mix),
+    faussaire:{dictee:clone(S.cfgs.faussaire.dictee), trou:clone(S.cfgs.faussaire.trou), correction:clone(S.cfgs.faussaire.correction)}
+  };
   draftPin=PIN; settingsTab="retenues"; $("warn").textContent=""; fillSettings(); $("settings").classList.add("show"); $("settings").scrollTop=0;
 }
 $("s-cancel").addEventListener("click",()=>$("settings").classList.remove("show"));
@@ -1519,8 +1787,8 @@ $("s-reset").addEventListener("click",()=>{ S.stats={tries:0,errors:0,best:0,ope
 $("s-save").addEventListener("click",async ()=>{
   if(!/^\d{4}$/.test(String(draftPin||""))){ $("warn").textContent="Le code du parent doit faire exactement 4 chiffres."; return; }
 
-  for(const key of ["retenues","tables","mix","faussaire"]){
-    const d=draft[key];
+  for(const key of ["retenues","tables","mix","faussaire:dictee","faussaire:trou","faussaire:correction"]){
+    const d=cfgAt(draft,key);
     d.code = String(d.code||"").replace(/\D/g,"") || "5472";
     d.target = Math.min(20,Math.max(2,parseInt(d.target,10)||6));
   }
@@ -1535,9 +1803,12 @@ $("s-save").addEventListener("click",async ()=>{
     }
   }
 
+  // les 3 épreuves du Faussaire ne peuvent jamais rester sans série active : correction silencieuse
+  for(const act of ["dictee","trou","correction"]) ensureMinOp("faussaire:"+act, draft.faussaire[act]);
+
   S.filousActifs = S.filousActifs || {};
   const notes=[];
-  for(const [id,label] of [["retenues","Le Faussaire des Retenues"],["tables","Le Tricheur des Tables"],["faussaire","Le Faussaire"]]){
+  for(const [id,label] of [["retenues","Le Faussaire des Retenues"],["tables","Le Tricheur des Tables"]]){
     if(!hasActiveOps(id,draft[id]) && S.filousActifs[id]!==false){ S.filousActifs[id]=false; notes.push(`${label} a été désactivé : plus aucune épreuve n'était active.`); }
   }
   if(notes.length) await store.set(pk("brigade-filous",ACTIVE_ID), S.filousActifs);
@@ -1546,7 +1817,9 @@ $("s-save").addEventListener("click",async ()=>{
   await store.set(pk(CFG_STORE_KEY.retenues,ACTIVE_ID), S.cfgs.retenues);
   await store.set(pk(CFG_STORE_KEY.tables,ACTIVE_ID), S.cfgs.tables);
   await store.set(pk(CFG_STORE_KEY.mix,ACTIVE_ID), S.cfgs.mix);
-  await store.set(pk(CFG_STORE_KEY.faussaire,ACTIVE_ID), S.cfgs.faussaire);
+  await store.set(pk(CFG_STORE_KEY.faussaire_dictee,ACTIVE_ID), S.cfgs.faussaire.dictee);
+  await store.set(pk(CFG_STORE_KEY.faussaire_trou,ACTIVE_ID), S.cfgs.faussaire.trou);
+  await store.set(pk(CFG_STORE_KEY.faussaire_correction,ACTIVE_ID), S.cfgs.faussaire.correction);
   PIN = draftPin; await store.set("brigade-pin", PIN);
   $("settings").classList.remove("show");
   if(notes.length) alert(notes.join("\n"));

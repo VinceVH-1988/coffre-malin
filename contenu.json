@@ -1,5 +1,5 @@
 {
-  "version": "0.2.0",
+  "version": "0.3.0",
   "date": "2026-11-18",
   "dictee": [
     {
@@ -447,6 +447,1346 @@
     }
   ],
   "deguiseur": [],
-  "faussaire": [],
+  "faussaire": [
+    {
+      "mot": "lundi",
+      "serie": 1,
+      "piege": "un",
+      "zones": [
+        "l",
+        "un",
+        "di"
+      ],
+      "blank": 1,
+      "choices": [
+        "un",
+        "in",
+        "ain"
+      ],
+      "faux": "lindi"
+    },
+    {
+      "mot": "mercredi",
+      "serie": 1,
+      "piege": "c (et non qu)",
+      "zones": [
+        "mer",
+        "c",
+        "redi"
+      ],
+      "blank": 1,
+      "choices": [
+        "c",
+        "qu"
+      ],
+      "faux": "merquredi"
+    },
+    {
+      "mot": "jeudi",
+      "serie": 1,
+      "piege": "eu",
+      "zones": [
+        "j",
+        "eu",
+        "di"
+      ],
+      "blank": 1,
+      "choices": [
+        "eu",
+        "u",
+        "ou"
+      ],
+      "faux": "judi"
+    },
+    {
+      "mot": "vendredi",
+      "serie": 1,
+      "piege": "en",
+      "zones": [
+        "v",
+        "en",
+        "dredi"
+      ],
+      "blank": 1,
+      "choices": [
+        "en",
+        "an",
+        "in"
+      ],
+      "faux": "vandredi"
+    },
+    {
+      "mot": "dimanche",
+      "serie": 1,
+      "piege": "an",
+      "zones": [
+        "dim",
+        "an",
+        "che"
+      ],
+      "blank": 1,
+      "choices": [
+        "an",
+        "en",
+        "in"
+      ],
+      "faux": "dimenche"
+    },
+    {
+      "mot": "pendant",
+      "serie": 1,
+      "piege": "en puis an, t muet",
+      "zones": [
+        "p",
+        "en",
+        "dant"
+      ],
+      "blank": 1,
+      "choices": [
+        "en",
+        "an",
+        "in"
+      ],
+      "faux": "pandant"
+    },
+    {
+      "mot": "les vacances",
+      "serie": 1,
+      "piege": "c, s du pluriel",
+      "zones": [
+        "les va",
+        "c",
+        "ances"
+      ],
+      "blank": 1,
+      "choices": [
+        "c",
+        "s",
+        "ss"
+      ],
+      "faux": "les vasances"
+    },
+    {
+      "mot": "un élève",
+      "serie": 1,
+      "piege": "é puis è, pluriel en s",
+      "zones": [
+        "un él",
+        "è",
+        "ve"
+      ],
+      "blank": 1,
+      "choices": [
+        "è",
+        "é",
+        "e"
+      ],
+      "faux": "un éléve"
+    },
+    {
+      "mot": "une peinture",
+      "serie": 2,
+      "piege": "ein",
+      "zones": [
+        "une p",
+        "ein",
+        "ture"
+      ],
+      "blank": 1,
+      "choices": [
+        "ein",
+        "in",
+        "ain"
+      ],
+      "faux": "une pinture"
+    },
+    {
+      "mot": "une activité artistique",
+      "serie": 2,
+      "piege": "é final, qu",
+      "zones": [
+        "une activité artisti",
+        "qu",
+        "e"
+      ],
+      "blank": 1,
+      "choices": [
+        "qu",
+        "c",
+        "k"
+      ],
+      "faux": "une activité artistice"
+    },
+    {
+      "mot": "les couleurs",
+      "serie": 2,
+      "piege": "ou, s muet",
+      "zones": [
+        "les c",
+        "ou",
+        "leurs"
+      ],
+      "blank": 1,
+      "choices": [
+        "ou",
+        "o",
+        "u"
+      ],
+      "faux": "les coleurs"
+    },
+    {
+      "mot": "une sculpture",
+      "serie": 2,
+      "piege": "p muet",
+      "zones": [
+        "une scu",
+        "lp",
+        "ture"
+      ],
+      "blank": 1,
+      "choices": [
+        "lp",
+        "l"
+      ],
+      "faux": "une sculture"
+    },
+    {
+      "mot": "le théâtre",
+      "serie": 2,
+      "piege": "th, â",
+      "zones": [
+        "le ",
+        "th",
+        "éâtre"
+      ],
+      "blank": 1,
+      "choices": [
+        "th",
+        "t"
+      ],
+      "faux": "le téâtre"
+    },
+    {
+      "mot": "l'imagination",
+      "serie": 2,
+      "piege": "tion",
+      "zones": [
+        "l'imagina",
+        "tion",
+        ""
+      ],
+      "blank": 1,
+      "choices": [
+        "tion",
+        "sion"
+      ],
+      "faux": "l'imaginasion"
+    },
+    {
+      "mot": "un dessin",
+      "serie": 2,
+      "piege": "ss, in",
+      "zones": [
+        "un de",
+        "ss",
+        "in"
+      ],
+      "blank": 1,
+      "choices": [
+        "ss",
+        "s"
+      ],
+      "faux": "un desin"
+    },
+    {
+      "mot": "la musique",
+      "serie": 2,
+      "piege": "s qui chante z, qu",
+      "zones": [
+        "la mu",
+        "s",
+        "ique"
+      ],
+      "blank": 1,
+      "choices": [
+        "s",
+        "z"
+      ],
+      "faux": "la muzique"
+    },
+    {
+      "mot": "une œuvre",
+      "serie": 2,
+      "piege": "œ",
+      "zones": [
+        "une ",
+        "œ",
+        "uvre"
+      ],
+      "blank": 1,
+      "choices": [
+        "œ",
+        "oe",
+        "eu"
+      ],
+      "faux": "une oeuvre"
+    },
+    {
+      "mot": "mademoiselle",
+      "serie": 3,
+      "piege": "ll",
+      "zones": [
+        "mademoise",
+        "ll",
+        "e"
+      ],
+      "blank": 1,
+      "choices": [
+        "ll",
+        "l"
+      ],
+      "faux": "mademoisele"
+    },
+    {
+      "mot": "monsieur",
+      "serie": 3,
+      "piege": "on prononcé e, eu",
+      "zones": [
+        "m",
+        "on",
+        "sieur"
+      ],
+      "blank": 1,
+      "choices": [
+        "on",
+        "eu"
+      ],
+      "faux": "meusieur"
+    },
+    {
+      "mot": "l'adresse",
+      "serie": 3,
+      "piege": "un seul d, ss",
+      "zones": [
+        "l'adre",
+        "ss",
+        "e"
+      ],
+      "blank": 1,
+      "choices": [
+        "ss",
+        "s"
+      ],
+      "faux": "l'adrese"
+    },
+    {
+      "mot": "la ville",
+      "serie": 3,
+      "piege": "ll, pluriel en s",
+      "zones": [
+        "la vi",
+        "ll",
+        "e"
+      ],
+      "blank": 1,
+      "choices": [
+        "ll",
+        "l"
+      ],
+      "faux": "la vile"
+    },
+    {
+      "mot": "le village",
+      "serie": 3,
+      "piege": "ll, ge",
+      "zones": [
+        "le vi",
+        "ll",
+        "age"
+      ],
+      "blank": 1,
+      "choices": [
+        "ll",
+        "l"
+      ],
+      "faux": "le vilage"
+    },
+    {
+      "mot": "la rue",
+      "serie": 3,
+      "piege": "e muet, pluriel en s",
+      "zones": [
+        "la r",
+        "ue",
+        ""
+      ],
+      "blank": 1,
+      "choices": [
+        "ue",
+        "u"
+      ],
+      "faux": "la ru"
+    },
+    {
+      "mot": "le numéro de téléphone",
+      "serie": 3,
+      "piege": "ph, é",
+      "zones": [
+        "le numéro de télé",
+        "ph",
+        "one"
+      ],
+      "blank": 1,
+      "choices": [
+        "ph",
+        "f"
+      ],
+      "faux": "le numéro de téléfone"
+    },
+    {
+      "mot": "une enveloppe",
+      "serie": 3,
+      "piege": "pp",
+      "zones": [
+        "une envelo",
+        "pp",
+        "e"
+      ],
+      "blank": 1,
+      "choices": [
+        "pp",
+        "p"
+      ],
+      "faux": "une envelope"
+    },
+    {
+      "mot": "un timbre",
+      "serie": 3,
+      "piege": "im devant b, pluriel en s",
+      "zones": [
+        "un t",
+        "im",
+        "bre"
+      ],
+      "blank": 1,
+      "choices": [
+        "im",
+        "in"
+      ],
+      "faux": "un tinbre"
+    },
+    {
+      "mot": "une année",
+      "serie": 4,
+      "piege": "nn, ée",
+      "zones": [
+        "une a",
+        "nn",
+        "ée"
+      ],
+      "blank": 1,
+      "choices": [
+        "nn",
+        "n"
+      ],
+      "faux": "une anée"
+    },
+    {
+      "mot": "la saison",
+      "serie": 4,
+      "piege": "s qui chante z",
+      "zones": [
+        "la ",
+        "s",
+        "aison"
+      ],
+      "blank": 1,
+      "choices": [
+        "s",
+        "z"
+      ],
+      "faux": "la zaison"
+    },
+    {
+      "mot": "le calendrier",
+      "serie": 4,
+      "piege": "en",
+      "zones": [
+        "le cal",
+        "en",
+        "drier"
+      ],
+      "blank": 1,
+      "choices": [
+        "en",
+        "an"
+      ],
+      "faux": "le calandrier"
+    },
+    {
+      "mot": "l'automne",
+      "serie": 4,
+      "piege": "au, m muet",
+      "zones": [
+        "l'",
+        "au",
+        "tomne"
+      ],
+      "blank": 1,
+      "choices": [
+        "au",
+        "o"
+      ],
+      "faux": "l'otomne"
+    },
+    {
+      "mot": "une citrouille",
+      "serie": 4,
+      "piege": "c qui chante s, ouille",
+      "zones": [
+        "une ",
+        "c",
+        "itrouille"
+      ],
+      "blank": 1,
+      "choices": [
+        "c",
+        "s"
+      ],
+      "faux": "une sitrouille"
+    },
+    {
+      "mot": "tomber",
+      "serie": 4,
+      "piege": "om devant b",
+      "zones": [
+        "t",
+        "om",
+        "ber"
+      ],
+      "blank": 1,
+      "choices": [
+        "om",
+        "on"
+      ],
+      "faux": "tonber"
+    },
+    {
+      "mot": "une feuille",
+      "serie": 4,
+      "piege": "euille",
+      "zones": [
+        "une f",
+        "euille",
+        ""
+      ],
+      "blank": 1,
+      "choices": [
+        "euille",
+        "eille"
+      ],
+      "faux": "une feille"
+    },
+    {
+      "mot": "un écureuil",
+      "serie": 4,
+      "piege": "euil, pluriel en s",
+      "zones": [
+        "un écur",
+        "euil",
+        ""
+      ],
+      "blank": 1,
+      "choices": [
+        "euil",
+        "euille"
+      ],
+      "faux": "un écureuille"
+    },
+    {
+      "mot": "un instrument de mesure",
+      "serie": 5,
+      "piege": "in, t muet",
+      "zones": [
+        "un ",
+        "in",
+        "strument de mesure"
+      ],
+      "blank": 1,
+      "choices": [
+        "in",
+        "un"
+      ],
+      "faux": "un unstrument de mesure"
+    },
+    {
+      "mot": "la masse",
+      "serie": 5,
+      "piege": "ss",
+      "zones": [
+        "la ma",
+        "ss",
+        "e"
+      ],
+      "blank": 1,
+      "choices": [
+        "ss",
+        "s"
+      ],
+      "faux": "la mase"
+    },
+    {
+      "mot": "la longueur",
+      "serie": 5,
+      "piege": "gu",
+      "zones": [
+        "la lon",
+        "gu",
+        "eur"
+      ],
+      "blank": 1,
+      "choices": [
+        "gu",
+        "g"
+      ],
+      "faux": "la longeur"
+    },
+    {
+      "mot": "la température",
+      "serie": 5,
+      "piege": "em devant p",
+      "zones": [
+        "la t",
+        "em",
+        "pérature"
+      ],
+      "blank": 1,
+      "choices": [
+        "em",
+        "en"
+      ],
+      "faux": "la tenpérature"
+    },
+    {
+      "mot": "la capacité",
+      "serie": 5,
+      "piege": "é final",
+      "zones": [
+        "la capacit",
+        "é",
+        ""
+      ],
+      "blank": 1,
+      "choices": [
+        "é",
+        "ée"
+      ],
+      "faux": "la capacitée"
+    },
+    {
+      "mot": "le temps",
+      "serie": 5,
+      "piege": "mps",
+      "zones": [
+        "le te",
+        "mps",
+        ""
+      ],
+      "blank": 1,
+      "choices": [
+        "mps",
+        "mp"
+      ],
+      "faux": "le temp"
+    },
+    {
+      "mot": "la durée",
+      "serie": 5,
+      "piege": "ée",
+      "zones": [
+        "la dur",
+        "ée",
+        ""
+      ],
+      "blank": 1,
+      "choices": [
+        "ée",
+        "é"
+      ],
+      "faux": "la duré"
+    },
+    {
+      "mot": "la monnaie",
+      "serie": 5,
+      "piege": "nn, aie",
+      "zones": [
+        "la mo",
+        "nn",
+        "aie"
+      ],
+      "blank": 1,
+      "choices": [
+        "nn",
+        "n"
+      ],
+      "faux": "la monaie"
+    },
+    {
+      "mot": "le cout",
+      "serie": 5,
+      "piege": "orthographe rectifiée, sans accent",
+      "zones": [
+        "le co",
+        "u",
+        "t"
+      ],
+      "blank": 1,
+      "choices": [
+        "u",
+        "û"
+      ],
+      "faux": "le coût"
+    },
+    {
+      "mot": "mesurer",
+      "serie": 5,
+      "piege": "s qui chante z",
+      "zones": [
+        "me",
+        "s",
+        "urer"
+      ],
+      "blank": 1,
+      "choices": [
+        "s",
+        "z"
+      ],
+      "faux": "mezurer"
+    },
+    {
+      "mot": "l'heure",
+      "serie": 6,
+      "piege": "h muet, eu",
+      "zones": [
+        "l'",
+        "h",
+        "eure"
+      ],
+      "blank": 1,
+      "choices": [
+        "h",
+        ""
+      ],
+      "faux": "l'eure"
+    },
+    {
+      "mot": "aujourd'hui",
+      "serie": 6,
+      "piege": "apostrophe",
+      "zones": [
+        "aujourd",
+        "'",
+        "hui"
+      ],
+      "blank": 1,
+      "choices": [
+        "'",
+        ""
+      ],
+      "faux": "aujourdhui"
+    },
+    {
+      "mot": "demain",
+      "serie": 6,
+      "piege": "ain",
+      "zones": [
+        "dem",
+        "ain",
+        ""
+      ],
+      "blank": 1,
+      "choices": [
+        "ain",
+        "in"
+      ],
+      "faux": "demin"
+    },
+    {
+      "mot": "hier",
+      "serie": 6,
+      "piege": "h muet",
+      "zones": [
+        "",
+        "h",
+        "ier"
+      ],
+      "blank": 1,
+      "choices": [
+        "h",
+        ""
+      ],
+      "faux": "ier"
+    },
+    {
+      "mot": "avant",
+      "serie": 6,
+      "piege": "an, t muet",
+      "zones": [
+        "av",
+        "an",
+        "t"
+      ],
+      "blank": 1,
+      "choices": [
+        "an",
+        "en"
+      ],
+      "faux": "avent"
+    },
+    {
+      "mot": "après",
+      "serie": 6,
+      "piege": "è, s muet",
+      "zones": [
+        "apr",
+        "è",
+        "s"
+      ],
+      "blank": 1,
+      "choices": [
+        "è",
+        "é"
+      ],
+      "faux": "aprés"
+    },
+    {
+      "mot": "maintenant",
+      "serie": 6,
+      "piege": "ain, en, an",
+      "zones": [
+        "m",
+        "ain",
+        "tenant"
+      ],
+      "blank": 1,
+      "choices": [
+        "ain",
+        "in"
+      ],
+      "faux": "mintenant"
+    },
+    {
+      "mot": "souvent",
+      "serie": 6,
+      "piege": "ou, ent",
+      "zones": [
+        "souv",
+        "ent",
+        ""
+      ],
+      "blank": 1,
+      "choices": [
+        "ent",
+        "ant"
+      ],
+      "faux": "souvant"
+    },
+    {
+      "mot": "déjà",
+      "serie": 6,
+      "piege": "é, à",
+      "zones": [
+        "déj",
+        "à",
+        ""
+      ],
+      "blank": 1,
+      "choices": [
+        "à",
+        "a"
+      ],
+      "faux": "déja"
+    },
+    {
+      "mot": "plus tard",
+      "serie": 6,
+      "piege": "deux mots, s et d muets",
+      "zones": [
+        "plus tar",
+        "d",
+        ""
+      ],
+      "blank": 1,
+      "choices": [
+        "d",
+        ""
+      ],
+      "faux": "plus tar"
+    },
+    {
+      "mot": "cher",
+      "serie": 7,
+      "piege": "accord masculin/féminin",
+      "zones": [
+        "ch",
+        "er",
+        ""
+      ],
+      "blank": 1,
+      "choices": [
+        "er",
+        "ère"
+      ],
+      "faux": "chère"
+    },
+    {
+      "mot": "j'espère",
+      "serie": 7,
+      "piege": "pas d'accent sur le premier e",
+      "zones": [
+        "j'",
+        "e",
+        "spère"
+      ],
+      "blank": 1,
+      "choices": [
+        "e",
+        "é"
+      ],
+      "faux": "j'éspère"
+    },
+    {
+      "mot": "voici",
+      "serie": 7,
+      "piege": "c et non ss",
+      "zones": [
+        "voi",
+        "c",
+        "i"
+      ],
+      "blank": 1,
+      "choices": [
+        "c",
+        "ss"
+      ],
+      "faux": "voissi"
+    },
+    {
+      "mot": "recevoir",
+      "serie": 7,
+      "piege": "pas de cédille devant e",
+      "zones": [
+        "re",
+        "c",
+        "evoir"
+      ],
+      "blank": 1,
+      "choices": [
+        "c",
+        "ç"
+      ],
+      "faux": "reçevoir"
+    },
+    {
+      "mot": "une lettre",
+      "serie": 7,
+      "piege": "deux t, pas d'accent",
+      "zones": [
+        "une le",
+        "tt",
+        "re"
+      ],
+      "blank": 1,
+      "choices": [
+        "tt",
+        "t"
+      ],
+      "faux": "une letre"
+    },
+    {
+      "mot": "un jeu",
+      "serie": 7,
+      "piege": "pluriel en x",
+      "zones": [
+        "un j",
+        "eu",
+        ""
+      ],
+      "blank": 1,
+      "choices": [
+        "eu",
+        "u"
+      ],
+      "faux": "un ju"
+    },
+    {
+      "mot": "un gros bisou",
+      "serie": 7,
+      "piege": "pluriel en s, gros invariable",
+      "zones": [
+        "un gros bis",
+        "ou",
+        ""
+      ],
+      "blank": 1,
+      "choices": [
+        "ou",
+        "oux"
+      ],
+      "faux": "un gros bisoux"
+    },
+    {
+      "mot": "je te souhaite",
+      "serie": 7,
+      "piege": "ou, h muet, ai",
+      "zones": [
+        "je te sou",
+        "h",
+        "aite"
+      ],
+      "blank": 1,
+      "choices": [
+        "h",
+        ""
+      ],
+      "faux": "je te souaite"
+    },
+    {
+      "mot": "à bientôt",
+      "serie": 7,
+      "piege": "à, ô, t muet",
+      "zones": [
+        "à bient",
+        "ô",
+        "t"
+      ],
+      "blank": 1,
+      "choices": [
+        "ô",
+        "o"
+      ],
+      "faux": "à bientot"
+    },
+    {
+      "mot": "avec",
+      "serie": 8,
+      "piege": "c final",
+      "zones": [
+        "ave",
+        "c",
+        ""
+      ],
+      "blank": 1,
+      "choices": [
+        "c",
+        "k"
+      ],
+      "faux": "avek"
+    },
+    {
+      "mot": "alors",
+      "serie": 8,
+      "piege": "s muet",
+      "zones": [
+        "alor",
+        "s",
+        ""
+      ],
+      "blank": 1,
+      "choices": [
+        "s",
+        ""
+      ],
+      "faux": "alor"
+    },
+    {
+      "mot": "assez",
+      "serie": 8,
+      "piege": "ss, ez",
+      "zones": [
+        "a",
+        "ss",
+        "ez"
+      ],
+      "blank": 1,
+      "choices": [
+        "ss",
+        "s"
+      ],
+      "faux": "asez"
+    },
+    {
+      "mot": "aucun",
+      "serie": 8,
+      "piege": "un",
+      "zones": [
+        "auc",
+        "un",
+        ""
+      ],
+      "blank": 1,
+      "choices": [
+        "un",
+        "in"
+      ],
+      "faux": "aucin"
+    },
+    {
+      "mot": "bien",
+      "serie": 8,
+      "piege": "ien",
+      "zones": [
+        "b",
+        "ien",
+        ""
+      ],
+      "blank": 1,
+      "choices": [
+        "ien",
+        "in"
+      ],
+      "faux": "bin"
+    },
+    {
+      "mot": "chez",
+      "serie": 8,
+      "piege": "ez",
+      "zones": [
+        "ch",
+        "ez",
+        ""
+      ],
+      "blank": 1,
+      "choices": [
+        "ez",
+        "é"
+      ],
+      "faux": "ché"
+    },
+    {
+      "mot": "combien",
+      "serie": 8,
+      "piege": "om devant b, ien",
+      "zones": [
+        "c",
+        "om",
+        "bien"
+      ],
+      "blank": 1,
+      "choices": [
+        "om",
+        "on"
+      ],
+      "faux": "conbien"
+    },
+    {
+      "mot": "dans",
+      "serie": 8,
+      "piege": "an, s muet",
+      "zones": [
+        "d",
+        "an",
+        "s"
+      ],
+      "blank": 2,
+      "choices": [
+        "s",
+        ""
+      ],
+      "faux": "dan"
+    },
+    {
+      "mot": "dehors",
+      "serie": 8,
+      "piege": "h, s muet",
+      "zones": [
+        "de",
+        "h",
+        "ors"
+      ],
+      "blank": 1,
+      "choices": [
+        "h",
+        ""
+      ],
+      "faux": "deors"
+    },
+    {
+      "mot": "depuis",
+      "serie": 8,
+      "piege": "s muet",
+      "zones": [
+        "depui",
+        "s",
+        ""
+      ],
+      "blank": 1,
+      "choices": [
+        "s",
+        ""
+      ],
+      "faux": "depui"
+    },
+    {
+      "mot": "encore",
+      "serie": 8,
+      "piege": "en",
+      "zones": [
+        "",
+        "en",
+        "core"
+      ],
+      "blank": 1,
+      "choices": [
+        "en",
+        "an"
+      ],
+      "faux": "ancore"
+    },
+    {
+      "mot": "enfin",
+      "serie": 8,
+      "piege": "en puis in",
+      "zones": [
+        "",
+        "en",
+        "fin"
+      ],
+      "blank": 1,
+      "choices": [
+        "en",
+        "in"
+      ],
+      "faux": "infin"
+    },
+    {
+      "mot": "ensuite",
+      "serie": 8,
+      "piege": "en, ui",
+      "zones": [
+        "",
+        "en",
+        "suite"
+      ],
+      "blank": 1,
+      "choices": [
+        "en",
+        "an"
+      ],
+      "faux": "ansuite"
+    },
+    {
+      "mot": "entre",
+      "serie": 8,
+      "piege": "en",
+      "zones": [
+        "",
+        "en",
+        "tre"
+      ],
+      "blank": 1,
+      "choices": [
+        "en",
+        "an"
+      ],
+      "faux": "antre"
+    },
+    {
+      "mot": "ici",
+      "serie": 8,
+      "piege": "c",
+      "zones": [
+        "i",
+        "c",
+        "i"
+      ],
+      "blank": 1,
+      "choices": [
+        "c",
+        "ss"
+      ],
+      "faux": "issi"
+    },
+    {
+      "mot": "jamais",
+      "serie": 8,
+      "piege": "ai, s muet",
+      "zones": [
+        "jam",
+        "ai",
+        "s"
+      ],
+      "blank": 1,
+      "choices": [
+        "ai",
+        "e"
+      ],
+      "faux": "james"
+    },
+    {
+      "mot": "lendemain",
+      "serie": 8,
+      "piege": "en, ain",
+      "zones": [
+        "l",
+        "en",
+        "demain"
+      ],
+      "blank": 1,
+      "choices": [
+        "en",
+        "an"
+      ],
+      "faux": "landemain"
+    },
+    {
+      "mot": "longtemps",
+      "serie": 8,
+      "piege": "on, mps",
+      "zones": [
+        "longte",
+        "mps",
+        ""
+      ],
+      "blank": 1,
+      "choices": [
+        "mps",
+        "mp"
+      ],
+      "faux": "longtemp"
+    },
+    {
+      "mot": "mais",
+      "serie": 8,
+      "piege": "ai, s muet",
+      "zones": [
+        "m",
+        "ais",
+        ""
+      ],
+      "blank": 1,
+      "choices": [
+        "ais",
+        "es"
+      ],
+      "faux": "mes"
+    },
+    {
+      "mot": "même",
+      "serie": 8,
+      "piege": "ê",
+      "zones": [
+        "m",
+        "ê",
+        "me"
+      ],
+      "blank": 1,
+      "choices": [
+        "ê",
+        "e"
+      ],
+      "faux": "meme"
+    }
+  ],
   "menteur": []
 }
