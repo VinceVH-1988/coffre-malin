@@ -1,8 +1,8 @@
 // Coffre Malin, service worker.
 // Réseau d'abord : si l'iPhone a du réseau, il prend toujours la dernière version publiée.
 // Sans réseau, il utilise la copie gardée en mémoire.
-const CACHE = "coffre-malin-v1";
-const FILES = ["./", "index.html", "manifest.webmanifest", "icons/apple-touch-icon.png", "icons/icon-192.png", "icons/icon-512.png"];
+const CACHE = "coffre-malin-v2";
+const FILES = ["./", "index.html", "manifest.webmanifest", "contenu.json", "icons/apple-touch-icon.png", "icons/icon-192.png", "icons/icon-512.png"];
 
 self.addEventListener("install", e => {
   e.waitUntil(caches.open(CACHE).then(c => c.addAll(FILES)));
