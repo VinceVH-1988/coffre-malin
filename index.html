@@ -175,12 +175,13 @@ button:focus-visible,input:focus-visible,select:focus-visible{outline:4px solid 
   .vault-wrap{grid-area:vault;min-height:0;height:clamp(120px,32dvh,220px);padding:0;align-self:center;justify-self:center;width:100%}
   .pad{grid-area:pad;align-self:center;justify-self:center;width:100%;max-width:280px;gap:4px}
   .pad button{padding:4px 0;font-size:clamp(1rem,3dvh,1.4rem)}
-  .dictee-pad,.choice-pad{grid-area:pad;align-self:center;justify-self:center;width:100%;max-width:340px}
+  .dictee-pad,.choice-pad,.verbe-pad,.habille-pad{grid-area:pad;align-self:center;justify-self:center;width:100%;max-width:340px}
   .dictee-pad .kb{gap:3px;margin:2px 0}
   .dictee-pad .kbd{padding:4px 0;font-size:.8rem}
   .dictee-pad #word-validate{padding:6px 16px;font-size:1rem}
   .choices{gap:6px}
   .choice-chip{padding:6px 14px;font-size:.95rem}
+  .hp-btn{padding:8px 14px;font-size:.95rem}
   main > .foot{grid-area:foot;min-height:0}
 
   .home.show{display:grid;
@@ -197,6 +198,13 @@ button:focus-visible,input:focus-visible,select:focus-visible{outline:4px solid 
   .mode-name{font-size:clamp(.95rem,2.6dvh,1.2rem)}
   .mode-desc{font-size:clamp(.68rem,1.7dvh,.82rem)}
   .home-info{grid-area:info;font-size:clamp(.65rem,1.6dvh,.78rem)}
+
+  .menteur-screen{padding-top:calc(env(safe-area-inset-top) + 4px);padding-bottom:calc(env(safe-area-inset-bottom) + 4px);gap:4px}
+  .menteur-screen .kicker{font-size:clamp(.65rem,1.6dvh,.8rem)}
+  .menteur-screen h1{font-size:clamp(.9rem,2.6dvh,1.2rem)}
+  .menteur-question{font-size:clamp(.85rem,2.6dvh,1.1rem)}
+  .menteur-choices{gap:8px}
+  .menteur-rappel{font-size:.85rem;padding:6px 10px}
 }
 
 /* ---------- profils ---------- */
@@ -275,12 +283,12 @@ button:focus-visible,input:focus-visible,select:focus-visible{outline:4px solid 
 .dictee-pad.show{display:flex}
 .btn.teal{background:var(--teal);color:#fff}
 .listen-btn{margin:6px auto 0;display:inline-block}
-.word-note{min-height:1.1em;font-size:.82rem;color:var(--muted);margin-top:2px}
+.word-note{min-height:1.1em;font-size:.82rem;color:#5b6878;margin-top:2px}
 .cursive{font-family:var(--cursive)}
-.word-zones{display:flex;flex-wrap:wrap;justify-content:center;align-items:baseline;gap:2px;font-size:min(1.6rem,9cqw);color:var(--ink);line-height:1.2;padding:4px 6px;width:100%;max-width:100%}
+.word-zones{display:flex;flex-wrap:nowrap;white-space:nowrap;justify-content:center;align-items:baseline;gap:2px;font-size:min(1.6rem,9cqw);color:var(--panel-ink);line-height:1.2;padding:4px 6px;width:100%;max-width:100%;overflow:hidden}
 .word-zones span{white-space:pre}
 .word-zones .blankzone{display:inline-flex;align-items:center;justify-content:center;min-width:.9em;padding:0 .1em;border-bottom:3px solid var(--mustard);color:var(--mustard);font-weight:700}
-.word-zones .zonebtn{font:inherit;font-family:var(--cursive);font-size:inherit;line-height:1.2;color:var(--ink);background:none;border:none;border-bottom:3px solid transparent;padding:0 .05em;cursor:pointer;min-width:.5em;min-height:1.2em}
+.word-zones .zonebtn{font:inherit;font-family:var(--cursive);font-size:inherit;line-height:1.2;color:var(--panel-ink);background:none;border:none;border-bottom:3px solid transparent;padding:0 .05em;cursor:pointer;min-width:.5em;min-height:1.2em}
 .word-zones .zonebtn:hover,.word-zones .zonebtn:focus-visible{border-bottom-color:var(--mustard)}
 .word-zones .zonebtn:active{transform:translateY(2px)}
 .choice-pad{display:none;width:100%;flex:none}
@@ -289,6 +297,38 @@ button:focus-visible,input:focus-visible,select:focus-visible{outline:4px solid 
 .choice-chip{font:inherit;font-size:1.05rem;font-weight:700;padding:10px 20px;border-radius:999px;border:2px solid var(--ink);
   background:var(--key);color:var(--key-ink);box-shadow:0 3px 0 var(--key-shadow);cursor:pointer}
 .choice-chip:active{transform:translateY(3px);box-shadow:0 0 0 var(--key-shadow)}
+.vx-btn{font:inherit;font-size:2.4rem;font-weight:700;line-height:1;width:84px;height:68px;border-radius:18px;border:3px solid var(--ink);
+  cursor:pointer;box-shadow:0 5px 0 var(--key-shadow);color:#fff}
+.vx-btn:active{transform:translateY(4px);box-shadow:0 1px 0 var(--key-shadow)}
+.vx-btn.vx-true{background:var(--teal)}
+.vx-btn.vx-false{background:var(--red)}
+
+/* ---------- Le Déguiseur ---------- */
+.sentence-zone{flex-wrap:wrap;justify-content:center;align-items:baseline;gap:.3em;font-size:min(1.35rem,7cqw);color:var(--panel-ink);line-height:1.5;padding:4px 10px;width:100%;max-width:100%;word-break:normal;overflow-wrap:normal}
+.sentence-zone span{white-space:pre}
+.hlverb{display:inline-block;border:3px solid var(--red);border-radius:8px;padding:0 .15em;color:var(--red);font-weight:700;white-space:pre}
+.tokbtn{font:inherit;font-family:var(--cursive);font-size:inherit;line-height:1.5;color:var(--panel-ink);background:none;border:none;border-bottom:3px solid transparent;padding:0 .05em;cursor:pointer}
+.tokbtn:hover,.tokbtn:focus-visible{border-bottom-color:var(--mustard)}
+.tokbtn.selected{border-bottom-color:var(--mustard);color:var(--mustard);font-weight:700}
+.tokbtn:active{transform:translateY(2px)}
+.verbe-pad,.habille-pad{display:none;width:100%;flex:none;align-items:center;justify-content:center;gap:10px}
+.verbe-pad.show{display:flex}
+.habille-pad.show{display:flex;flex-wrap:wrap}
+.hp-btn{font:inherit;font-size:1.05rem;font-weight:700;padding:12px 20px;border-radius:14px;border:3px solid var(--ink);
+  background:var(--key);color:var(--key-ink);box-shadow:0 4px 0 var(--key-shadow);cursor:pointer}
+.hp-btn:active{transform:translateY(3px);box-shadow:0 1px 0 var(--key-shadow)}
+
+/* ---------- Le Menteur ---------- */
+.menteur-screen{position:fixed;inset:0;z-index:3;background:var(--bg);display:none;flex-direction:column;align-items:center;
+  gap:clamp(8px,1.8dvh,16px);
+  padding:calc(env(safe-area-inset-top) + 2dvh) calc(env(safe-area-inset-right) + 18px) calc(env(safe-area-inset-bottom) + 1.5dvh) calc(env(safe-area-inset-left) + 18px)}
+.menteur-screen.show{display:flex}
+.menteur-screen .kicker{font-weight:700;letter-spacing:.2em;color:var(--mustard);font-size:clamp(.75rem,1.8dvh,.95rem);flex:none}
+.menteur-screen h1{font-size:clamp(1.4rem,4.2dvh,2rem);margin:0}
+.menteur-question{font-size:clamp(1.1rem,3.4dvh,1.5rem);font-weight:700;text-align:center;max-width:460px;flex:1 1 auto;display:flex;align-items:center;justify-content:center;min-height:0}
+.menteur-choices{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:14px;flex:none}
+.menteur-rappel{background:var(--panel);color:var(--panel-ink);border:3px solid var(--ink);border-radius:14px;padding:10px 14px;font-size:1rem;font-weight:600;text-align:center;max-width:460px;flex:none}
+.menteur-rappel.wrong{border-color:var(--red)}
 .tab-cat{font-size:.78rem;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);margin:10px 0 4px}
 .tab-cat:first-child{margin-top:0}
 </style>
@@ -314,6 +354,7 @@ button:focus-visible,input:focus-visible,select:focus-visible{outline:4px solid 
         <div class="answer empty" id="answer" aria-live="polite"></div>
         <div class="word-note" id="word-note" aria-live="polite"></div>
         <div class="word-zones cursive" id="word-zones" style="display:none"></div>
+        <div class="sentence-zone cursive" id="sentence-zone" style="display:none"></div>
         <div class="progress" id="progress"></div>
       </div>
     </div>
@@ -333,6 +374,15 @@ button:focus-visible,input:focus-visible,select:focus-visible{outline:4px solid 
 
   <div class="choice-pad" id="choice-pad">
     <div class="choices" id="word-choices"></div>
+  </div>
+
+  <div class="verbe-pad" id="verbe-pad">
+    <button type="button" class="btn teal" id="verbe-validate">Valider</button>
+  </div>
+
+  <div class="habille-pad" id="habille-pad">
+    <button type="button" class="hp-btn" id="hp-habille">Habillé</button>
+    <button type="button" class="hp-btn" id="hp-pyjama">En pyjama</button>
   </div>
 
   <div class="foot"><button class="btn ghost" id="again" style="display:none">Rejouer</button><button class="parent-link" id="profiles-link">Profils</button><button class="parent-link" id="filous-link">Filous</button><button class="parent-link" data-pin>Réglages</button></div>
@@ -366,10 +416,20 @@ button:focus-visible,input:focus-visible,select:focus-visible{outline:4px solid 
 </section>
 
 <section class="filous" id="activites" aria-label="Choisis une épreuve">
-  <div class="kicker">LE FAUSSAIRE</div>
+  <div class="kicker" id="activites-kicker">LE FAUSSAIRE</div>
   <h1>Quelle épreuve ?</h1>
   <div class="filou-list" id="activite-list"></div>
   <div class="foot"><button class="parent-link" id="activites-back">Filous</button><button class="parent-link" data-pin>Réglages</button></div>
+</section>
+
+<section class="menteur-screen" id="menteur-screen" aria-label="Le Menteur">
+  <div class="kicker">LE MENTEUR</div>
+  <h1>Vrai ou faux ?</h1>
+  <div class="menteur-question" id="menteur-question"></div>
+  <div class="menteur-choices" id="menteur-choices"></div>
+  <div class="menteur-rappel" id="menteur-rappel" style="display:none"></div>
+  <button type="button" class="btn teal" id="menteur-next" style="display:none">Question suivante</button>
+  <div class="foot"><button class="parent-link" id="menteur-back">Filous</button><button class="parent-link" data-pin>Réglages</button></div>
 </section>
 
 <section class="avatarcreate" id="avatarcreate" aria-label="Créer ton profil">
@@ -450,11 +510,17 @@ button:focus-visible,input:focus-visible,select:focus-visible{outline:4px solid 
       <div id="calc-tabs"></div>
     </div>
 
-    <div class="group">
+    <div class="group" id="g-coffre-mode">
       <div class="group-head"><h3 id="coffre-tab-title">Mode coffre</h3></div>
       <div class="field"><label for="s-target">Bonnes réponses d'affilée</label><input id="s-target" type="number" inputmode="numeric" min="2" max="20"></div>
       <div class="sub">Quand le coffre s'ouvre</div><div class="chips" data-radio="reward"></div>
       <div class="field" id="f-code"><label for="s-code">Code du cadenas</label><input id="s-code" inputmode="numeric" maxlength="6"></div>
+    </div>
+    <div class="group" id="g-menteur" data-tab="menteur">
+      <div class="group-head"><h3>Le Menteur</h3></div>
+      <div class="sub">Thèmes actifs pour ce profil</div>
+      <div class="chips" data-list="menteur-themes"></div>
+      <div class="sub">Pas de coffre pour Le Menteur : c'est un quiz de découverte, sans enjeu.</div>
     </div>
 
     <div class="group" id="g-add" data-tab="retenues">
@@ -503,6 +569,21 @@ button:focus-visible,input:focus-visible,select:focus-visible{outline:4px solid 
       <div class="group-head"><h3>Repérer et corriger</h3></div>
       <div class="sub">Séries actives pour ce profil</div>
       <div class="chips" data-list="faussaire:correction-series"></div>
+    </div>
+    <div class="group" id="g-deguiseur-verbe" data-tab="deguiseur:verbe">
+      <div class="group-head"><h3>Trouver le verbe</h3></div>
+      <div class="sub">Séries actives pour ce profil</div>
+      <div class="chips" data-list="deguiseur:verbe-series"></div>
+    </div>
+    <div class="group" id="g-deguiseur-habille" data-tab="deguiseur:habille">
+      <div class="group-head"><h3>Habillé ou en pyjama ?</h3></div>
+      <div class="sub">Séries actives pour ce profil</div>
+      <div class="chips" data-list="deguiseur:habille-series"></div>
+    </div>
+    <div class="group" id="g-deguiseur-infinitif" data-tab="deguiseur:infinitif">
+      <div class="group-head"><h3>Écrire l'infinitif</h3></div>
+      <div class="sub">Séries actives pour ce profil</div>
+      <div class="chips" data-list="deguiseur:infinitif-series"></div>
     </div>
 
     <div class="group">
@@ -680,7 +761,8 @@ const REWARD = {feu:"Feu d'artifice", code:"Code du cadenas"};
 const VILLAIN = {
   add:{name:"Le Faussaire des Retenues", art:"retenues"}, sub:{name:"Le Faussaire des Retenues", art:"retenues"},
   mul:{name:"Le Tricheur des Tables", art:"tables"}, div:{name:"Le Tricheur des Tables", art:"tables"},
-  faussaire:{name:"Le Faussaire", art:"faussaire_mot"}
+  faussaire:{name:"Le Faussaire", art:"faussaire_mot"},
+  deguiseur:{name:"Le Déguiseur", art:"deguiseur"}
 };
 const SYM = {add:"+", sub:"−", mul:"x", div:":"};
 const FORMS = {
@@ -700,13 +782,19 @@ const DEFAULT_TABLES = {
 };
 const DEFAULT_MIX = { code:"5472", target:6, reward:"feu" };
 const DEFAULT_FAUSSAIRE_ACTIVITY = { code:"5472", target:6, reward:"feu", series:[1,2,3,4,5,6,7,8] };
+const DEFAULT_DEGUISEUR_ACTIVITY = { code:"5472", target:6, reward:"feu", series:[1,2,3,4,5] };
+const DEFAULT_MENTEUR_CFG = { themes:["temps"] };
 const DEFAULTS_BY_FILOU = {
   retenues:DEFAULT_RETENUES, tables:DEFAULT_TABLES, mix:DEFAULT_MIX,
-  faussaire_dictee:DEFAULT_FAUSSAIRE_ACTIVITY, faussaire_trou:DEFAULT_FAUSSAIRE_ACTIVITY, faussaire_correction:DEFAULT_FAUSSAIRE_ACTIVITY
+  faussaire_dictee:DEFAULT_FAUSSAIRE_ACTIVITY, faussaire_trou:DEFAULT_FAUSSAIRE_ACTIVITY, faussaire_correction:DEFAULT_FAUSSAIRE_ACTIVITY,
+  deguiseur_verbe:DEFAULT_DEGUISEUR_ACTIVITY, deguiseur_habille:DEFAULT_DEGUISEUR_ACTIVITY, deguiseur_infinitif:DEFAULT_DEGUISEUR_ACTIVITY,
+  menteur:DEFAULT_MENTEUR_CFG
 };
 const CFG_STORE_KEY = {
   retenues:"coffre-cfg-retenues", tables:"coffre-cfg-tables", mix:"coffre-cfg-mix",
-  faussaire_dictee:"coffre-cfg-faussaire-dictee", faussaire_trou:"coffre-cfg-faussaire-trou", faussaire_correction:"coffre-cfg-faussaire-correction"
+  faussaire_dictee:"coffre-cfg-faussaire-dictee", faussaire_trou:"coffre-cfg-faussaire-trou", faussaire_correction:"coffre-cfg-faussaire-correction",
+  deguiseur_verbe:"coffre-cfg-deguiseur-verbe", deguiseur_habille:"coffre-cfg-deguiseur-habille", deguiseur_infinitif:"coffre-cfg-deguiseur-infinitif",
+  menteur:"coffre-cfg-menteur"
 };
 
 /* ---------- filous (registre) ---------- */
@@ -714,24 +802,32 @@ const FILOUS = [
   {id:"retenues", nom:"Le Faussaire des Retenues", domaine:"Calcul : additions et soustractions", art:"retenues", ready:true, scope:"retenues", kind:"calc", categorie:"calcul"},
   {id:"tables", nom:"Le Tricheur des Tables", domaine:"Calcul : multiplications et divisions", art:"tables", ready:true, scope:"tables", kind:"calc", categorie:"calcul"},
   {id:"mix", nom:"Calcul mélangé", domaine:"Toutes tes opérations réglées, au hasard", art:"mix", ready:true, scope:"mix", combo:true, kind:"calc", categorie:"calcul"},
-  {id:"deguiseur", nom:"Le Déguiseur", domaine:"Les verbes", art:"deguiseur", ready:false, kind:"deguiseur", categorie:"francais"},
+  {id:"deguiseur", nom:"Le Déguiseur", domaine:"Trouver le verbe, habillé ou en pyjama, l'infinitif", art:"deguiseur", ready:true, kind:"deguiseur", categorie:"francais"},
   {id:"faussaire", nom:"Le Faussaire", domaine:"Dictée, trou et corrections", art:"faussaire_mot", ready:true, kind:"faussaire", categorie:"francais"},
-  {id:"menteur", nom:"Le Menteur", domaine:"Quiz d'éveil", art:"menteur", ready:false, kind:"menteur", categorie:"eveil"}
+  {id:"menteur", nom:"Le Menteur", domaine:"Quiz d'éveil, vrai ou faux", art:"menteur", ready:true, kind:"menteur", categorie:"eveil"}
 ];
 const FILOU_KIND = Object.fromEntries(FILOUS.map(f=>[f.id, f.kind]));
-function currentKind(){ return S.filou==="faussaire" ? S.activite : FILOU_KIND[S.filou]; }
+const MULTI_ACTIVITY_FILOUS = new Set(["faussaire","deguiseur"]);
+function currentKind(){ return MULTI_ACTIVITY_FILOUS.has(S.filou) ? S.activite : FILOU_KIND[S.filou]; }
 const FAUSSAIRE_ACTIVITIES = [
   {id:"dictee", nom:"Dictée", desc:"Écoute le mot et écris-le au clavier."},
   {id:"trou", nom:"Le trou du Faussaire", desc:"Trouve la bonne lettre manquante."},
-  {id:"correction", nom:"Repérer et corriger", desc:"Touche la faute, puis corrige-la."}
+  {id:"correction", nom:"Repérer et corriger", desc:"Regarde si le mot est juste, puis corrige-le."}
 ];
+const DEGUISEUR_ACTIVITIES = [
+  {id:"verbe", nom:"Trouver le verbe", desc:"Touche le verbe habillé dans la phrase."},
+  {id:"habille", nom:"Habillé ou en pyjama ?", desc:"Le verbe en évidence est-il habillé ou en pyjama ?"},
+  {id:"infinitif", nom:"Écrire l'infinitif", desc:"Écris l'infinitif du verbe habillé."}
+];
+const ACTIVITIES_BY_FILOU = {faussaire: FAUSSAIRE_ACTIVITIES, deguiseur: DEGUISEUR_ACTIVITIES};
+const MENTEUR_THEME_LABEL = {temps:"Temps : saisons et mois"};
 const CATEGORIES = [["calcul","Calcul"],["francais","Français"],["eveil","Éveil"]];
 function buildEpreuveTabs(){
   return CATEGORIES.map(([cat,label])=>{
     const tabs=[];
     FILOUS.filter(f=>f.ready && f.categorie===cat).forEach(f=>{
-      if(f.id==="faussaire"){
-        FAUSSAIRE_ACTIVITIES.forEach(a=>tabs.push(["faussaire:"+a.id, a.nom]));
+      if(ACTIVITIES_BY_FILOU[f.id]){
+        ACTIVITIES_BY_FILOU[f.id].forEach(a=>tabs.push([f.id+":"+a.id, a.nom]));
       }else{
         tabs.push([f.id, f.nom]);
       }
@@ -802,14 +898,19 @@ const clone = o => JSON.parse(JSON.stringify(o));
 const S = {
   cfgs:{
     retenues:clone(DEFAULT_RETENUES), tables:clone(DEFAULT_TABLES), mix:clone(DEFAULT_MIX),
-    faussaire:{dictee:clone(DEFAULT_FAUSSAIRE_ACTIVITY), trou:clone(DEFAULT_FAUSSAIRE_ACTIVITY), correction:clone(DEFAULT_FAUSSAIRE_ACTIVITY)}
+    faussaire:{dictee:clone(DEFAULT_FAUSSAIRE_ACTIVITY), trou:clone(DEFAULT_FAUSSAIRE_ACTIVITY), correction:clone(DEFAULT_FAUSSAIRE_ACTIVITY)},
+    deguiseur:{verbe:clone(DEFAULT_DEGUISEUR_ACTIVITY), habille:clone(DEFAULT_DEGUISEUR_ACTIVITY), infinitif:clone(DEFAULT_DEGUISEUR_ACTIVITY)},
+    menteur:clone(DEFAULT_MENTEUR_CFG)
   },
   stats:{tries:0,errors:0,best:0,opens:0}, records:{}, mode:"coffre", recKey:"", newRec:false, streak:0,
-  q:null, word:null, lastWord:"", spoken:false, item:null, lastItem:"", picked:null,
+  q:null, word:null, lastWord:"", spoken:false, item:null, lastItem:"", picked:null, itemIsFaux:false,
+  dItem:null, lastDItem:"", selectedTokens:[],
+  mItem:null, lastMenteur:"", mAnswered:false,
   input:"", last:"", locked:true, filou:"retenues", activite:"dictee"
 };
 function curCfg(){
   if(S.filou==="faussaire") return (S.cfgs.faussaire && S.cfgs.faussaire[S.activite]) || S.cfgs.faussaire.dictee;
+  if(S.filou==="deguiseur") return (S.cfgs.deguiseur && S.cfgs.deguiseur[S.activite]) || S.cfgs.deguiseur.verbe;
   return S.cfgs[S.filou] || S.cfgs.retenues;
 }
 const $ = id => document.getElementById(id);
@@ -877,9 +978,13 @@ async function migrateIfNeeded(){
   await store.set(pk(CFG_STORE_KEY.faussaire_dictee,id), clone(DEFAULT_FAUSSAIRE_ACTIVITY));
   await store.set(pk(CFG_STORE_KEY.faussaire_trou,id), clone(DEFAULT_FAUSSAIRE_ACTIVITY));
   await store.set(pk(CFG_STORE_KEY.faussaire_correction,id), clone(DEFAULT_FAUSSAIRE_ACTIVITY));
+  await store.set(pk(CFG_STORE_KEY.deguiseur_verbe,id), clone(DEFAULT_DEGUISEUR_ACTIVITY));
+  await store.set(pk(CFG_STORE_KEY.deguiseur_habille,id), clone(DEFAULT_DEGUISEUR_ACTIVITY));
+  await store.set(pk(CFG_STORE_KEY.deguiseur_infinitif,id), clone(DEFAULT_DEGUISEUR_ACTIVITY));
+  await store.set(pk(CFG_STORE_KEY.menteur,id), clone(DEFAULT_MENTEUR_CFG));
   await store.set(pk("coffre-stats",id), legacyStats || {tries:0,errors:0,best:0,opens:0});
   await store.set(pk("coffre-records",id), legacyRecords || {});
-  await store.set(pk("brigade-filous",id), {retenues:true, tables:true, faussaire:true});
+  await store.set(pk("brigade-filous",id), {retenues:true, tables:true, faussaire:true, deguiseur:true, menteur:true});
   const profile = {id, prenom:"", avatar:clone(DEFAULT_AVATAR), createdAt:Date.now()};
   PROFILES = [profile];
   await saveProfiles();
@@ -898,11 +1003,17 @@ async function loadActiveProfileData(){
       dictee: mergeCfgFor("faussaire_dictee", await store.get(pk(CFG_STORE_KEY.faussaire_dictee,id))),
       trou: mergeCfgFor("faussaire_trou", await store.get(pk(CFG_STORE_KEY.faussaire_trou,id))),
       correction: mergeCfgFor("faussaire_correction", await store.get(pk(CFG_STORE_KEY.faussaire_correction,id)))
-    }
+    },
+    deguiseur: {
+      verbe: mergeCfgFor("deguiseur_verbe", await store.get(pk(CFG_STORE_KEY.deguiseur_verbe,id))),
+      habille: mergeCfgFor("deguiseur_habille", await store.get(pk(CFG_STORE_KEY.deguiseur_habille,id))),
+      infinitif: mergeCfgFor("deguiseur_infinitif", await store.get(pk(CFG_STORE_KEY.deguiseur_infinitif,id)))
+    },
+    menteur: mergeCfgFor("menteur", await store.get(pk(CFG_STORE_KEY.menteur,id)))
   };
   const st = await store.get(pk("coffre-stats",id)); S.stats = st || {tries:0,errors:0,best:0,opens:0};
   S.records = (await store.get(pk("coffre-records",id))) || {};
-  S.filousActifs = (await store.get(pk("brigade-filous",id))) || {retenues:true, tables:true, faussaire:true};
+  S.filousActifs = (await store.get(pk("brigade-filous",id))) || {retenues:true, tables:true, faussaire:true, deguiseur:true, menteur:true};
 }
 
 function currentProfile(){ return PROFILES.find(p=>p.id===ACTIVE_ID) || null; }
@@ -956,7 +1067,8 @@ function renderFilouList(){
 function openFilou(id){
   S.filou = id;
   hideAllScreens();
-  if(id==="faussaire") showActivites();
+  if(id==="menteur") return openMenteurQuiz();
+  if(ACTIVITIES_BY_FILOU[id]) showActivites();
   else goHome();
 }
 function showFilous(){
@@ -971,19 +1083,25 @@ function hideAllScreens(){
   $("filous").classList.remove("show");
   $("home").classList.remove("show");
   $("activites").classList.remove("show");
+  $("menteur-screen").classList.remove("show");
 }
 
-/* ---------- Le Faussaire : écran de choix d'épreuve ---------- */
+/* ---------- écran de choix d'épreuve (Faussaire, Déguiseur, ...) ---------- */
+const ACTIVITY_ICON = {faussaire:"faussaire_mot", deguiseur:"deguiseur"};
 function showActivites(){
   hideAllScreens();
+  const f = FILOUS.find(x=>x.id===S.filou);
+  $("activites-kicker").textContent = f ? f.nom.toUpperCase() : "";
   renderActiviteList();
   $("activites").classList.add("show");
 }
 function renderActiviteList(){
   const list=$("activite-list"); list.innerHTML="";
-  FAUSSAIRE_ACTIVITIES.forEach(a=>{
+  const acts = ACTIVITIES_BY_FILOU[S.filou] || [];
+  const icon = ART[ACTIVITY_ICON[S.filou]] || ART[S.filou] || "";
+  acts.forEach(a=>{
     const card=document.createElement("div"); card.className="filou-card";
-    card.innerHTML = `<div class="ic">${ART.faussaire_mot}</div><div class="tx"><div class="nm">${a.nom}</div><div class="dm">${a.desc}</div></div>`;
+    card.innerHTML = `<div class="ic">${icon}</div><div class="tx"><div class="nm">${a.nom}</div><div class="dm">${a.desc}</div></div>`;
     card.addEventListener("click", ()=>{ S.activite=a.id; hideAllScreens(); goHome(); });
     list.appendChild(card);
   });
@@ -1052,9 +1170,13 @@ $("av-save").addEventListener("click", async ()=>{
     await store.set(pk(CFG_STORE_KEY.faussaire_dictee,id), clone(DEFAULT_FAUSSAIRE_ACTIVITY));
     await store.set(pk(CFG_STORE_KEY.faussaire_trou,id), clone(DEFAULT_FAUSSAIRE_ACTIVITY));
     await store.set(pk(CFG_STORE_KEY.faussaire_correction,id), clone(DEFAULT_FAUSSAIRE_ACTIVITY));
+    await store.set(pk(CFG_STORE_KEY.deguiseur_verbe,id), clone(DEFAULT_DEGUISEUR_ACTIVITY));
+    await store.set(pk(CFG_STORE_KEY.deguiseur_habille,id), clone(DEFAULT_DEGUISEUR_ACTIVITY));
+    await store.set(pk(CFG_STORE_KEY.deguiseur_infinitif,id), clone(DEFAULT_DEGUISEUR_ACTIVITY));
+    await store.set(pk(CFG_STORE_KEY.menteur,id), clone(DEFAULT_MENTEUR_CFG));
     await store.set(pk("coffre-stats",id), {tries:0,errors:0,best:0,opens:0});
     await store.set(pk("coffre-records",id), {});
-    await store.set(pk("brigade-filous",id), {retenues:true, tables:true, faussaire:true});
+    await store.set(pk("brigade-filous",id), {retenues:true, tables:true, faussaire:true, deguiseur:true, menteur:true});
     await setActiveProfile(id);
   }
   await saveProfiles();
@@ -1070,6 +1192,8 @@ async function deleteProfile(id){
   await saveProfiles();
   await store.del(pk(CFG_STORE_KEY.retenues,id)); await store.del(pk(CFG_STORE_KEY.tables,id)); await store.del(pk(CFG_STORE_KEY.mix,id));
   await store.del(pk(CFG_STORE_KEY.faussaire_dictee,id)); await store.del(pk(CFG_STORE_KEY.faussaire_trou,id)); await store.del(pk(CFG_STORE_KEY.faussaire_correction,id));
+  await store.del(pk(CFG_STORE_KEY.deguiseur_verbe,id)); await store.del(pk(CFG_STORE_KEY.deguiseur_habille,id)); await store.del(pk(CFG_STORE_KEY.deguiseur_infinitif,id));
+  await store.del(pk(CFG_STORE_KEY.menteur,id));
   await store.del(pk("coffre-stats",id)); await store.del(pk("coffre-records",id)); await store.del(pk("brigade-filous",id));
   if(ACTIVE_ID===id){
     ACTIVE_ID = PROFILES.length ? PROFILES[0].id : null;
@@ -1125,6 +1249,7 @@ function generate(){
   const kind = currentKind();
   if(kind==="dictee") return generateWord();
   if(kind==="trou"||kind==="correction") return generateItem();
+  if(kind==="verbe"||kind==="habille"||kind==="infinitif") return generateDItem();
   let q, key, guard=0;
   do{
     const op = pick(activeOpsForFilou(S.filou));
@@ -1212,7 +1337,7 @@ function handleFaussaireSuccess(noteMsg){
 }
 function handleFaussaireError(msgHtml, stepsHtml){
   S.stats.errors++; store.set(pk("coffre-stats",ACTIVE_ID),S.stats);
-  const v=VILLAIN.faussaire;
+  const v=VILLAIN[S.filou];
   $("catch-who").innerHTML = ART[v.art];
   let msg = msgHtml;
   if(S.mode==="infini"){
@@ -1245,7 +1370,7 @@ function pickItem(){
   return it;
 }
 function generateItem(){
-  S.item = pickItem(); S.picked = null; render();
+  S.item = pickItem(); S.picked = null; S.itemIsFaux = Math.random()<0.5; render();
 }
 function shuffle(arr){
   const a=[...arr];
@@ -1267,10 +1392,26 @@ function helpItem(it){
   if(it.piege) html += `<span class="note">Piège : ${it.piege}</span>`;
   return html;
 }
+function fitWordZones(){
+  const el = $("word-zones");
+  if(!el) return;
+  el.style.fontSize = "";
+  let guard = 0;
+  while(el.scrollWidth > el.clientWidth + 1 && guard++ < 30){
+    const cur = parseFloat(window.getComputedStyle(el).fontSize);
+    if(!(cur>4)) break;
+    el.style.fontSize = (cur*0.93) + "px";
+  }
+}
+window.addEventListener("resize", ()=>{
+  const kind = currentKind();
+  if(kind==="trou"||kind==="correction") fitWordZones();
+});
 function renderTrou(){
   if(!S.item) return;
   const it = S.item;
   $("word-zones").innerHTML = it.zones.map((z,i)=> i===it.blank ? `<span class="blankzone">?</span>` : `<span>${z}</span>`).join("");
+  fitWordZones();
   const p=$("progress");
   if(S.mode==="infini"){ p.textContent = S.newRec ? `Série : ${S.streak} · Nouveau record !` : `Série : ${S.streak} · Record : ${S.records[S.recKey]||0}`; p.classList.toggle("rec",S.newRec); }
   else { p.textContent = `Verrous ouverts : ${S.streak} sur ${curCfg().target}`; p.classList.remove("rec"); }
@@ -1289,6 +1430,18 @@ function submitTrouChoice(choice){
   }
 }
 function wrongZoneText(it){ const f=it.choices.find(c=>c!==it.zones[it.blank]); return f!==undefined ? f : it.zones[it.blank]; }
+function fauxForm(it){ const w=wrongZoneText(it); return it.zones.map((z,k)=>k===it.blank?w:z).join(""); }
+function renderVX(onPick){
+  const wrap = $("word-choices");
+  wrap.innerHTML = "";
+  const vBtn = document.createElement("button");
+  vBtn.type="button"; vBtn.className="vx-btn vx-true"; vBtn.setAttribute("aria-label","Juste"); vBtn.textContent="✓";
+  vBtn.addEventListener("click", ()=>onPick(true));
+  const xBtn = document.createElement("button");
+  xBtn.type="button"; xBtn.className="vx-btn vx-false"; xBtn.setAttribute("aria-label","Faux"); xBtn.textContent="✗";
+  xBtn.addEventListener("click", ()=>onPick(false));
+  wrap.appendChild(vBtn); wrap.appendChild(xBtn);
+}
 function renderCorrection(){
   if(!S.item) return;
   const it = S.item;
@@ -1297,29 +1450,32 @@ function renderCorrection(){
   else { p.textContent = `Verrous ouverts : ${S.streak} sur ${curCfg().target}`; p.classList.remove("rec"); }
   document.querySelectorAll(".bolt").forEach((el,i)=>el.classList.toggle("done", i<S.streak));
   if(S.picked===null){
-    const wrongText = wrongZoneText(it);
-    $("word-zones").innerHTML = it.zones.map((z,i)=>{
-      const txt = i===it.blank ? wrongText : z;
-      return `<button type="button" class="zonebtn" data-i="${i}">${txt}</button>`;
-    }).join("");
-    $("word-zones").querySelectorAll(".zonebtn").forEach(btn=>{
-      btn.addEventListener("click", ()=>pickZone(parseInt(btn.dataset.i,10)));
-    });
-    $("word-choices").innerHTML = "";
+    const zonesToShow = S.itemIsFaux ? it.zones.map((z,i)=> i===it.blank ? wrongZoneText(it) : z) : it.zones;
+    $("word-zones").innerHTML = zonesToShow.map(z=>`<span>${z}</span>`).join("");
+    fitWordZones();
+    renderVX(submitCorrectionVX);
   }else{
     $("word-zones").innerHTML = it.zones.map((z,i)=> i===it.blank ? `<span class="blankzone">?</span>` : `<span>${z}</span>`).join("");
+    fitWordZones();
     renderChoices(it.choices, submitCorrectionChoice);
   }
 }
-function pickZone(i){
+function submitCorrectionVX(choseJuste){
   if(S.locked || !S.item || S.picked!==null) return;
-  const it = S.item;
-  if(i===it.blank){ S.picked = i; render(); return; }
   S.stats.tries++;
-  const wrongText = wrongZoneText(it);
-  const fauxForm = it.zones.map((z,k)=>k===it.blank?wrongText:z).join("");
-  const msg = `Ce n'était pas la lettre fautive. Le mot fautif était <b>${fauxForm}</b>.`;
-  handleFaussaireError(msg, helpItem(it));
+  const it = S.item, actuallyFaux = S.itemIsFaux;
+  if(choseJuste && !actuallyFaux){
+    handleFaussaireSuccess(null);
+  }else if(!choseJuste && actuallyFaux){
+    S.picked = "correcting";
+    render();
+  }else if(choseJuste && actuallyFaux){
+    const msg = `Ce mot était fautif : <b>${fauxForm(it)}</b>.`;
+    handleFaussaireError(msg, helpItem(it));
+  }else{
+    const msg = `Ce mot était bien écrit : <b>${it.mot}</b>.`;
+    handleFaussaireError(msg, helpItem(it));
+  }
 }
 function submitCorrectionChoice(choice){
   if(S.locked || !S.item) return;
@@ -1332,6 +1488,186 @@ function submitCorrectionChoice(choice){
     handleFaussaireError(msg, helpItem(it));
   }
 }
+
+/* ---------- Le Déguiseur : trouver le verbe / habillé-pyjama / infinitif ---------- */
+function poolDeguiseurActivity(act){
+  const active = new Set(curCfg().series);
+  let pool = CONTENU.deguiseur.filter(it=>active.has(it.serie));
+  if(act==="verbe"||act==="infinitif") pool = pool.filter(it=>it.type==="habille");
+  return pool;
+}
+function pickDItem(act){
+  const pool = poolDeguiseurActivity(act);
+  if(!pool.length) return null;
+  let it, guard=0;
+  do{ it = pick(pool); } while(it.phrase===S.lastDItem && guard++<20);
+  S.lastDItem = it.phrase;
+  return it;
+}
+function generateDItem(){
+  S.dItem = pickDItem(S.activite); S.selectedTokens = []; S.input = ""; render();
+}
+function renderDProgress(){
+  const p=$("progress");
+  if(S.mode==="infini"){ p.textContent = S.newRec ? `Série : ${S.streak} · Nouveau record !` : `Série : ${S.streak} · Record : ${S.records[S.recKey]||0}`; p.classList.toggle("rec",S.newRec); }
+  else { p.textContent = `Verrous ouverts : ${S.streak} sur ${curCfg().target}`; p.classList.remove("rec"); }
+  document.querySelectorAll(".bolt").forEach((el,i)=>el.classList.toggle("done", i<S.streak));
+}
+function sentenceTokensHTML(it, highlightIdx){
+  const hl = highlightIdx || [];
+  const parts = [];
+  let i = 0;
+  while(i < it.tokens.length){
+    if(hl.includes(i)){
+      const group = [];
+      while(i < it.tokens.length && hl.includes(i)){ group.push(it.tokens[i]); i++; }
+      parts.push(`<span class="hlverb">${group.join(" ")}</span>`);
+    }else{
+      parts.push(`<span>${it.tokens[i]}</span>`);
+      i++;
+    }
+  }
+  return parts.join(" ");
+}
+function renderVerbe(){
+  if(!S.dItem) return;
+  const it = S.dItem;
+  const zone = $("sentence-zone");
+  zone.innerHTML = it.tokens.map((t,i)=>`<button type="button" class="tokbtn${S.selectedTokens.includes(i)?" selected":""}" data-i="${i}">${t}</button>`).join(" ");
+  zone.querySelectorAll(".tokbtn").forEach(b=>{
+    b.addEventListener("click", ()=>{
+      if(S.locked) return;
+      const i = +b.dataset.i;
+      const idx = S.selectedTokens.indexOf(i);
+      if(idx>=0) S.selectedTokens.splice(idx,1); else S.selectedTokens.push(i);
+      renderVerbe();
+    });
+  });
+  renderDProgress();
+}
+function submitVerbe(){
+  if(S.locked || !S.dItem) return;
+  S.stats.tries++;
+  const it = S.dItem;
+  const a = [...S.selectedTokens].sort((x,y)=>x-y);
+  const b = [...it.verbeIdx].sort((x,y)=>x-y);
+  const ok = a.length===b.length && a.length>0 && a.every((v,i)=>v===b[i]);
+  if(ok){
+    handleFaussaireSuccess(null);
+  }else{
+    const verbTxt = it.verbeIdx.map(i=>it.tokens[i]).join(" ");
+    const msg = `Le verbe habillé était <b>${verbTxt}</b>.`;
+    const steps = it.negatif ? `${it.negatif}<span class="note">Le verbe conjugué se trouve entre « ne » et « pas ».</span>` : `La bonne réponse était : <b>${verbTxt}</b>`;
+    handleFaussaireError(msg, steps);
+  }
+}
+function renderHabille(){
+  if(!S.dItem) return;
+  const it = S.dItem;
+  $("sentence-zone").innerHTML = sentenceTokensHTML(it, it.verbeIdx);
+  renderDProgress();
+}
+function submitHabille(choice){
+  if(S.locked || !S.dItem) return;
+  S.stats.tries++;
+  const it = S.dItem;
+  if(choice===it.type){
+    handleFaussaireSuccess(null);
+  }else{
+    const label = it.type==="habille" ? "habillé" : "en pyjama";
+    const msg = `Ce verbe était <b>${label}</b>.`;
+    const steps = `Habillé : il change avec la personne, on sait qui fait l'action et quand.<br>En pyjama : il ne change jamais, il se termine par ER, IR, OIR ou RE.`;
+    handleFaussaireError(msg, steps);
+  }
+}
+function renderInfinitif(){
+  if(!S.dItem) return;
+  const it = S.dItem;
+  $("sentence-zone").innerHTML = sentenceTokensHTML(it, it.verbeIdx);
+  const ans=$("answer"); ans.textContent=S.input; ans.classList.toggle("empty",!S.input);
+  renderDProgress();
+}
+function submitInfinitif(){
+  if(S.locked || !S.input || !S.dItem) return;
+  S.stats.tries++;
+  const it = S.dItem;
+  if(normWord(S.input)===normWord(it.infinitif)){
+    handleFaussaireSuccess(null);
+  }else{
+    const msg = `Tu as écrit <b>${S.input}</b>. La bonne réponse était <b>${it.infinitif}</b>.`;
+    const steps = `L'infinitif : <b>${it.infinitif}</b><span class="note">Petit truc : « C'est l'action de ${it.infinitif}… » ou « Il faut ${it.infinitif}… ».</span>`;
+    handleFaussaireError(msg, steps);
+  }
+}
+
+/* ---------- Le Menteur : quiz d'éveil sans enjeu (pas de coffre, pas de record) ---------- */
+function poolMenteur(){
+  const active = new Set((S.cfgs.menteur && S.cfgs.menteur.themes) || DEFAULT_MENTEUR_CFG.themes);
+  return CONTENU.menteur.filter(it=>active.has(it.theme));
+}
+function pickMenteurItem(){
+  const pool = poolMenteur();
+  if(!pool.length) return null;
+  let it, guard=0;
+  do{ it = pick(pool); } while(it.question===S.lastMenteur && guard++<20);
+  S.lastMenteur = it.question;
+  return it;
+}
+function openMenteurQuiz(){
+  S.filou = "menteur";
+  hideAllScreens();
+  generateMenteurItem();
+  $("menteur-screen").classList.add("show");
+}
+function generateMenteurItem(){
+  S.mItem = pickMenteurItem();
+  S.mAnswered = false;
+  renderMenteur();
+}
+function renderMenteur(){
+  const it = S.mItem;
+  $("menteur-rappel").style.display = "none";
+  $("menteur-rappel").classList.remove("wrong");
+  $("menteur-next").style.display = "none";
+  const wrap = $("menteur-choices"); wrap.innerHTML = "";
+  if(!it){
+    $("menteur-question").textContent = "Aucune question réglée pour ce profil.";
+    return;
+  }
+  $("menteur-question").textContent = it.question;
+  if(it.type==="vf"){
+    const vBtn = document.createElement("button");
+    vBtn.type="button"; vBtn.className="vx-btn vx-true"; vBtn.setAttribute("aria-label","Vrai"); vBtn.textContent="✓";
+    vBtn.addEventListener("click", ()=>submitMenteur(true));
+    const xBtn = document.createElement("button");
+    xBtn.type="button"; xBtn.className="vx-btn vx-false"; xBtn.setAttribute("aria-label","Faux"); xBtn.textContent="✗";
+    xBtn.addEventListener("click", ()=>submitMenteur(false));
+    wrap.appendChild(vBtn); wrap.appendChild(xBtn);
+  }else{
+    shuffle(it.choix).forEach(c=>{
+      const b=document.createElement("button"); b.type="button"; b.className="choice-chip"; b.textContent=c;
+      b.addEventListener("click", ()=>submitMenteur(c));
+      wrap.appendChild(b);
+    });
+  }
+}
+function submitMenteur(answer){
+  if(S.mAnswered || !S.mItem) return;
+  S.mAnswered = true;
+  const it = S.mItem;
+  const correct = answer===it.reponse;
+  S.stats.tries++;
+  if(!correct) S.stats.errors++;
+  store.set(pk("coffre-stats",ACTIVE_ID), S.stats);
+  const rappelEl = $("menteur-rappel");
+  rappelEl.innerHTML = (correct ? "Bonne réponse ! " : "Et non ! ") + it.rappel;
+  rappelEl.classList.toggle("wrong", !correct);
+  rappelEl.style.display = "block";
+  $("menteur-choices").querySelectorAll("button").forEach(b=>b.disabled=true);
+  $("menteur-next").style.display = "inline-block";
+}
+$("menteur-next").addEventListener("click", generateMenteurItem);
+$("menteur-back").addEventListener("click", showFilous);
 
 /* ---------- aide après une erreur ---------- */
 function places(n){ const out=[]; const h=Math.floor(n/100)*100, d=Math.floor(n%100/10)*10, u=n%10; if(h) out.push(h); if(d) out.push(d); if(u) out.push(u); return out; }
@@ -1368,6 +1704,11 @@ function recordKeyScoped(filou){
     const c = S.cfgs.faussaire[act];
     return act+":"+sorted(c.series).join(",");
   }
+  if(filou==="deguiseur"){
+    const act = S.activite||"verbe";
+    const c = S.cfgs.deguiseur[act];
+    return act+":"+sorted(c.series).join(",");
+  }
   const k=[];
   if(filou!=="tables"){
     const c=S.cfgs.retenues;
@@ -1382,10 +1723,11 @@ function recordKeyScoped(filou){
   return k.join("|");
 }
 const PASS_TXT = {avec:"avec passage", sans:"sans passage", mix:"avec ou sans passage"};
-const FAUSSAIRE_ACT_LABEL = {dictee:"Dictée", trou:"Le trou du Faussaire", correction:"Repérer et corriger"};
+const FAUSSAIRE_ACT_LABEL = {dictee:"Dictée", trou:"Le trou du Faussaire", correction:"Repérer et corriger",
+  verbe:"Trouver le verbe", habille:"Habillé ou en pyjama ?", infinitif:"Écrire l'infinitif"};
 function describeKey(key){
   if(!key) return "Aucune épreuve réglée";
-  for(const act of ["dictee","trou","correction"]){
+  for(const act of ["dictee","trou","correction","verbe","habille","infinitif"]){
     if(key.startsWith(act+":")){
       const series = key.slice(act.length+1);
       return series ? `${FAUSSAIRE_ACT_LABEL[act]} · séries ${series.split(",").join(", ")}` : `${FAUSSAIRE_ACT_LABEL[act]} · aucune série`;
@@ -1410,7 +1752,7 @@ function buildBolts(){
 }
 function leadText(){
   const kind = currentKind();
-  const unite = kind==="calc" ? "calculs" : "mots";
+  const unite = kind==="calc" ? "calculs" : (kind==="verbe"||kind==="habille"||kind==="infinitif") ? "phrases" : "mots";
   $("title").textContent = S.mode==="infini" ? "Mode infini" : S.mode==="montre" ? "Contre la montre" : "Le coffre des Filous";
   $("lead").innerHTML = S.mode==="infini"
     ? `Enchaîne les ${unite} justes le plus longtemps possible.`
@@ -1423,6 +1765,9 @@ function render(){
   if(kind==="dictee") return renderDictee();
   if(kind==="trou") return renderTrou();
   if(kind==="correction") return renderCorrection();
+  if(kind==="verbe") return renderVerbe();
+  if(kind==="habille") return renderHabille();
+  if(kind==="infinitif") return renderInfinitif();
   if(!S.q) return;
   const q=S.q, txt=`${q.a} ${SYM[q.op]} ${q.b} =`;
   $("calc").textContent = txt; $("calc").classList.toggle("long", txt.length>10);
@@ -1441,14 +1786,18 @@ function render(){
 /* ---------- accueil (écran du filou choisi) ---------- */
 function applyKindUI(){
   const kind = currentKind();
+  const isDeg = kind==="verbe"||kind==="habille"||kind==="infinitif";
   $("pad").style.display = kind==="calc" ? "grid" : "none";
-  $("dictee-pad").classList.toggle("show", kind==="dictee");
+  $("dictee-pad").classList.toggle("show", kind==="dictee"||kind==="infinitif");
   $("choice-pad").classList.toggle("show", kind==="trou"||kind==="correction");
+  $("verbe-pad").classList.toggle("show", kind==="verbe");
+  $("habille-pad").classList.toggle("show", kind==="habille");
   $("calc").style.display = kind==="calc" ? "block" : "none";
   $("word-listen").style.display = kind==="dictee" ? "inline-block" : "none";
   $("word-note").style.display = kind==="dictee" ? "block" : "none";
   $("word-zones").style.display = (kind==="trou"||kind==="correction") ? "block" : "none";
-  $("answer").style.display = (kind==="calc"||kind==="dictee") ? "flex" : "none";
+  $("sentence-zone").style.display = isDeg ? "flex" : "none";
+  $("answer").style.display = (kind==="calc"||kind==="dictee"||kind==="infinitif") ? "flex" : "none";
   $("go-montre").style.display = kind==="calc" ? "flex" : "none";
 }
 function goHome(){
@@ -1458,11 +1807,12 @@ function goHome(){
   const kind = currentKind();
   const isWord = kind!=="calc";
   applyKindUI();
-  const titre = S.filou==="faussaire" ? (FAUSSAIRE_ACTIVITIES.find(a=>a.id===S.activite)||{}).nom : (f ? f.nom : "Le coffre des Filous");
+  const acts = ACTIVITIES_BY_FILOU[S.filou];
+  const titre = acts ? (acts.find(a=>a.id===S.activite)||{}).nom : (f ? f.nom : "Le coffre des Filous");
   $("home-title").textContent = titre || "Le coffre des Filous";
   $("home-art").innerHTML = ART[f.art];
-  $("home-back").textContent = S.filou==="faussaire" ? "Épreuves" : "Filous";
-  const unite = kind==="calc" ? "calculs" : "mots";
+  $("home-back").textContent = acts ? "Épreuves" : "Filous";
+  const unite = kind==="calc" ? "calculs" : (kind==="verbe"||kind==="habille"||kind==="infinitif") ? "phrases" : "mots";
   $("desc-coffre").textContent = isWord ? `Réussis ${curCfg().target} ${unite} d'affilée pour ouvrir le coffre.` : `Réussis ${curCfg().target} calculs d'affilée pour ouvrir le coffre.`;
   const r=currentRecord();
   $("desc-infini").textContent = r ? `Des ${unite} sans fin. Ton record : ${r}` : `Des ${unite} sans fin. Établis ton premier record !`;
@@ -1505,6 +1855,8 @@ function submit(){
   const kind = currentKind();
   if(kind==="dictee") return submitWord();
   if(kind==="trou"||kind==="correction") return;
+  if(kind==="infinitif") return submitInfinitif();
+  if(kind==="verbe"||kind==="habille") return;
   if(S.locked || !S.input) return;
   S.stats.tries++;
   if(parseInt(S.input,10)===S.q.r){
@@ -1578,6 +1930,9 @@ buildKeyboard($("word-kb"),
   ()=>{ if(S.locked) return; S.input=S.input.slice(0,-1); render(); }
 );
 $("word-validate").addEventListener("click", submit);
+$("verbe-validate").addEventListener("click", submitVerbe);
+$("hp-habille").addEventListener("click", ()=>submitHabille("habille"));
+$("hp-pyjama").addEventListener("click", ()=>submitHabille("pyjama"));
 $("word-listen").addEventListener("click", ()=>{
   if(!S.word) return;
   speakText(S.word.mot);
@@ -1598,7 +1953,7 @@ document.addEventListener("keydown",e=>{
 function closeCatch(){ $("catch").classList.remove("show"); S.base=S.records[S.recKey]||0; S.locked=false; generate(); }
 $("catch-ok").addEventListener("click",closeCatch);
 $("again").addEventListener("click",restart);
-$("home-back").addEventListener("click",()=>{ if(S.filou==="faussaire") showActivites(); else showFilous(); });
+$("home-back").addEventListener("click",()=>{ if(ACTIVITIES_BY_FILOU[S.filou]) showActivites(); else showFilous(); });
 $("profiles-link").addEventListener("click",showProfiles);
 $("filous-link").addEventListener("click",()=>{ if(ACTIVE_ID) showFilous(); else showProfiles(); });
 $("filous-back").addEventListener("click",showProfiles);
@@ -1645,7 +2000,8 @@ function cfgAt(obj, tab){ const i=tab.indexOf(":"); return i<0 ? obj[tab] : obj[
 function hasActiveOps(filouId, c){
   if(filouId==="retenues") return (c.add.on&&c.add.forms.length)||(c.sub.on&&c.sub.forms.length);
   if(filouId==="tables") return (c.mul.on&&(c.mul.tables.length||c.mul.extra.length))||(c.div.on&&c.div.tables.length);
-  if(filouId==="faussaire"||filouId.startsWith("faussaire:")) return c.series && c.series.length>0;
+  if(filouId==="faussaire"||filouId.startsWith("faussaire:")||filouId==="deguiseur"||filouId.startsWith("deguiseur:")) return c.series && c.series.length>0;
+  if(filouId==="menteur") return c.themes && c.themes.length>0;
   return true;
 }
 function ensureMinOp(filouId, c){
@@ -1653,8 +2009,10 @@ function ensureMinOp(filouId, c){
     c.add.on=true; if(!c.add.forms.length) c.add.forms=["du+u"];
   }else if(filouId==="tables" && !hasActiveOps("tables",c)){
     c.mul.on=true; if(!c.mul.tables.length && !c.mul.extra.length) c.mul.tables=[2,5,10];
-  }else if((filouId==="faussaire"||filouId.startsWith("faussaire:")) && !hasActiveOps(filouId,c)){
+  }else if((filouId==="faussaire"||filouId.startsWith("faussaire:")||filouId==="deguiseur"||filouId.startsWith("deguiseur:")) && !hasActiveOps(filouId,c)){
     c.series=[1];
+  }else if(filouId==="menteur" && !hasActiveOps("menteur",c)){
+    c.themes=["temps"];
   }
 }
 function fillSettingsProfiles(){
@@ -1716,12 +2074,16 @@ function fillSettings(){
   document.querySelectorAll("[data-tab]").forEach(el=>{ el.style.display = el.dataset.tab===settingsTab ? "" : "none"; });
   const tabLabel = EPREUVE_TABS.flatMap(g=>g.tabs).find(t=>t[0]===settingsTab)[1];
   $("coffre-tab-title").textContent = "Mode coffre — " + tabLabel;
+  $("g-coffre-mode").style.display = settingsTab==="menteur" ? "none" : "";
 
   const d=cfgAt(draft,settingsTab);
-  $("s-code").value=d.code; $("s-pin").value=PIN; $("s-target").value=d.target;
-  const rw=document.querySelector('[data-radio="reward"]'); rw.innerHTML="";
-  for(const [k,label] of Object.entries(REWARD)) rw.appendChild(chip(label, d.reward===k, ()=>{d.reward=k;}));
-  $("f-code").style.display = d.reward==="code" ? "" : "none";
+  $("s-pin").value=PIN;
+  if(settingsTab!=="menteur"){
+    $("s-code").value=d.code; $("s-target").value=d.target;
+    const rw=document.querySelector('[data-radio="reward"]'); rw.innerHTML="";
+    for(const [k,label] of Object.entries(REWARD)) rw.appendChild(chip(label, d.reward===k, ()=>{d.reward=k;}));
+    $("f-code").style.display = d.reward==="code" ? "" : "none";
+  }
 
   const keys=Object.keys(S.records).filter(k=>S.records[k]>0).sort((a,b)=>S.records[b]-S.records[a]);
   $("recs").innerHTML = keys.length ? keys.map(k=>{
@@ -1762,6 +2124,16 @@ function fillSettings(){
     const seriesAvailable=[...new Set(source.map(w=>w.serie))].sort((a,b)=>a-b);
     const sl=document.querySelector(`[data-list="${settingsTab}-series"]`); sl.innerHTML="";
     for(const sNum of seriesAvailable) sl.appendChild(chip("Série "+sNum, df.series.includes(sNum), ()=>toggleIn(df.series,sNum)));
+  }else if(settingsTab.startsWith("deguiseur:")){
+    const df=d;
+    const seriesAvailable=[...new Set(CONTENU.deguiseur.map(w=>w.serie))].sort((a,b)=>a-b);
+    const sl=document.querySelector(`[data-list="${settingsTab}-series"]`); sl.innerHTML="";
+    for(const sNum of seriesAvailable) sl.appendChild(chip("Série "+sNum, df.series.includes(sNum), ()=>toggleIn(df.series,sNum)));
+  }else if(settingsTab==="menteur"){
+    const dm=d;
+    const themesAvailable=[...new Set(CONTENU.menteur.map(x=>x.theme))];
+    const tl=document.querySelector('[data-list="menteur-themes"]'); tl.innerHTML="";
+    for(const th of themesAvailable) tl.appendChild(chip(MENTEUR_THEME_LABEL[th]||th, dm.themes.includes(th), ()=>toggleIn(dm.themes,th)));
   }
 
   const s=S.stats, rate=s.tries?Math.round(100*(s.tries-s.errors)/s.tries):0;
@@ -1777,7 +2149,9 @@ let draftPin = "0000";
 function openSettings(){
   draft = {
     retenues:clone(S.cfgs.retenues), tables:clone(S.cfgs.tables), mix:clone(S.cfgs.mix),
-    faussaire:{dictee:clone(S.cfgs.faussaire.dictee), trou:clone(S.cfgs.faussaire.trou), correction:clone(S.cfgs.faussaire.correction)}
+    faussaire:{dictee:clone(S.cfgs.faussaire.dictee), trou:clone(S.cfgs.faussaire.trou), correction:clone(S.cfgs.faussaire.correction)},
+    deguiseur:{verbe:clone(S.cfgs.deguiseur.verbe), habille:clone(S.cfgs.deguiseur.habille), infinitif:clone(S.cfgs.deguiseur.infinitif)},
+    menteur:clone(S.cfgs.menteur)
   };
   draftPin=PIN; settingsTab="retenues"; $("warn").textContent=""; fillSettings(); $("settings").classList.add("show"); $("settings").scrollTop=0;
 }
@@ -1787,7 +2161,7 @@ $("s-reset").addEventListener("click",()=>{ S.stats={tries:0,errors:0,best:0,ope
 $("s-save").addEventListener("click",async ()=>{
   if(!/^\d{4}$/.test(String(draftPin||""))){ $("warn").textContent="Le code du parent doit faire exactement 4 chiffres."; return; }
 
-  for(const key of ["retenues","tables","mix","faussaire:dictee","faussaire:trou","faussaire:correction"]){
+  for(const key of ["retenues","tables","mix","faussaire:dictee","faussaire:trou","faussaire:correction","deguiseur:verbe","deguiseur:habille","deguiseur:infinitif"]){
     const d=cfgAt(draft,key);
     d.code = String(d.code||"").replace(/\D/g,"") || "5472";
     d.target = Math.min(20,Math.max(2,parseInt(d.target,10)||6));
@@ -1803,8 +2177,10 @@ $("s-save").addEventListener("click",async ()=>{
     }
   }
 
-  // les 3 épreuves du Faussaire ne peuvent jamais rester sans série active : correction silencieuse
+  // les épreuves du Faussaire et du Déguiseur ne peuvent jamais rester sans série active : correction silencieuse
   for(const act of ["dictee","trou","correction"]) ensureMinOp("faussaire:"+act, draft.faussaire[act]);
+  for(const act of ["verbe","habille","infinitif"]) ensureMinOp("deguiseur:"+act, draft.deguiseur[act]);
+  ensureMinOp("menteur", draft.menteur);
 
   S.filousActifs = S.filousActifs || {};
   const notes=[];
@@ -1813,13 +2189,17 @@ $("s-save").addEventListener("click",async ()=>{
   }
   if(notes.length) await store.set(pk("brigade-filous",ACTIVE_ID), S.filousActifs);
 
-  S.cfgs.retenues = dr; S.cfgs.tables = dt; S.cfgs.mix = draft.mix; S.cfgs.faussaire = draft.faussaire;
+  S.cfgs.retenues = dr; S.cfgs.tables = dt; S.cfgs.mix = draft.mix; S.cfgs.faussaire = draft.faussaire; S.cfgs.deguiseur = draft.deguiseur; S.cfgs.menteur = draft.menteur;
   await store.set(pk(CFG_STORE_KEY.retenues,ACTIVE_ID), S.cfgs.retenues);
   await store.set(pk(CFG_STORE_KEY.tables,ACTIVE_ID), S.cfgs.tables);
   await store.set(pk(CFG_STORE_KEY.mix,ACTIVE_ID), S.cfgs.mix);
   await store.set(pk(CFG_STORE_KEY.faussaire_dictee,ACTIVE_ID), S.cfgs.faussaire.dictee);
   await store.set(pk(CFG_STORE_KEY.faussaire_trou,ACTIVE_ID), S.cfgs.faussaire.trou);
   await store.set(pk(CFG_STORE_KEY.faussaire_correction,ACTIVE_ID), S.cfgs.faussaire.correction);
+  await store.set(pk(CFG_STORE_KEY.deguiseur_verbe,ACTIVE_ID), S.cfgs.deguiseur.verbe);
+  await store.set(pk(CFG_STORE_KEY.deguiseur_habille,ACTIVE_ID), S.cfgs.deguiseur.habille);
+  await store.set(pk(CFG_STORE_KEY.deguiseur_infinitif,ACTIVE_ID), S.cfgs.deguiseur.infinitif);
+  await store.set(pk(CFG_STORE_KEY.menteur,ACTIVE_ID), S.cfgs.menteur);
   PIN = draftPin; await store.set("brigade-pin", PIN);
   $("settings").classList.remove("show");
   if(notes.length) alert(notes.join("\n"));
